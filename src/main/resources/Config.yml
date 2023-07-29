@@ -1,0 +1,61 @@
+#     ███        █████      ████     ███ █████████ ███    █████    
+#  ███   ███   ███    ███   ██ ███   ███ ███       ███  ██    ███  
+# ███        ███        ███ ███ ███  ███ ███       ███ ██          
+# ███        ███        ███ ███  ███ ███ ███████   ███ ███         
+# ███        ███        ███ ███   ██ ███ ███       ███ ███   ██████
+#  ███   ███   ███     ███  ███    ██ ██ ███       ███  ███    ██  
+#    █████       █████      ███      ███ ███       ███   ██████     
+                                                                  
+                       
+
+#Date-Format
+Date: "dd/MM/yyyy"
+ 
+Format: "0.00"
+ 
+#      ███      █████      █████               ███        █████      ████     ███ █████████ ███    █████    
+#      ███    ███    ███   ██  ███          ███   ███   ███    ███   ██ ███   ███ ███       ███  ██    ███  
+#      ███  ███        ███ ██   ███        ███        ███        ███ ███ ███  ███ ███       ███ ██          
+#      ███  ███        ███ ██████          ███        ███        ███ ███  ███ ███ ███████   ███ ███         
+#      ███  ███        ███ ██    ███       ███        ███        ███ ███   ██ ███ ███       ███ ███   ██████
+# ██   ███    ███     ███  ██     ██        ███   ███   ███     ███  ███    ██ ██ ███       ███  ███    ██  
+#  █████        █████      ████ ███           █████       █████      ███      ███ ███       ███   ██████                                                                                                                                      
+
+#
+#how many jobs can a player have by default?  
+#
+MaxDefaultJobs: 1
+
+UseLevels: true
+
+LevelUp:
+
+  Titles:
+  
+    Enabled: true
+    
+    T1: "&8| &6&lLevel Up &8|"
+    T2: "&7#&a<level> &7| <job>"
+    
+  Message:
+  
+    Enabled: true
+    
+    Message: "<prefix> &7You reached a new Level in the <job> &7Job!"
+
+#if enabled, players can own default jobs
+EnabledDefaultJobs: false
+
+AutoJoinDefaultJobs: false
+
+#when a player gets created, he will own this job
+DefaultJobs:
+  - "MINER"
+
+#the gui when you are in a job and you click to join again to navigate to other features
+JobInfoGUI: true
+  
+NeedToConfirmWhileBuying: true
+
+#reopen the gui for a update or close it
+ReOpenForUpdate: true

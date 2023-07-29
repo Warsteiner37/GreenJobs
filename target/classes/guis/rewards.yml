@@ -1,0 +1,104 @@
+#  _____  ________          __     _____  _____   _____ 
+# |  __ \|  ____\ \        / /\   |  __ \|  __ \ / ____|
+# | |__) | |__   \ \  /\  / /  \  | |__) | |  | | (___  
+# |  _  /|  __|   \ \/  \/ / /\ \ |  _  /| |  | |\___ \ 
+# | | \ \| |____   \  /\  / ____ \| | \ \| |__| |____) |
+# |_|  \_\______|   \/  \/_/    \_\_|  \_\_____/|_____/ 
+#                                                      
+                                                       
+GUI_Size: 6
+
+GUI_Name: "&b&lRewards &8| <job>"
+
+#"NORMAL" -> by sorting numbers for each ID
+DefaultSorting: "RANDOM"
+
+ItemsPerPage: 35
+
+SortModes:
+
+  Display: "&7Sorting Items &8: &7"
+  
+  Slot: 46
+  
+  List:
+    - "RANDOM"
+    - "NORMAL" 
+
+  RANDOM:
+  
+    Display: "&eRandom"
+    
+    Icon: "CHEST"
+    
+    Lore:
+      - "&8Sorting is Random"
+
+  NORMAL:
+  
+    Display: "&eNormal"
+    
+    Icon: "PAPER"
+    
+    Lore:
+      - "&8Normal sorting"
+
+GUI_Items:
+
+  List:
+    - "CloseButton"
+    - "Next"
+    - "Back"
+
+  Next:
+  
+    Display: "&7Next Page &8->"
+
+    Actions:
+      - "GO_NEXT_PAGE"
+  
+    Lore:
+      - "&8Next Page!"
+      
+    Icon: "ARROW"
+    
+    Slot: 50
+    
+  Back:
+  
+    Display: "&8<- &7Go Back"
+
+    Actions:
+      - "GO_BACK_PAGE"
+
+    Lore:
+      - "&8Go Back!"
+      
+    Icon: "ARROW"
+    
+    Slot: 48
+ 
+  CloseButton:
+  
+    Display: "&8< &cClose &8>"
+    
+    Actions:
+      - "CLOSE"
+    
+    Lore:
+      - "&8Close this menu!"
+      
+    Icon: "RED_DYE"
+    
+    Slot: 49
+
+GUI_Placeholders:
+  - "BLACK_STAINED_GLASS_PANE:36:&8/"
+  - "BLACK_STAINED_GLASS_PANE:37:&8/"
+  - "BLACK_STAINED_GLASS_PANE:38:&8/"
+  - "BLACK_STAINED_GLASS_PANE:39:&8/"
+  - "BLACK_STAINED_GLASS_PANE:40:&8/"
+  - "BLACK_STAINED_GLASS_PANE:41:&8/"
+  - "BLACK_STAINED_GLASS_PANE:42:&8/"
+  - "BLACK_STAINED_GLASS_PANE:43:&8/"
+  - "BLACK_STAINED_GLASS_PANE:44:&8/"

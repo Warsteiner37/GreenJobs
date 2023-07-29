@@ -1,0 +1,74 @@
+#       _  ____  ____   _____    _____ _    _ _____ 
+#      | |/ __ \|  _ \ / ____|  / ____| |  | |_   _|
+#      | | |  | | |_) | (___   | |  __| |  | | | |  
+#  _   | | |  | |  _ < \___ \  | | |_ | |  | | | |  
+# | |__| | |__| | |_) |____) | | |__| | |__| |_| |_ 
+#  \____/ \____/|____/|_____/   \_____|\____/|_____|
+#                                                   
+                                                   
+GUI_Size: 5
+
+GUI_Name: "&8✪ #47b2f5#Jobs &8✪"
+
+GUI_Items:
+
+  List:
+    - "CloseButton"
+    - "InfoItem"
+    - "LeaveItem"
+ 
+  CloseButton:
+  
+    Display: "&8✘ &cClose &8✘"
+    
+    Actions:
+      - "CLOSE"
+    
+    Lore:
+      - "&8└ &8Close this menu!"
+      
+    Icon: "url;http://textures.minecraft.net/texture/afd2400002ad9fbbbd0066941eb5b1a384ab9b0e48a178ee96e4d129a5208654"
+    
+    Slot: 41
+    
+  InfoItem:
+  
+    Display: "&8» &cInfomation &8«"
+  
+    Lore:
+      - "&8└ &7You can work now!"
+      
+    Icon: "url;http://textures.minecraft.net/texture/352723aa0637ea5204447be536151f529fe4906826d8c066c4dcc50079a64465"
+    
+    Slot: 4
+    
+  LeaveItem:
+  
+    Display: "&8⌧ &cLeave all Jobs &8⌧"
+    
+    Actions:
+      - "LEAVE"
+    
+    Lore:
+      - "&8✔ Leave all your jobs!"
+      
+    Icon: "BARRIER"
+    
+    Slot: 39
+    
+GUI_Placeholders:
+  - "BLACK_STAINED_GLASS_PANE:0:&8/"
+  - "BLACK_STAINED_GLASS_PANE:1:&8/"
+  - "BLACK_STAINED_GLASS_PANE:2:&8/"
+  - "BLACK_STAINED_GLASS_PANE:3:&8/"
+  - "BLACK_STAINED_GLASS_PANE:5:&8/"
+  - "BLACK_STAINED_GLASS_PANE:6:&8/"
+  - "BLACK_STAINED_GLASS_PANE:7:&8/"
+  - "BLACK_STAINED_GLASS_PANE:8:&8/"
+  - "BLACK_STAINED_GLASS_PANE:40:&8/"
+  - "BLACK_STAINED_GLASS_PANE:36:&8/"
+  - "BLACK_STAINED_GLASS_PANE:37:&8/"
+  - "BLACK_STAINED_GLASS_PANE:38:&8/"
+  - "BLACK_STAINED_GLASS_PANE:42:&8/"
+  - "BLACK_STAINED_GLASS_PANE:43:&8/"
+  - "BLACK_STAINED_GLASS_PANE:44:&8/"

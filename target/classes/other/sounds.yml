@@ -1,0 +1,84 @@
+#   _____  ____  _    _ _   _ _____   _____ 
+#  / ____|/ __ \| |  | | \ | |  __ \ / ____|
+# | (___ | |  | | |  | |  \| | |  | | (___  
+#  \___ \| |  | | |  | | . ` | |  | |\___ \ 
+#  ____) | |__| | |__| | |\  | |__| |____) |
+# |_____/ \____/ \____/|_| \_|_____/|_____/ 
+#                                                                                                                                       
+                                                       
+Sounds:
+
+  LIVEGUI_PROGRESS_CANCELED:
+    Type: "ENTITY_VILLAGER_NO"
+    Vol: 1
+    Pitch: 2
+ 
+  RE_OPEN_MAIN_GUI:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+ 
+  OPEN_JOBS_GUI:
+    Type: "BLOCK_CHEST_OPEN"
+    Vol: 1
+    Pitch: 4
+
+  OPEN_OPTIONS_GUI:
+    Type: "BLOCK_CHEST_OPEN"
+    Vol: 1
+    Pitch: 4
+
+  OPEN_CONFIRM_GUI:
+    Type: "BLOCK_CHEST_OPEN"
+    Vol: 1
+    Pitch: 4
+
+  OPEN_REWARDS_GUI:
+    Type: "BLOCK_CHEST_OPEN"
+    Vol: 1
+    Pitch: 4
+
+  REWARDS_CHANGE_PAGE:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+
+  PLAYER_LEAVE_ALL_JOBS:
+    Type: "ENTITY_PLAYER_LEVELUP"
+    Vol: 1
+    Pitch: 2
+
+  PLAYER_LEAVE_A_JOB:
+    Type: "ENTITY_PLAYER_LEVELUP"
+    Vol: 1
+    Pitch: 2
+
+  PLAYER_CLOSE_BUTTON_ACTION:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+
+  PLAYER_BOUGHT_JOB:
+    Type: "ENTITY_PLAYER_LEVELUP"
+    Vol: 1
+    Pitch: 2
+
+  PLAYER_JOINED_JOB:
+    Type: "ENTITY_PLAYER_LEVELUP"
+    Vol: 1
+    Pitch: 2
+
+  REWARDS_CHANGE_SORTING:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+
+  PLAYER_FINISH_WORK:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+    
+  PLAYER_LEVEL_UP:
+    Type: "ENTITY_LIGHTNING_BOLT_THUNDER"
+    Vol: 1
+    Pitch: 1

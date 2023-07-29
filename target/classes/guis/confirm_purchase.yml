@@ -1,0 +1,61 @@
+#   _____ ____  _   _ ______ _____ _____  __  __ 
+#  / ____/ __ \| \ | |  ____|_   _|  __ \|  \/  |
+# | |   | |  | |  \| | |__    | | | |__) | \  / |
+# | |   | |  | | . ` |  __|   | | |  _  /| |\/| |
+# | |___| |__| | |\  | |     _| |_| | \ \| |  | |
+#  \_____\____/|_| \_|_|    |_____|_|  \_\_|  |_|
+#                                                
+                                                
+GUI_Size: 3
+
+GUI_Name: "&7&lConfirm - <job>"
+
+GUI_Buttons:
+
+  Confirm:
+  
+    Display: "&8< &aConfirm &8>"
+    
+    Enable: true
+ 
+    Lore:
+      - "&8Confirm and buy the Job!"
+      
+    Icon: "GREEN_DYE"
+    
+    Slot: 11
+    
+  Cancel:
+  
+    Display: "&8< &cCancel &8>"
+    
+    Enable: true
+ 
+    Lore:
+      - "&8Go back to the Jobs Menu!"
+      
+    Icon: "RED_DYE"
+    
+    Slot: 15 
+
+GUI_Items:
+
+  List:
+    - "GoBack" 
+ 
+  GoBack:
+  
+    Display: "&8✘ &cGo Back &8✘"
+    
+    Actions:
+      - "OPEN_MAIN"
+    
+    Lore:
+      - "&8└ &8Go back to Main GUI."
+      
+    Icon: "url;http://textures.minecraft.net/texture/d59be1557201c7ff1a0b3696d19eab4104880d6a9cdb4d5fa21b6daa9db2d1"
+    
+    Slot: 26
+    
+GUI_Placeholders:
+  - "RED_STAINED_GLASS_PANE:13:&8/" 
