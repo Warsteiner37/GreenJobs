@@ -3,7 +3,7 @@
 
 <div align="center">
  
-# GreenJobs
+# ⛏️ GreenJobs
 
 The best Jobs Plugin!
 
