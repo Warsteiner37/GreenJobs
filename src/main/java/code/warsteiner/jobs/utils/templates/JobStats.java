@@ -5,13 +5,16 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import code.warsteiner.jobs.GreenJobs;
+import code.warsteiner.jobs.utils.custom.PlayerDataChangeEvent;
 
 public class JobStats {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
 
+	private UUID ID;
 	private int level;
 	private double need;
 	private double lvlup;
@@ -31,7 +34,7 @@ public class JobStats {
 	
 	private ArrayList<String> worked_dates_list;
 
-	public JobStats(int level, double need, double lvlup, double total, String bought, String joined, int worked_times,
+	public JobStats(UUID d, int level, double need, double lvlup, double total, String bought, String joined, int worked_times,
 		 HashMap<String, Double> earnings_all,
 			HashMap<String, HashMap<String, Integer>> times_broken_a_block,
 			HashMap<String, HashMap<String, Double>> earnings_by_block, HashMap<String, Integer> times_broken_block,
@@ -51,8 +54,24 @@ public class JobStats {
 		this.times_broken_block = times_broken_block;
 		this.earned_money_broken_block = earned_money_broken_block;
 		this.worked_dates_list = worked_dates_list;
-
+		this.ID = d;
 	
+	
+	}
+	
+	public UUID getPlayerID() {
+		return this.ID;
+	}
+	
+	public void callChangeInData() {
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				PlayerDataChangeEvent event = new PlayerDataChangeEvent(getPlayerID());
+				Bukkit.getServer().getPluginManager().callEvent(event);
+			}
+		}.runTask(plugin);
 	}
 	
 	public ArrayList<String> getDatesList() {
@@ -83,26 +102,38 @@ public class JobStats {
 	
 	public void setNeed(double nd) {
 		this.lvlup = nd;
+		
+		callChangeInData();
 	}
 	
 	public void setExp(double ep) {
 		this.need = ep;
+		
+		callChangeInData();
 	}
 	
 	public void setLevel(int lvl) {
 		this.level = lvl;
+	
+		callChangeInData();
 	}
 	
 	public void addExp(double d) {
 		this.need = this.need + d;
+	
+		callChangeInData();
 	}
 
 	public void addTotalEarnings(double i) {
 		this.total = this.total + i;
+		
+		callChangeInData();
 	}
 	
 	public void addWorkedTimes(int i) {
 		this.worked_times = this.worked_times + i;
+		
+		callChangeInData();
 	}
 	
 	public double getNeed() {
@@ -152,6 +183,8 @@ public class JobStats {
 		Double old = list.get(block);
 
 		double calc = old + am;
+		
+		callChangeInData();
 
 		list.put(block, calc);
 
@@ -201,6 +234,8 @@ public class JobStats {
 			use = list.get(block);
 
 		}
+		
+		callChangeInData();
 
 		int calc = use + am;
 
@@ -259,6 +294,8 @@ public class JobStats {
 		}
 
 		double calc = use + reward;
+		
+		callChangeInData();
 
 		d1.put(block, calc);
 
@@ -327,6 +364,8 @@ public class JobStats {
 		}
 
 		int calc = use + reward;
+		
+		callChangeInData();
 
 		d1.put(block, calc);
 
@@ -366,6 +405,8 @@ public class JobStats {
 		}
 
 		double calc = use + reward;
+		
+		callChangeInData();
 
 		er.put(date, calc);
 

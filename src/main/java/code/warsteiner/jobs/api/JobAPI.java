@@ -46,9 +46,8 @@ public class JobAPI {
 	private HashMap<String, ArrayList<String>> sorted_actions = new HashMap<String, ArrayList<String>>();
 	
 	public void sortJobsAfterActions() {
-		Bukkit.getConsoleSender().sendMessage("§bSorting Jobs...");
-		for(String action : plugin.getJobActionManager().getArrayListTwo()) {
-			Bukkit.getConsoleSender().sendMessage("§bCheckinng "+action+"...");
+	 
+		for(String action : plugin.getJobActionManager().getArrayListTwo()) { 
 			ArrayList<String> current = null;
 			
 			
@@ -69,8 +68,7 @@ public class JobAPI {
 				
 				List<String> act = real.getActions();
 				
-				if(act.contains(rl.getID())) {
-					Bukkit.getConsoleSender().sendMessage("§bRegister Job "+d+" for Action "+action+"...");
+				if(act.contains(rl.getID())) { 
 					current.add(real.getID());
 				}
 				

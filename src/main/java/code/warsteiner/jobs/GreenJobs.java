@@ -29,6 +29,7 @@ import code.warsteiner.jobs.basic.events.PlayerASyncInventoryClickEvent;
 import code.warsteiner.jobs.basic.events.PlayerASyncJoinEvent;
 import code.warsteiner.jobs.basic.events.PlayerASyncQuitEvent;
 import code.warsteiner.jobs.basic.events.PlayerAsyncCheckForWork;
+import code.warsteiner.jobs.basic.events.PlayerUpdateInventory;
 import code.warsteiner.jobs.commands.JobTabComplete;
 import code.warsteiner.jobs.commands.JobsCommand;
 import code.warsteiner.jobs.commands.admin.AdminCommand;
@@ -56,6 +57,7 @@ import code.warsteiner.jobs.utils.actions.BreakAction;
 import code.warsteiner.jobs.utils.actions.JobActionManager;
 import code.warsteiner.jobs.utils.actions.KillMobAction;
 import code.warsteiner.jobs.utils.actions.PlaceAction;
+import code.warsteiner.jobs.utils.actions.ShearAction;
 import code.warsteiner.jobs.utils.actions.StripLogAction;
 import code.warsteiner.jobs.utils.admincommand.AdminSubCommandRegistry;
 import code.warsteiner.jobs.utils.playercommand.PlayerSubCommandRegistry;
@@ -90,13 +92,13 @@ public class GreenJobs extends JavaPlugin {
 	private MessageManager messages;
 	private AdminSubCommandRegistry as;
 	private PlayerSubCommandRegistry cp;
-	
+
 	private JobLoadAPI load;
 	private SkullCreatorAPI skulls;
 	private JobAPI jobapi;
 	private LevelAPI levels;
 	private JobActionManager acm;
-	private WorldGuardSupport wg; 
+	private WorldGuardSupport wg;
 
 	public void onLoad() {
 
@@ -112,7 +114,7 @@ public class GreenJobs extends JavaPlugin {
 			this.wg.setClass();
 			this.wg.load();
 		}
- 
+
 	}
 
 	@Override
@@ -128,13 +130,10 @@ public class GreenJobs extends JavaPlugin {
 
 		this.setClassesv2();
 
-		this.getBasicGUIManager().startUpdater();
-		 
 		if (isInstalled("PlaceHolderAPI")) {
-			Bukkit.getConsoleSender().sendMessage("Loading PlaceHolderAPI Support...");
+			Bukkit.getConsoleSender().sendMessage("§aLoading PlaceHolderAPI Support...");
 			new PlaceHolderManager().register();
 		}
-		
 
 		BossBarHandler.startSystemCheck();
 
@@ -143,9 +142,7 @@ public class GreenJobs extends JavaPlugin {
 		FileConfiguration dt = f.getDataFile().get();
 
 		executor.submit(() -> {
-
-			Bukkit.getConsoleSender().sendMessage("§5§lLoading Players...");
-
+ 
 			ArrayList<String> people = (ArrayList<String>) dt.getStringList("PlayerList");
 
 			for (String guy : people) {
@@ -153,9 +150,7 @@ public class GreenJobs extends JavaPlugin {
 				UUID d = UUID.fromString(guy.toString());
 
 				String name = dt.getString("Player." + d + ".Name");
-
-				Bukkit.getConsoleSender().sendMessage("§a§lLoading Player " + name + "...");
-
+ 
 				int max = dt.getInt("Player." + d + ".Max");
 				double points = dt.getDouble("Player." + d + ".Points");
 				double sal = dt.getDouble("Player." + d + ".Salary");
@@ -192,35 +187,37 @@ public class GreenJobs extends JavaPlugin {
 					HashMap<String, Integer> listed = new HashMap<String, Integer>();
 					HashMap<String, Double> listed2 = new HashMap<String, Double>();
 
-					for (String date : worked_dates_list) {
+					if (real != null) {
+						for (String date : worked_dates_list) {
 
-						double earnings_all_amounts = dt
-								.getDouble("JobDates." + d + ".Job." + job + "." + date + ".Earnings");
+							double earnings_all_amounts = dt
+									.getDouble("JobDates." + d + ".Job." + job + "." + date + ".Earnings");
 
-						earnings_all.put(date, earnings_all_amounts);
+							earnings_all.put(date, earnings_all_amounts);
+
+							real.getEveryID().forEach((id, type) -> {
+
+								listed.put(id, dt.getInt(
+										"JobDates." + d + ".Job." + job + "." + date + ".BrokenTimesBlock." + id));
+								listed2.put(id, dt.getDouble(
+										"JobDates." + d + ".Job." + job + "." + date + ".EarnedMoney." + id));
+
+							});
+
+							t.put(date, listed);
+							t2.put(date, listed2);
+
+						}
 
 						real.getEveryID().forEach((id, type) -> {
-
-							listed.put(id, dt
-									.getInt("JobDates." + d + ".Job." + job + "." + date + ".BrokenTimesBlock." + id));
-							listed2.put(id,
-									dt.getDouble("JobDates." + d + ".Job." + job + "." + date + ".EarnedMoney." + id));
-
+							times_broken_block.put(id,
+									dt.getInt("JobDates." + d + ".Job." + job + ".TimesBrokenThisBlock." + id));
+							earned_money_broken_block.put(id,
+									dt.getDouble("JobDates." + d + ".Job." + job + ".EarnedByThisBlock." + id));
 						});
-
-						t.put(date, listed);
-						t2.put(date, listed2);
-
 					}
 
-					real.getEveryID().forEach((id, type) -> {
-						times_broken_block.put(id,
-								dt.getInt("JobDates." + d + ".Job." + job + ".TimesBrokenThisBlock." + id));
-						earned_money_broken_block.put(id,
-								dt.getDouble("JobDates." + d + ".Job." + job + ".EarnedByThisBlock." + id));
-					});
-
-					JobStats stats_created = new JobStats(level, exp, need, total, bought, joined, worked_times,
+					JobStats stats_created = new JobStats(d, level, exp, need, total, bought, joined, worked_times,
 							earnings_all, t, t2, times_broken_block, earned_money_broken_block,
 							(ArrayList<String>) worked_dates_list);
 
@@ -232,12 +229,16 @@ public class GreenJobs extends JavaPlugin {
 
 				plugin.getPlayerDataManager().addToList(d, jobs_player);
 
-				Bukkit.getConsoleSender().sendMessage("§b§lLoaded Player " + name + "!");
+				 
 
 			}
+			
+			int total = plugin.getPlayerDataManager().getJobsPlayerList().size();
+			
+			Bukkit.getConsoleSender().sendMessage("§4§lLoaded a total of "+total+"x Player's Data!");
 
 		});
-		
+
 		new Metrics(this, 19287);
 
 	}
@@ -254,10 +255,10 @@ public class GreenJobs extends JavaPlugin {
 
 			HashMap<UUID, JobsPlayer> jlist = this.data_manager.getJobsPlayerList();
 
+			int total = jlist.size();
+			
 			ArrayList<String> my_list = new ArrayList<String>();
-
-			Bukkit.getConsoleSender().sendMessage("§5Trying to save " + jlist.size() + "x Players!");
-
+  
 			jlist.forEach((ID, jb) -> {
 
 				my_list.add("" + ID);
@@ -310,45 +311,62 @@ public class GreenJobs extends JavaPlugin {
 						HashMap<String, Integer> test = real.getTimesBrokenABlockDates().get(date);
 						HashMap<String, HashMap<String, Double>> test2 = real.getEarningsByBlockDates();
 
-						test.forEach((id, amount) -> {
-							dt.set("JobDates." + d + ".Job." + job + "." + date + ".BrokenTimesBlock." + id, amount);
-						});
+						if(test != null) {
+							test.forEach((id, amount) -> { 
+								dt.set("JobDates." + d + ".Job." + job + "." + date + ".BrokenTimesBlock." + id, amount);
+							});
 
-						test2.get(date).forEach((id, amount) -> {
-							dt.set("JobDates." + d + ".Job." + job + "." + date + ".EarnedMoney." + id, amount);
-						});
+							test2.get(date).forEach((id, amount) -> {
+								dt.set("JobDates." + d + ".Job." + job + "." + date + ".EarnedMoney." + id, amount);
+							});
+						}
 
 					}
 
 					HashMap<String, Integer> test3 = real.getTimesBrokenABlock();
 
-					test3.forEach((id, amount) -> {
-						dt.set("JobDates." + d + ".Job." + job + ".TimesBrokenThisBlock." + id, amount);
-					});
+					if(test3 != null) {
+						test3.forEach((id, amount) -> {
+							dt.set("JobDates." + d + ".Job." + job + ".TimesBrokenThisBlock." + id, amount);
+						});
+					}
 
 					HashMap<String, Double> test4 = real.getEarnedMoneyByBlock();
 
-					test4.forEach((id, amount) -> {
-						dt.set("JobDates." + d + ".Job." + job + ".EarnedByThisBlock." + id, amount);
-					});
+					if(test4 != null) {
+						test4.forEach((id, amount) -> {
+							dt.set("JobDates." + d + ".Job." + job + ".EarnedByThisBlock." + id, amount);
+						});
+					}
 
 				});
-
-				Bukkit.getConsoleSender().sendMessage("§b§lSaved Player " + jb.getName() + "!");
+ 
 
 			});
 
 			dt.set("PlayerList", my_list);
-
-			f.getLocationFile().save();
-			try {
-				dt.save(dt_file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+ 
+			Bukkit.getConsoleSender().sendMessage("§4§lSaving a total of "+total+"x Player's Data!");
 
 		});
+		
+		if (!getDataFolder().exists()) {
+			getDataFolder().mkdir();
+		}
+		
+		File folder_2 = new File(getDataFolder(), "data");
 
+		if (!folder_2.exists()) {
+			folder_2.mkdir();
+		}
+
+		f.getLocationFile().save();
+		try {
+			dt.save(dt_file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		BossBarHandler.clearLists();
 
 		if (isInstalled("WorldGuard")) {
@@ -377,7 +395,7 @@ public class GreenJobs extends JavaPlugin {
 		mg.registerEvents(new PlayerASyncJoinEvent(), this);
 		mg.registerEvents(new PlayerASyncQuitEvent(), this);
 		mg.registerEvents(new PlayerASyncInventoryClickEvent(), this);
-
+		mg.registerEvents(new PlayerUpdateInventory(), this);
 		mg.registerEvents(new CommandListeners(), this);
 	}
 
@@ -391,6 +409,7 @@ public class GreenJobs extends JavaPlugin {
 		f.registerAction(new BreakAction());
 		f.registerAction(new PlaceAction());
 		f.registerAction(new KillMobAction());
+		f.registerAction(new ShearAction());
 
 		mg.registerEvents(new PlayerAsyncCheckForWork(), this);
 
@@ -416,7 +435,7 @@ public class GreenJobs extends JavaPlugin {
 	public void registerCommands() {
 		getCommand("jobs").setExecutor(new JobsCommand());
 		getCommand("jobs").setTabCompleter(new JobTabComplete());
-		
+
 		getPlayerSubCommandManager().getSubCommandList().add(new RewardsSub());
 		getPlayerSubCommandManager().getSubCommandList().add(new HelpSub());
 
@@ -424,7 +443,7 @@ public class GreenJobs extends JavaPlugin {
 
 		getCommand("jpm").setExecutor(new AdminCommand());
 		getCommand("jpm").setTabCompleter(new AdminTabComplete());
- 
+
 		getAdminSubCommandManager().getSubCommandList().add(new ExpSub());
 		getAdminSubCommandManager().getSubCommandList().add(new LevelSub());
 		getAdminSubCommandManager().getSubCommandList().add(new NeedSub());
@@ -457,7 +476,7 @@ public class GreenJobs extends JavaPlugin {
 		this.gs.load();
 
 	}
-	
+
 	public PlayerSubCommandRegistry getPlayerSubCommandManager() {
 		return this.cp;
 	}
@@ -524,7 +543,7 @@ public class GreenJobs extends JavaPlugin {
 		if (!folder_4.exists()) {
 			folder_4.mkdir();
 		}
-		
+
 		File folder_5 = new File(getDataFolder(), "integrations");
 
 		if (!folder_5.exists()) {

@@ -13,7 +13,7 @@ GUI_Name: "&b&lRewards &8| <job>"
 #"NORMAL" -> by sorting numbers for each ID
 DefaultSorting: "RANDOM"
 
-ItemsPerPage: 35
+ItemsPerPage: 36
 
 SortModes:
 

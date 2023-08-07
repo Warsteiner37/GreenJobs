@@ -49,14 +49,14 @@ public class JobsGUIManager {
 
 		Inventory inv = plugin.getBasicGUIManager().openInventory(player, type, null, string, sd);
 
-		plugin.executor.submit(() -> {
+	 	plugin.executor.submit(() -> {
 
 			setOther(type, inv, name);
 
 			setItemsSorted(type, page, file.getInt("ItemsPerPage"), inv, player, sd, string, jb);
 
 			setCatItem(type, page, file.getInt("ItemsPerPage"), inv, player, sd, string, jb);
-		});
+		 });
 
 		player.openInventory(inv);
 	}
@@ -223,15 +223,18 @@ public class JobsGUIManager {
 
 			HashMap<String, JobID> list = job.getEveryID();
 
+	 
 			int total = list.size();
 
 			int startIndex = (page - 1) * itemsPerPage;
 			int endIndex = Math.min(startIndex + itemsPerPage, total);
 
 			for (int i = startIndex; i < endIndex; i++) {
-
+				
+			 
 				String get = job.getArrayList2Sorted().get(i);
-
+				
+				 
 				JobID real = job.getEveryID().get(get);
 
 				ItemStack item = real.getItemToDisplayInRewards();

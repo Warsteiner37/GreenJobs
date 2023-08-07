@@ -2,6 +2,7 @@ package code.warsteiner.jobs.manager;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -14,14 +15,11 @@ public class ItemManager {
 	private GreenJobs plugin = GreenJobs.getPlugin();
 
 	private HashMap<String, ItemStack> items = new HashMap<String, ItemStack>();
-	
-	
-	@SuppressWarnings("deprecation")
+	 
 	public ItemStack createOrGetItem(String id, String type, String player_name, int custom_model) {
 		
-		ItemStack item = null;
-		
-		
+		ItemStack item = new ItemStack(Material.BARRIER);
+	 
 		if(!items.containsKey(id.toLowerCase())) {
 			
 			ItemStack it = null;
@@ -63,13 +61,18 @@ public class ItemManager {
 		
 		ItemMeta meta = item.getItemMeta();
 		
-		meta.setCustomModelData(custom_model);
+		if(custom_model != 0) {
+			meta.setCustomModelData(custom_model);
+		}
 		
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
 		meta.addItemFlags(ItemFlag.HIDE_DYE);
 		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE); 
+		meta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		meta.addItemFlags(ItemFlag.HIDE_DYE);
 		
 		item.setItemMeta(meta);
 		

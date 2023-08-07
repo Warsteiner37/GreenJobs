@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import code.warsteiner.jobs.GreenJobs;
 import code.warsteiner.jobs.utils.custom.PlayerAddNewCurrentJobEvent;
 import code.warsteiner.jobs.utils.custom.PlayerAddNewOwnedJobEvent;
+import code.warsteiner.jobs.utils.custom.PlayerDataChangeEvent;
 import code.warsteiner.jobs.utils.custom.PlayerLeaveAJobEvent;
 import code.warsteiner.jobs.utils.custom.PlayerLeaveAllJobsEvent;
 
@@ -59,9 +60,22 @@ public class JobsPlayer {
 		this.skill_points = skill_points;
 		this.skills = skills;
 	}
- 
+	
+	public void callChangeInData() {
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				PlayerDataChangeEvent event = new PlayerDataChangeEvent(ID);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+			}
+		}.runTask(plugin);
+	}
+  
 	public void addPoints(double d) {
 		this.points = this.points + d;
+		
+		callChangeInData();
 	}
 	
 	public HashMap<String, PlayerSkill> getSkillList() {
@@ -110,7 +124,7 @@ public class JobsPlayer {
 		
 		Job d = plugin.getJobAPI().getLoadedJobsHash().get(job);
 
-		JobStats stat = new JobStats(1, 0, plugin.getLevelAPI().getNeedForLvlOne(d), 0, date, date, 0, null, null, null, null, null, null);
+		JobStats stat = new JobStats(this.ID, 1, 0, plugin.getLevelAPI().getNeedForLvlOne(d), 0, date, date, 0, null, null, null, null, null, null);
 
 		new BukkitRunnable() {
 			
@@ -120,6 +134,8 @@ public class JobsPlayer {
 				Bukkit.getServer().getPluginManager().callEvent(event);
 			}
 		}.runTask(plugin);
+		
+		callChangeInData();
 		 
 		jobs.add(job);
 
@@ -151,6 +167,8 @@ public class JobsPlayer {
 			}
 		}.runTask(plugin);
 		
+		callChangeInData();
+		
 		this.current_jobs = new ArrayList<String>();
 	}
 	
@@ -165,6 +183,8 @@ public class JobsPlayer {
 				Bukkit.getServer().getPluginManager().callEvent(event);
 			}
 		}.runTask(plugin);
+		
+		callChangeInData();
 		
 		jobs.remove(job);
 		
@@ -186,6 +206,8 @@ public class JobsPlayer {
 		JobStats stats = this.jobs_stats.get(job);
 		
 		stats.updateJoinedDate(date);
+		
+		callChangeInData();
 		
 		jobs.add(job);
 		

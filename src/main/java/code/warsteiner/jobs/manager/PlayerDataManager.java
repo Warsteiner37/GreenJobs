@@ -94,7 +94,7 @@ public class PlayerDataManager {
 					
 					Job d = plugin.getJobAPI().getLoadedJobsHash().get(job);
 
-					JobStats stat = new JobStats(1, 0, plugin.getLevelAPI().getNeedForLvlOne(d), 0, date, date, 0, null, null, null, null, null, null);
+					JobStats stat = new JobStats(id,1, 0, plugin.getLevelAPI().getNeedForLvlOne(d), 0, date, date, 0, null, null, null, null, null, null);
 
 					stats.put(job, stat);
 				}

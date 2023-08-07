@@ -16,14 +16,6 @@
             <goals>
               <goal>shade</goal>
             </goals>
-            <configuration>
-              <relocations>
-                <relocation>
-                  <pattern>com.zaxxer.hikari</pattern>
-                  <shadedPattern>de.warsteiner.jobs.mylib</shadedPattern>
-                </relocation>
-              </relocations>
-            </configuration>
           </execution>
         </executions>
       </plugin>

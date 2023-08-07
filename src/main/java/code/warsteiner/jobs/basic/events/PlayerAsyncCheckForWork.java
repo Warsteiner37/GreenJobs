@@ -165,7 +165,7 @@ public class PlayerAsyncCheckForWork implements Listener {
 											Bukkit.getServer().getPluginManager().callEvent(event);
 										}
 									}.runTask(plugin);
-									 
+								  
 									if (plugin.getFileManager().getConfigConfig().getBoolean("UseLevels")) {
 										plugin.getLevelAPI().checkLevel(jbb, real);
 									}

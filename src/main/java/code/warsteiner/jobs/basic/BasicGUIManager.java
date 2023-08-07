@@ -26,97 +26,83 @@ public class BasicGUIManager {
 	private HashMap<UUID, String> details_about = new HashMap<UUID, String>();
 	private HashMap<UUID, String> details_cat = new HashMap<UUID, String>();
 	private HashMap<UUID, String> details_job = new HashMap<UUID, String>();
-	
+
 	public void clearLists() {
 		this.guis.clear();
 		this.details_about.clear();
 		this.details_cat.clear();
 		this.details_job.clear();
 	}
-	
-	public void startUpdater() {
 
-		new BukkitRunnable() {
+	public void updateInventory(Player player) {
 
-			public void run() {
+		plugin.executor.submit(() -> {
 
-				plugin.executor.submit(() -> {
+			MessageManager mg = plugin.getMessageManager();
+			JobsGUIManager gui = plugin.getJobsGUIManager();
 
-					MessageManager mg = plugin.getMessageManager(); 
-					JobsGUIManager gui = plugin.getJobsGUIManager();
-					
-					for(Player player : Bukkit.getOnlinePlayers())  {
-					 
-						if(player.getOpenInventory() != null) {
-							
-							InventoryView inv = player.getOpenInventory();
-							String title = inv.getTitle();
-							
-							if(inv.getTitle() != null) {
-								
-								UUID ID = player.getUniqueId();
-								String name = player.getName();
+			if (player.getOpenInventory() != null) {
 
-								if (guis.containsKey(ID)) {
+				InventoryView inv = player.getOpenInventory();
+				String title = inv.getTitle();
 
-									GUIType get = guis.get(ID);
-									
-									String d = getJobData().get(ID);
+				if (inv.getTitle() != null) {
 
-									Job job = plugin.getJobAPI().getLoadedJobsHash().get(d);
+					UUID ID = player.getUniqueId();
+					String name = player.getName();
 
-									
-									if(get.equals(GUIType.BUY_CONFIRM) && isConfirmBuyMenu(player, job, title)) {
-										
-										if(job.getPrice() != 0) {
-											double bal = plugin.getEco().getBalance(player);
-											double price = job.getPrice() - 0.05;
-											
-											if(bal <= price) {
-												
-												player.sendMessage(mg.getMessage("livegui_cancel_not_enough_money").replaceAll("<job>",
-														job.getDisplay()));
-												
-												plugin.getBasicPluginManager().playSound(player, "LIVEGUI_PROGRESS_CANCELED");
-												
-												Bukkit.getScheduler().runTask(plugin, () -> {
-													 gui.openJobsMenu(player, true);
-												});
-											} else {
-												plugin.getJobsGUIManager().updateConfPurchasMenu(player, name);
-											}
-										}
-										
-									} else if(get.equals(GUIType.JOBS) && isJobsMenu(player, title)) {
-										gui.updateJobMenu(player);
-									} else if(get.equals(GUIType.OPTIONS) && isOptionsMenu(player, title, job.getDisplay())) {
-										gui.updateOptionsGUI(player);
-									} else if(get.equals(GUIType.REWARDS) && isRewardsMenu(player, job, title)) {
-										
-										int page = gui.details_page_manager.get(ID);
-										String next = plugin.getBasicGUIManager().getCurrentCate().get(ID);
-										
-										gui.updateBlockRewardsGUI(player, job.getID(), page, next);
+					if (guis.containsKey(ID)) {
 
-									}
-								  
-									
+						GUIType get = guis.get(ID);
+
+						String d = getJobData().get(ID);
+
+						Job job = plugin.getJobAPI().getLoadedJobsHash().get(d);
+
+						if (get.equals(GUIType.BUY_CONFIRM) && isConfirmBuyMenu(player, job, title)) {
+
+							if (job.getPrice() != 0) {
+								double bal = plugin.getEco().getBalance(player);
+								double price = job.getPrice() - 0.05;
+
+								if (bal <= price) {
+
+									player.sendMessage(mg.getMessage("livegui_cancel_not_enough_money")
+											.replaceAll("<job>", job.getDisplay()));
+
+									plugin.getBasicPluginManager().playSound(player, "LIVEGUI_PROGRESS_CANCELED");
+
+									Bukkit.getScheduler().runTask(plugin, () -> {
+										gui.openJobsMenu(player, true);
+									});
+								} else {
+									plugin.getJobsGUIManager().updateConfPurchasMenu(player, name);
 								}
-								
-							 
-								
 							}
-							
+
+						} else if (get.equals(GUIType.JOBS) && isJobsMenu(player, title)) {
+							gui.updateJobMenu(player);
+						} else if (get.equals(GUIType.OPTIONS) && isOptionsMenu(player, title, job.getDisplay())) {
+							gui.updateOptionsGUI(player);
+						} else if (get.equals(GUIType.REWARDS) && isRewardsMenu(player, job, title)) {
+
+							int page = gui.details_page_manager.get(ID);
+							String next = plugin.getBasicGUIManager().getCurrentCate().get(ID);
+
+							gui.updateBlockRewardsGUI(player, job.getID(), page, next);
+
 						}
-						
+
 					}
-					
-				});
+
+				}
 
 			}
-		}.runTaskTimer(plugin, 0, 30);
+
+		});
+
 	}
- 
+
 	public HashMap<UUID, GUIType> getGUIData() {
 		return this.guis;
 	}
@@ -124,11 +110,11 @@ public class BasicGUIManager {
 	public HashMap<UUID, String> getJobData() {
 		return this.details_job;
 	}
-	
+
 	public HashMap<UUID, String> getCurrentCate() {
 		return this.details_cat;
 	}
- 
+
 	public boolean isRewardsMenu(Player player, Job job, String right_now) {
 
 		UUID ID = player.getUniqueId();
@@ -218,7 +204,8 @@ public class BasicGUIManager {
 			String translated = plugin.getBasicPluginManager().toHex(plugin.getLoadAndStoreGUIManager().getName(get))
 					.replaceAll("<job>", job).replaceAll("<name>", name);
 
-			String title = plugin.getBasicPluginManager().toHex(right_now).replaceAll("<job>", job).replaceAll("<name>", name);
+			String title = plugin.getBasicPluginManager().toHex(right_now).replaceAll("<job>", job).replaceAll("<name>",
+					name);
 
 			if (translated.equalsIgnoreCase(title) && get.equals(GUIType.OPTIONS)) {
 				return true;
@@ -267,7 +254,6 @@ public class BasicGUIManager {
 			if (this.guis.containsKey(UUID)) {
 				this.guis.remove(UUID);
 			}
-			
 
 			if (this.details_job.containsKey(UUID)) {
 				this.details_job.remove(UUID);
@@ -280,10 +266,9 @@ public class BasicGUIManager {
 			if (about != null) {
 				this.details_about.put(UUID, about);
 			}
- 
 
 			if (d != null) {
-	 
+
 				this.details_job.put(UUID, d);
 			}
 
@@ -291,10 +276,10 @@ public class BasicGUIManager {
 				this.guis.put(UUID, name);
 			}
 
-			if(cate != null) {
+			if (cate != null) {
 				this.details_cat.put(UUID, cate);
 			}
-			
+
 		});
 
 		String used = plugin.getLoadAndStoreGUIManager().getName(name).replaceAll("<job>", job);
