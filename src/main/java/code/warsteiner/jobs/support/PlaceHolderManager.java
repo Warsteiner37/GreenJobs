@@ -77,7 +77,7 @@ public class PlaceHolderManager extends PlaceholderExpansion {
 					
 				}
 				 
-			} else if(pr.contains("_display")) {
+			} else if(pr.contains("_displayname")) {
 				
 				String[] split = pr.split("_");
 				
@@ -99,6 +99,24 @@ public class PlaceHolderManager extends PlaceholderExpansion {
 					
 					if(jb.getOwnedJobs().contains(d)) {
 						return ""+jb.getJobStats().get(d).getLevel();
+					} else {
+						return basic.toHex(cfg.getString("NoLevel"));
+					}
+					
+				} else {
+					return basic.toHex(cfg.getString("UnknownJob"));
+				}
+				
+			}else if(pr.contains("_displaylevel")) {
+				
+				String[] split = pr.split("_");
+				
+				String d = split[0].toUpperCase(); 
+				if(job.existJob(d)) {
+					
+					if(jb.getOwnedJobs().contains(d)) {
+						int lv = jb.getJobStats().get(d).getLevel();
+						return plugin.getLevelAPI().getDisplayOfLevel(plugin.getJobAPI().getLoadedJobsHash().get(d), lv);
 					} else {
 						return basic.toHex(cfg.getString("NoLevel"));
 					}

@@ -67,6 +67,7 @@ code\warsteiner\jobs\api\JobAPI.class
 code\warsteiner\jobs\commands\JobsCommand.class
 code\warsteiner\jobs\basic\events\PlayerASyncQuitEvent.class
 code\warsteiner\jobs\utils\custom\PlayerAddNewCurrentJobEvent.class
+code\warsteiner\jobs\utils\templates\JobLevel.class
 code\warsteiner\jobs\utils\LocationManager.class
 code\warsteiner\jobs\commands\admin\AdminTabComplete.class
 code\warsteiner\jobs\utils\Metrics$AdvancedBarChart.class

@@ -135,7 +135,7 @@ public class BossBarHandler {
 		}.runTaskTimer(plugin, 0, 30);
 	}
 
-	public static double calc(double exp, boolean ismaxlevel, double need) {
+	public static double calculate(double exp, boolean ismaxlevel, double need) {
 		double use = 1.0;
 		if (!ismaxlevel) {
 			double jobneed = need / 100;

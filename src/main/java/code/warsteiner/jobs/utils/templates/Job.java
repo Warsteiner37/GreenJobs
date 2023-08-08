@@ -38,15 +38,14 @@ public class Job {
 	private ArrayList<String> so2;
 	private List<String> worlds;
 	private HashMap<String, String> reward_messages;
-	private String bar_color;
-	private YamlConfiguration cfg;
+	private String bar_color; 
+	private HashMap<Integer, JobLevel> levels;
 	
-	public Job(YamlConfiguration cfg, String id, String name, List<String> actions,
+	public Job(String id, String name, List<String> actions,
 			String icon, int icon_data, List<String> command_join, List<String> command_leave, String bar_color, int slot, double price, List<String> worlds,
 			String desc, List<String> stats_in2, List<String> stats_look2, HashMap<String, ArrayList<String>> act, HashMap<String, JobID> everyid,
-			HashMap<String, String> lvl, Map<String, Integer> so1, ArrayList<String> arraylist_sorted02, HashMap<String, String> reward_messages) {
-	
-		this.cfg = cfg;
+			HashMap<String, String> lvl, Map<String, Integer> so1, ArrayList<String> arraylist_sorted02, HashMap<String, String> reward_messages, HashMap<Integer, JobLevel> levels) {
+	 
 		this.ID = id;
 		this.actions = actions;
 		this.Name = name;
@@ -68,12 +67,21 @@ public class Job {
 		this.worlds = worlds;
 		this.reward_messages = reward_messages;
 		this.bar_color = bar_color;
+		this.levels = levels;
 	}
 	
-	public YamlConfiguration getConfig() {
-		return this.cfg;
+	public boolean existLevel(int i) {
+		return this.levels.containsKey(i);
 	}
 	
+	public JobLevel getLevel(int i) {
+		return this.levels.get(i);
+	}
+	
+	public HashMap<Integer, JobLevel> getLevels() {
+		return this.levels;
+	}
+ 
 	public BarColor getBarColor() {
 		return BarColor.valueOf(this.bar_color);
 	}
@@ -121,7 +129,7 @@ public class Job {
 		return this.cmd_leave;
 	}
 	
-	public HashMap<String, String> getLevelOptions() {
+	public HashMap<String, String> getLevelOptionsList() {
 		return this.lvl;
 	}
 	

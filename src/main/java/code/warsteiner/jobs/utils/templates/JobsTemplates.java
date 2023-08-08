@@ -144,6 +144,17 @@ public class JobsTemplates {
 		cfg.set("Levels.Config.Base", 29.5);
 		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
 		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+		
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> commands = new ArrayList<String>();
+		
+		commands.add("say <name> just reached level 3 in <job>");
+		
+		cfg.set("Levels.3.Commands", commands);
 
 		try {
 			cfg.save(file);
@@ -262,6 +273,17 @@ public class JobsTemplates {
 		cfg.set("Levels.Config.Base", 29.5);
 		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
 		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+		
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> commands = new ArrayList<String>();
+		
+		commands.add("say <name> just reached level 3 in <job>");
+		
+		cfg.set("Levels.3.Commands", commands);
 
 		try {
 			cfg.save(file);
@@ -378,7 +400,18 @@ public class JobsTemplates {
 		cfg.set("Levels.Config.Base", 29.5);
 		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
 		cfg.set("Levels.Config.MaxLevel", 30);
-
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+		
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> commands = new ArrayList<String>();
+		
+		commands.add("say <name> just reached level 3 in <job>");
+		
+		cfg.set("Levels.3.Commands", commands);
+		
 		try {
 			cfg.save(file);
 		} catch (IOException e) {
@@ -499,7 +532,18 @@ public class JobsTemplates {
 		cfg.set("Levels.Config.Base", 29.5);
 		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
 		cfg.set("Levels.Config.MaxLevel", 30);
-
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+		
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> commands = new ArrayList<String>();
+		
+		commands.add("say <name> just reached level 3 in <job>");
+		
+		cfg.set("Levels.3.Commands", commands);
+		
 		try {
 			cfg.save(file);
 		} catch (IOException e) {
@@ -620,6 +664,17 @@ public class JobsTemplates {
 		cfg.set("Levels.Config.Base", 29.5);
 		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
 		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+		
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> commands = new ArrayList<String>();
+		
+		commands.add("say <name> just reached level 3 in <job>");
+		
+		cfg.set("Levels.3.Commands", commands);
 
 		try {
 			cfg.save(file);
@@ -738,6 +793,17 @@ public class JobsTemplates {
 		cfg.set("Levels.Config.Base", 29.5);
 		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
 		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+		
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> commands = new ArrayList<String>();
+		
+		commands.add("say <name> just reached level 3 in <job>");
+		
+		cfg.set("Levels.3.Commands", commands);
 
 		try {
 			cfg.save(file);
@@ -868,6 +934,17 @@ public class JobsTemplates {
 		cfg.set("Levels.Config.Base", 25.5);
 		cfg.set("Levels.Config.AddPercentValueLevelUp", 50);
 		cfg.set("Levels.Config.MaxLevel", 25);
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+		
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> commands = new ArrayList<String>();
+		
+		commands.add("say <name> just reached level 3 in <job>");
+		
+		cfg.set("Levels.3.Commands", commands);
 
 		try {
 			cfg.save(file);
@@ -991,6 +1068,17 @@ public class JobsTemplates {
 		cfg.set("Levels.Config.Base", 29.5);
 		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
 		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+		
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> commands = new ArrayList<String>();
+		
+		commands.add("say <name> just reached level 3 in <job>");
+		
+		cfg.set("Levels.3.Commands", commands);
 
 		try {
 			cfg.save(file);

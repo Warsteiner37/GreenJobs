@@ -348,25 +348,27 @@ public class GreenJobs extends JavaPlugin {
  
 			Bukkit.getConsoleSender().sendMessage("§4§lSaving a total of "+total+"x Player's Data!");
 
+
+			if (!getDataFolder().exists()) {
+				getDataFolder().mkdir();
+			}
+			
+			File folder_2 = new File(getDataFolder(), "data");
+
+			if (!folder_2.exists()) {
+				folder_2.mkdir();
+			}
+
+			f.getLocationFile().save();
+			try {
+				dt.save(dt_file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
 		});
-		
-		if (!getDataFolder().exists()) {
-			getDataFolder().mkdir();
-		}
-		
-		File folder_2 = new File(getDataFolder(), "data");
-
-		if (!folder_2.exists()) {
-			folder_2.mkdir();
-		}
-
-		f.getLocationFile().save();
-		try {
-			dt.save(dt_file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		 
 		BossBarHandler.clearLists();
 
 		if (isInstalled("WorldGuard")) {

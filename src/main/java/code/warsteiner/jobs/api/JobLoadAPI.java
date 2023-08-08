@@ -17,6 +17,7 @@ import code.warsteiner.jobs.GreenJobs;
 import code.warsteiner.jobs.utils.templates.Job;
 import code.warsteiner.jobs.utils.templates.JobAction;
 import code.warsteiner.jobs.utils.templates.JobID;
+import code.warsteiner.jobs.utils.templates.JobLevel;
 
 public class JobLoadAPI {
 
@@ -60,15 +61,7 @@ public class JobLoadAPI {
 					List<String> stats_in = cfg.getStringList("Stats.In");
 
 					List<String> stats_look = cfg.getStringList("Stats.Look");
-
-					HashMap<String, String> lvl = new HashMap<String, String>();
-
-					lvl.put("base", "" + cfg.getDouble("Levels.Config.Base"));
-					lvl.put("percent", "" + cfg.getDouble("Levels.Config.AddPercentValueLevelUp"));
-					lvl.put("maxlvl", "" + cfg.getDouble("Levels.Config.MaxLevel"));
-
-					// load ids
-
+ 
 					HashMap<String, ArrayList<String>> ac = new HashMap<String, ArrayList<String>>();
 					HashMap<String, JobID> everyid = new HashMap<String, JobID>();
 					ArrayList<String> arraylist_sorted02 = new ArrayList<String>();
@@ -219,16 +212,49 @@ public class JobLoadAPI {
 
 					});
 					
-					Bukkit.getConsoleSender().sendMessage("§6Loaded "+to_sort_numbers.size()+"x IDs for Job "+job_id+"...");
+					HashMap<Integer, JobLevel> levels = new HashMap<Integer, JobLevel>();
+					
+					double base = cfg.getDouble("Levels.Config.AddPercentValueLevelUp");
+					double add = cfg.getDouble("Levels.Config.AddPercentValueLevelUp");
+					int maxlevel = cfg.getInt("Levels.Config.MaxLevel");
+					String default_display = cfg.getString("Levels.Config.DefaultDisplay");
+					
+					HashMap<String, String> lvl = new HashMap<String, String>();
+
+					lvl.put("Base", "" + base);
+					lvl.put("AddPercentValueLevelUp", "" + add);
+					lvl.put("MaxLevel", "" + maxlevel);
+					lvl.put("DefaultDisplay", default_display);
+					
+					//levels stuff
+					for(int i1=0; i1<maxlevel; i1++) {
+						
+						String custom_display = cfg.getString("Levels."+i1+".CustomDisplay");
+						String custom_item  = cfg.getString("Levels."+i1+".CustomIcon");
+						int custom_data  = cfg.getInt("Levels."+i1+".CustomModelData");
+						List<String> custom_desc  = cfg.getStringList("Levels."+i1+".Description");
+						String song  = cfg.getString("Levels."+i1+".PlaySong");
+						double reward = cfg.getDouble("Levels."+i1+".Reward");
+						List<String> commands  = cfg.getStringList("Levels."+i1+".Commands");
+						
+						double earn_more = cfg.getDouble("Levels."+i1+".EarnMorePercent");
+						double earn_less = cfg.getDouble("Levels."+i1+".EarnLessPercent");
+					 
+						JobLevel level = new JobLevel(job_id, i1, custom_desc, custom_display, reward, earn_more, earn_less, commands, custom_item, custom_data, song);
+						
+						levels.put(i1, level);
+					}
+					
+					Bukkit.getConsoleSender().sendMessage("§6Loaded "+to_sort_numbers.size()+"x IDs & "+levels.size()+"x Levels for Job "+job_id+"...");
 					 
 
 					Map<String, Integer> sorted_after_numbers = to_sort_numbers.entrySet().stream()
 							.sorted(Map.Entry.<String, Integer>comparingByValue().reversed()).collect(Collectors
 									.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
-					Job job = new Job(cfg, job_id, display, actions, icon, icon_data, command_join, command_leave,
+					Job job = new Job(job_id, display, actions, icon, icon_data, command_join, command_leave,
 							color, slot, price, worlds, desc, stats_in, stats_look, ac, everyid, lvl,
-							sorted_after_numbers, arraylist_sorted02, rw);
+							sorted_after_numbers, arraylist_sorted02, rw, levels);
 
 					plugin.getJobAPI().AddActiveJob(job);
 				}
