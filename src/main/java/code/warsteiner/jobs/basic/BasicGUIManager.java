@@ -82,7 +82,7 @@ public class BasicGUIManager {
 
 						} else if (get.equals(GUIType.JOBS) && isJobsMenu(player, title)) {
 							gui.updateJobMenu(player);
-						} else if (get.equals(GUIType.OPTIONS) && isOptionsMenu(player, title, job.getDisplay())) {
+						} else if (get.equals(GUIType.OPTIONS) && isOptionsMenu(player, title, job)) {
 							gui.updateOptionsGUI(player);
 						} else if (get.equals(GUIType.REWARDS) && isRewardsMenu(player, job, title)) {
 
@@ -120,38 +120,42 @@ public class BasicGUIManager {
 		UUID ID = player.getUniqueId();
 		String name = player.getName();
 
-		if (job != null) {
+	 
 			if (this.guis.containsKey(ID)) {
 
 				GUIType get = this.guis.get(ID);
 
-				String translated = plugin.getBasicPluginManager()
-						.toHex(plugin.getLoadAndStoreGUIManager().getName(get)).replaceAll("<name>", name)
-						.replaceAll("<job>", job.getDisplay());
+				if(job != null) {
+					String translated = plugin.getBasicPluginManager()
+							.toHex(plugin.getLoadAndStoreGUIManager().getName(get)).replaceAll("<name>", name)
+							.replaceAll("<job>", job.getDisplay());
 
-				String title = plugin.getBasicPluginManager().toHex(right_now).replaceAll("<name>", name)
-						.replaceAll("<job>", job.getDisplay());
+					String title = plugin.getBasicPluginManager().toHex(right_now).replaceAll("<name>", name)
+							.replaceAll("<job>", job.getDisplay());
 
-				if (translated.equalsIgnoreCase(title) && get.equals(GUIType.REWARDS)) {
+					if (translated.equalsIgnoreCase(title) && get.equals(GUIType.REWARDS)) {
+						return true;
+					}
+				} else if (get.equals(GUIType.REWARDS)) {
 					return true;
 				}
 
-			}
+		 
 		}
 
 		return false;
 	}
-
+ 
 	public boolean isConfirmBuyMenu(Player player, Job job, String right_now) {
 
 		UUID ID = player.getUniqueId();
 		String name = player.getName();
 
-		if (job != null) {
-			if (this.guis.containsKey(ID)) {
+		if (this.guis.containsKey(ID)) {
 
-				GUIType get = this.guis.get(ID);
+			GUIType get = this.guis.get(ID);
 
+			if (job != null) {
 				String translated = plugin.getBasicPluginManager()
 						.toHex(plugin.getLoadAndStoreGUIManager().getName(get)).replaceAll("<name>", name)
 						.replaceAll("<job>", job.getDisplay());
@@ -162,7 +166,8 @@ public class BasicGUIManager {
 				if (translated.equalsIgnoreCase(title) && get.equals(GUIType.BUY_CONFIRM)) {
 					return true;
 				}
-
+			} else if (get.equals(GUIType.BUY_CONFIRM)) {
+				return true;
 			}
 		}
 
@@ -192,7 +197,7 @@ public class BasicGUIManager {
 		return false;
 	}
 
-	public boolean isOptionsMenu(Player player, String right_now, String job) {
+	public boolean isOptionsMenu(Player player, String right_now, Job job) {
 
 		UUID ID = player.getUniqueId();
 		String name = player.getName();
@@ -201,13 +206,19 @@ public class BasicGUIManager {
 
 			GUIType get = this.guis.get(ID);
 
-			String translated = plugin.getBasicPluginManager().toHex(plugin.getLoadAndStoreGUIManager().getName(get))
-					.replaceAll("<job>", job).replaceAll("<name>", name);
+			if (job != null) {
 
-			String title = plugin.getBasicPluginManager().toHex(right_now).replaceAll("<job>", job).replaceAll("<name>",
-					name);
+				String translated = plugin.getBasicPluginManager()
+						.toHex(plugin.getLoadAndStoreGUIManager().getName(get)).replaceAll("<job>", job.getDisplay())
+						.replaceAll("<name>", name);
 
-			if (translated.equalsIgnoreCase(title) && get.equals(GUIType.OPTIONS)) {
+				String title = plugin.getBasicPluginManager().toHex(right_now).replaceAll("<job>", job.getDisplay())
+						.replaceAll("<name>", name);
+
+				if (translated.equalsIgnoreCase(title) && get.equals(GUIType.OPTIONS)) {
+					return true;
+				}
+			} else if (get.equals(GUIType.OPTIONS)) {
 				return true;
 			}
 

@@ -8,6 +8,11 @@
                                                        
 Sounds:
 
+  PLAYER_ALREADY_LEFT_ALL_JOBS:
+    Type: "ENTITY_VILLAGER_NO"
+    Vol: 1
+    Pitch: 2
+
   LIVEGUI_PROGRESS_CANCELED:
     Type: "ENTITY_VILLAGER_NO"
     Vol: 1

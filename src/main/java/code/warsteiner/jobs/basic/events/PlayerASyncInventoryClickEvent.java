@@ -405,7 +405,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 					}
 				}.runTaskAsynchronously(plugin);
 
-			} else if (m.isOptionsMenu(player, title, job.getDisplay())) {
+			} else if (m.isOptionsMenu(player, title, job)) {
 				event.setCancelled(true);
 
 				new BukkitRunnable() {
@@ -497,6 +497,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 							}
 						} else {
 							if (mg.hasMessage("job_nothing_to_leave")) {
+								plugin.getBasicPluginManager().playSound(player, "PLAYER_ALREADY_LEFT_ALL_JOBS");
 								player.sendMessage(mg.getMessage("job_nothing_to_leave"));
 							}
 						}
