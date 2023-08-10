@@ -28,6 +28,7 @@ code\warsteiner\jobs\utils\templates\FileTemplate.class
 code\warsteiner\jobs\utils\templates\JobsMultiplier.class
 code\warsteiner\jobs\utils\actions\KillMobAction.class
 code\warsteiner\jobs\api\SkullCreatorAPI.class
+code\warsteiner\jobs\commands\admin\sub\LimitSub.class
 code\warsteiner\jobs\utils\enums\GUIType.class
 code\warsteiner\jobs\utils\custom\PlayerFinishJobEvent.class
 code\warsteiner\jobs\basic\events\PlayerUpdateInventory.class

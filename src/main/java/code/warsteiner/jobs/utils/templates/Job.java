@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import code.warsteiner.jobs.GreenJobs; 
@@ -161,16 +162,16 @@ public class Job {
 		return plugin.getItemManager().createOrGetItem("job_icon_"+ID, this.icon, null, this.icon_data);
 	}
 	
-	public String getDisplay() {
-		return plugin.getBasicPluginManager().toHex(this.Name);
+	public String getDisplay(Player player) {
+		return plugin.getBasicPluginManager().toHex(player, this.Name);
 	}
  
 	public String getID() {
 		return this.ID.toUpperCase();
 	}
 	
-	public String getName() {
-		return plugin.getBasicPluginManager().toHex(this.Name);
+	public String getName(Player player) {
+		return plugin.getBasicPluginManager().toHex(player, this.Name);
 	}
 
 	

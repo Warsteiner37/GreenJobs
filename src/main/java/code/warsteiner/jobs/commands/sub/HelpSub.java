@@ -42,7 +42,7 @@ public class HelpSub extends PlayerSubCommand {
 		String name = player.getName();
 		UUID id = player.getUniqueId();
 		
-		String prefix = plugin.getMessageManager().getPrefix();
+		String prefix = plugin.getMessageManager().getPrefix(player);
 		
 		JobAPI jb = plugin.getJobAPI();
 
@@ -53,18 +53,18 @@ public class HelpSub extends PlayerSubCommand {
 		if (args.length == 1) {
 
 			if (!f.getBoolean("CommandConfig.Help.Enabled")) {
-				player.sendMessage(v.toHex(uk.replaceAll("<prefix>", prefix)));
+				player.sendMessage(v.toHex(sender, uk.replaceAll("<prefix>", prefix)));
 				return;
 			}
 
 			List<String> mg = f.getStringList("CommandConfig.Help.Message");
 
 			for (String line : mg) {
-				player.sendMessage(v.toHex(line.replaceAll("<prefix>", prefix)));
+				player.sendMessage(v.toHex(sender, line.replaceAll("<prefix>", prefix)));
 			}
 
 		} else {
-			sender.sendMessage(m.getPrefix() + getUsage());
+			sender.sendMessage(m.getPrefix(player) + getUsage(sender));
 
 		}
 	}
@@ -79,10 +79,10 @@ public class HelpSub extends PlayerSubCommand {
 	}
  
 	@Override
-	public String getUsage() {
+	public String getUsage(CommandSender sender) {
 		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
 		
-		return plugin.getBasicPluginManager().toHex(f.getString("CommandConfig.Help.Usage"));
+		return plugin.getBasicPluginManager().toHex(sender, f.getString("CommandConfig.Help.Usage"));
 	}
  
 	@Override

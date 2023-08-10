@@ -123,8 +123,8 @@ public class PlayerAsyncCheckForWork implements Listener {
 										if (rw.containsKey("BOSSBAR")) {
 
 											String bm = plugin.getBasicPluginManager()
-													.toHex(rw.get("BOSSBAR").replaceAll("<block>", rld.getDisplay())
-															.replaceAll("<job>", real.getDisplay())
+													.toHex(player, rw.get("BOSSBAR").replaceAll("<block>", rld.getDisplay(player))
+															.replaceAll("<job>", real.getDisplay(player))
 															.replaceAll("<money>", "" + reward));
 
 											Date isago5seconds = new Date((new Date()).getTime() + 3000L);
@@ -150,16 +150,16 @@ public class PlayerAsyncCheckForWork implements Listener {
 										if (rw.containsKey("ACTIONBAR")) {
 											player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
 													TextComponent.fromLegacyText(plugin.getBasicPluginManager()
-															.toHex(rw.get("ACTIONBAR")
-																	.replaceAll("<block>", rld.getDisplay())
-																	.replaceAll("<job>", real.getDisplay())
+															.toHex(player, rw.get("ACTIONBAR")
+																	.replaceAll("<block>", rld.getDisplay(player))
+																	.replaceAll("<job>", real.getDisplay(player))
 																	.replaceAll("<money>", "" + reward))));
 
 										}
 										if (rw.containsKey("MESSAGE")) {
 											player.sendMessage(plugin.getBasicPluginManager()
-													.toHex(rw.get("MESSAGE").replaceAll("<block>", rld.getDisplay())
-															.replaceAll("<job>", real.getDisplay())
+													.toHex(player, rw.get("MESSAGE").replaceAll("<block>", rld.getDisplay(player))
+															.replaceAll("<job>", real.getDisplay(player))
 															.replaceAll("<money>", "" + reward)));
 										}
 									}

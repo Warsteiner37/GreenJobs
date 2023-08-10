@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import code.warsteiner.jobs.GreenJobs;
@@ -53,8 +54,8 @@ public class JobID {
 	
 	}
 	
-	public String getDisplay() {
-		return plugin.getBasicPluginManager().toHex(this.display);
+	public String getDisplay(Player player) {
+		return plugin.getBasicPluginManager().toHex(player, this.display);
 	}
  
 	
@@ -86,8 +87,8 @@ public class JobID {
 		return this.lore;
 	}
 	
-	public String getDisplayInRewards() {
-		return plugin.getBasicPluginManager().toHex(this.display_rewards);
+	public String getDisplayInRewards(Player player) {
+		return plugin.getBasicPluginManager().toHex(player, this.display_rewards);
 	}
 	
 	public ItemStack getItemToDisplayInRewards() {

@@ -43,7 +43,7 @@ public class JobsCommand implements CommandExecutor {
 					
 					String uk = f.getString("CommandConfig.GeneralUnknown");
 					 
-					sender.sendMessage(plugin.getBasicPluginManager().toHex(uk));
+					sender.sendMessage(plugin.getBasicPluginManager().toHex(sender, uk));
 					return true;
 				} else {
 

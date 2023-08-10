@@ -24,7 +24,7 @@ public class LevelAPI {
 		
 	}
 	
-	public String getDisplayOfLevel(Job job, int level) {
+	public String getDisplayOfLevel(Player player, Job job, int level) {
 		 
 		JobLevel lvl = job.getLevel(level);
 		
@@ -36,7 +36,7 @@ public class LevelAPI {
 			
 		} 
 	 
-		return plugin.getBasicPluginManager().toHex(use.replaceAll("<level>", ""+level));
+		return plugin.getBasicPluginManager().toHex(player, use.replaceAll("<level>", ""+level));
 		
 	}
 	
@@ -60,7 +60,7 @@ public class LevelAPI {
 
 				JobLevel lvl = job.getLevel(new_level);
 				
-				String dis = getDisplayOfLevel(job, new_level);
+				String dis = getDisplayOfLevel(player, job, new_level);
 				
 				double one_percent = need / 100;
 				
@@ -97,16 +97,16 @@ public class LevelAPI {
 				
 				if(m.getBoolean("LevelUp.Titles.Enabled")) {
 
-					String t1 = m.getString("LevelUp.Titles.T1").replaceAll("<level>", ""+new_level).replaceAll("<job>", job.getDisplay());
-					String t2 = m.getString("LevelUp.Titles.T2").replaceAll("<level>", ""+new_level).replaceAll("<job>", job.getDisplay());
+					String t1 = m.getString("LevelUp.Titles.T1").replaceAll("<level>", ""+new_level).replaceAll("<job>", job.getDisplay(player));
+					String t2 = m.getString("LevelUp.Titles.T2").replaceAll("<level>", ""+new_level).replaceAll("<job>", job.getDisplay(player));
 					
-					player.sendTitle(bc.toHex(t1), bc.toHex(t2));
+					player.sendTitle(bc.toHex(player, t1), bc.toHex(player, t2));
 				}
 				
 				if(m.getBoolean("LevelUp.Message.Enabled")) {
-					String me = m.getString("LevelUp.Message.Message").replaceAll("<prefix>", plugin.getMessageManager().getPrefix()).replaceAll("<level>", ""+new_level).replaceAll("<job>", job.getDisplay());;
+					String me = m.getString("LevelUp.Message.Message").replaceAll("<prefix>", plugin.getMessageManager().getPrefix(player)).replaceAll("<level>", ""+new_level).replaceAll("<job>", job.getDisplay(player));;
 					
-					player.sendMessage(bc.toHex(me));
+					player.sendMessage(bc.toHex(player, me));
 				}
 				
 			}

@@ -41,7 +41,7 @@ public class AdminCommand implements CommandExecutor {
 				String ar = args[0].toLowerCase();
 
 				if (find(ar) == null) {
-					sender.sendMessage(m.getPrefix() + " §7Error! §7Use §6/jpm §7to see all Commands.");
+					sender.sendMessage(m.getPrefix(sender) + " §7Error! §7Use §6/jpm §7to see all Commands.");
 					return true;
 				} else {
 
@@ -52,7 +52,7 @@ public class AdminCommand implements CommandExecutor {
 						cmd.perform(sender, args);
 
 					} else {
-						sender.sendMessage(m.getPrefix() + " §cYou dont have Permissions!");
+						sender.sendMessage(m.getPrefix(sender) + " §cYou dont have Permissions!");
 						return true;
 					}
 				}
@@ -60,7 +60,7 @@ public class AdminCommand implements CommandExecutor {
 			}
 
 		} else {
-			sender.sendMessage(m.getPrefix() + " §cYou dont have Permissions!");
+			sender.sendMessage(m.getPrefix(sender) + " §cYou dont have Permissions!");
 			return true;
 		}
 		return false;

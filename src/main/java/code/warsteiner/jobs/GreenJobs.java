@@ -37,6 +37,7 @@ import code.warsteiner.jobs.commands.admin.AdminTabComplete;
 import code.warsteiner.jobs.commands.admin.JobsManagerCommand;
 import code.warsteiner.jobs.commands.admin.sub.ExpSub;
 import code.warsteiner.jobs.commands.admin.sub.LevelSub;
+import code.warsteiner.jobs.commands.admin.sub.LimitSub;
 import code.warsteiner.jobs.commands.admin.sub.NeedSub;
 import code.warsteiner.jobs.commands.sub.HelpSub;
 import code.warsteiner.jobs.commands.sub.RewardsSub;
@@ -448,6 +449,7 @@ public class GreenJobs extends JavaPlugin {
 
 		getAdminSubCommandManager().getSubCommandList().add(new ExpSub());
 		getAdminSubCommandManager().getSubCommandList().add(new LevelSub());
+		getAdminSubCommandManager().getSubCommandList().add(new LimitSub());
 		getAdminSubCommandManager().getSubCommandList().add(new NeedSub());
 	}
 

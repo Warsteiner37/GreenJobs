@@ -71,6 +71,12 @@ public class JobsPlayer {
 			}
 		}.runTask(plugin);
 	}
+	
+	public void setMax(int d) {
+		this.max = d;
+		
+		callChangeInData();
+	}
   
 	public void addPoints(double d) {
 		this.points = this.points + d;

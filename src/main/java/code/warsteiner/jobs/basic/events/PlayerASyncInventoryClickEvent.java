@@ -67,7 +67,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 			ItemStack item = event.getCurrentItem();
 
-			String display = plugin.getBasicPluginManager().toHex(item.getItemMeta().getDisplayName());
+			String display = plugin.getBasicPluginManager().toHex(player, item.getItemMeta().getDisplayName());
 
 			JobsPlayer jb = plugin.getPlayerDataManager().getJobsPlayer(player.getName(), ID);
 
@@ -204,7 +204,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 								ItemStack item2 = job.getIcon();
 
-								String display2 = job.getDisplay();
+								String display2 = job.getDisplay(player);
 
 								if (item2.getType().equals(item.getType()) && display.equalsIgnoreCase(display2)) {
 
@@ -212,14 +212,14 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 										// lore.add("In");
 
 										if (plugin.getFileManager().getConfigConfig().getBoolean("JobInfoGUI")) {
-											Bukkit.getScheduler().runTask(plugin, () -> {
+											Bukkit.getScheduler().runTaskLater(plugin, () -> {
 												plugin.getJobsGUIManager().openOptionsMenu(player, job.getID(), false);
-											});
+											}, 2);
 										} else {
 
 											if (mg.hasMessage("job_already_joined")) {
-												player.sendMessage(mg.getMessage("job_already_joined")
-														.replaceAll("<job>", job.getDisplay()));
+												player.sendMessage(mg.getMessage(player, "job_already_joined")
+														.replaceAll("<job>", job.getDisplay(player)));
 											}
 										}
 
@@ -228,16 +228,16 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 										if (jb.getCurrentJobs().size() >= jb.getMaxJobs() + 1) {
 											if (mg.hasMessage("too_many_jobs")) {
-												player.sendMessage(mg.getMessage("too_many_jobs").replaceAll("<job>",
-														job.getDisplay()));
+												player.sendMessage(mg.getMessage(player, "too_many_jobs").replaceAll("<job>",
+														job.getDisplay(player)));
 											}
 											return;
 										} else {
 											jb.addCurrentJob(job.getID(), date);
 
 											if (mg.hasMessage("job_join_message")) {
-												player.sendMessage(mg.getMessage("job_join_message").replaceAll("<job>",
-														job.getDisplay()));
+												player.sendMessage(mg.getMessage(player, "job_join_message").replaceAll("<job>",
+														job.getDisplay(player)));
 											}
 
 											plugin.getBasicPluginManager().playSound(player, "PLAYER_JOINED_JOB");
@@ -260,14 +260,15 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 											jb.addOwnedJob(job.getID());
 
 											if (mg.hasMessage("job_is_free_message")) {
-												player.sendMessage(mg.getMessage("job_is_free_message")
-														.replaceAll("<job>", job.getDisplay()));
+												player.sendMessage(mg.getMessage(player, "job_is_free_message")
+														.replaceAll("<job>", job.getDisplay(player)));
 											}
 
 											plugin.getBasicPluginManager().playSound(player, "PLAYER_BOUGHT_JOB");
 
 											if (plugin.getFileManager().getConfigConfig()
 													.getBoolean("ReOpenForUpdate")) {
+												 
 												plugin.getJobsGUIManager().updateJobMenu(player);
 											} else {
 												Bukkit.getScheduler().runTask(plugin, () -> {
@@ -285,10 +286,10 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 												if (plugin.getFileManager().getConfigConfig()
 														.getBoolean("NeedToConfirmWhileBuying")) {
 
-													Bukkit.getScheduler().runTask(plugin, () -> {
+													Bukkit.getScheduler().runTaskLater(plugin, () -> {
 														plugin.getJobsGUIManager().openConfPurchaseMenu(player,
 																job.getID(), false);
-													});
+													}, 2);
 
 												} else {
 
@@ -299,9 +300,9 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 													plugin.getBasicPluginManager().playSound(player,
 															"PLAYER_BOUGHT_JOB");
 
-													player.sendMessage(mg.getMessage("job_buy_message")
+													player.sendMessage(mg.getMessage(player, "job_buy_message")
 															.replaceAll("<price>", job.getPriceToDisplay())
-															.replaceAll("<job>", job.getDisplay()));
+															.replaceAll("<job>", job.getDisplay(player)));
 
 													if (plugin.getFileManager().getConfigConfig()
 															.getBoolean("ReOpenForUpdate")) {
@@ -317,8 +318,8 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 												return;
 											} else {
 												if (mg.hasMessage("job_not_enough_money")) {
-													player.sendMessage(mg.getMessage("job_not_enough_money")
-															.replaceAll("<job>", job.getDisplay()));
+													player.sendMessage(mg.getMessage(player, "job_not_enough_money")
+															.replaceAll("<job>", job.getDisplay(player)));
 												}
 											}
 											return;
@@ -349,7 +350,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 							String displayc = c.getString("GUI_Buttons.Confirm.Display");
 
-							String trans = plugin.getBasicPluginManager().toHex(displayc);
+							String trans = plugin.getBasicPluginManager().toHex(player, displayc);
 
 							if (display.equalsIgnoreCase(trans)) {
 								if (plugin.getEco().getBalance(player) >= job.getPrice()
@@ -362,15 +363,15 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 									plugin.getBasicPluginManager().playSound(player, "PLAYER_BOUGHT_JOB");
 
-									player.sendMessage(mg.getMessage("job_buy_message")
+									player.sendMessage(mg.getMessage(player, "job_buy_message")
 											.replaceAll("<price>", job.getPriceToDisplay())
-											.replaceAll("<job>", job.getDisplay()));
+											.replaceAll("<job>", job.getDisplay(player)));
 
 									if (plugin.getFileManager().getConfigConfig().getBoolean("ReOpenForUpdate")) {
 
-										Bukkit.getScheduler().runTask(plugin, () -> {
+										Bukkit.getScheduler().runTaskLater(plugin, () -> {
 											plugin.getJobsGUIManager().openJobsMenu(player, true);
-										});
+										}, 2);
 
 									} else {
 										Bukkit.getScheduler().runTask(plugin, () -> {
@@ -381,8 +382,8 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 									return;
 								} else {
 									if (mg.hasMessage("job_not_enough_money")) {
-										player.sendMessage(mg.getMessage("job_not_enough_money").replaceAll("<job>",
-												job.getDisplay()));
+										player.sendMessage(mg.getMessage(player, "job_not_enough_money").replaceAll("<job>",
+												job.getDisplay(player)));
 									}
 								}
 								return;
@@ -393,7 +394,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 							String displayc = c.getString("GUI_Buttons.Cancel.Display");
 
-							String trans = plugin.getBasicPluginManager().toHex(displayc);
+							String trans = plugin.getBasicPluginManager().toHex(player, displayc);
 
 							if (display.equalsIgnoreCase(trans)) {
 								Bukkit.getScheduler().runTask(plugin, () -> {
@@ -441,8 +442,8 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 			custom_items.forEach((item) -> {
 
-				String idis = d.toHex(item.getDisplay());
-				String trans = d.toHex(display);
+				String idis = d.toHex(player, item.getDisplay(player));
+				String trans = d.toHex(player, display);
 
 				ItemStack c = item.getIcon(player.getName());
 
@@ -464,9 +465,9 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 						jb.removeCurrentJob(j);
 
-						Bukkit.getScheduler().runTask(plugin, () -> {
+						Bukkit.getScheduler().runTaskLater(plugin, () -> {
 							plugin.getJobsGUIManager().openJobsMenu(player, true);
-						});
+						}, 2);
 
 						plugin.getBasicPluginManager().playSound(player, "PLAYER_LEAVE_A_JOB");
 
@@ -475,7 +476,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 						if (jb.getCurrentJobs() != null && !jb.getCurrentJobs().isEmpty()) {
 							if (mg.hasMessage("job_left_all")) {
-								player.sendMessage(mg.getMessage("job_left_all"));
+								player.sendMessage(mg.getMessage(player, "job_left_all"));
 							}
 
 							jb.removeAllCurrentJobs();
@@ -498,7 +499,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 						} else {
 							if (mg.hasMessage("job_nothing_to_leave")) {
 								plugin.getBasicPluginManager().playSound(player, "PLAYER_ALREADY_LEFT_ALL_JOBS");
-								player.sendMessage(mg.getMessage("job_nothing_to_leave"));
+								player.sendMessage(mg.getMessage(player, "job_nothing_to_leave"));
 							}
 						}
 
@@ -535,7 +536,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 									return;
 								} else {
-									player.sendMessage(plugin.getMessageManager().getMessage("rewards_no_other_page"));
+									player.sendMessage(plugin.getMessageManager().getMessage(player, "rewards_no_other_page"));
 									return;
 								}
 							}
@@ -561,7 +562,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 								int page = m2.details_page_manager.get(ID);
 
 								if (page == 1) {
-									player.sendMessage(plugin.getMessageManager().getMessage("rewards_no_other_page"));
+									player.sendMessage(plugin.getMessageManager().getMessage(player, "rewards_no_other_page"));
 									return;
 								} else {
 
@@ -577,12 +578,12 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 					}
 					if (actions.contains(CustomItemAction.OPEN_MAIN)) {
-						Bukkit.getScheduler().runTask(plugin, () -> {
+						Bukkit.getScheduler().runTaskLater(plugin, () -> {
 
 							plugin.getBasicPluginManager().playSound(player, "RE_OPEN_MAIN_GUI");
 
 							plugin.getJobsGUIManager().openJobsMenu(player, true);
-						});
+						}, 2);
 
 					}
 

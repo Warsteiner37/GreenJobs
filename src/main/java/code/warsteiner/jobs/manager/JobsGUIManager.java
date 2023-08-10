@@ -51,7 +51,7 @@ public class JobsGUIManager {
 
 	 	plugin.executor.submit(() -> {
 
-			setOther(type, inv, name);
+			setOther(player, type, inv, name);
 
 			setItemsSorted(type, page, file.getInt("ItemsPerPage"), inv, player, sd, string, jb);
 
@@ -85,7 +85,7 @@ public class JobsGUIManager {
 			plugin.getBasicGUIManager().getCurrentCate().put(player.getUniqueId(), sd);
 			m2.details_page_manager.put(player.getUniqueId(), page);
 
-			setOther(type, inv, name);
+			setOther(player, type, inv, name);
 
 			setItemsSorted(type, page, file.getInt("ItemsPerPage"), inv, player, sd, string, jb);
 
@@ -110,12 +110,12 @@ public class JobsGUIManager {
 
 			ItemStack item = plugin.getItemManager().createOrGetItem("CatItemRewardsRandom", oc, player.getName(), 0);
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(plugin.getBasicPluginManager().toHex(display_start + cat));
+			meta.setDisplayName(plugin.getBasicPluginManager().toHex(player, display_start + cat));
 
 			ArrayList<String> lore = new ArrayList<String>();
 
 			for (String line : lored) {
-				lore.add(plugin.getBasicPluginManager().toHex(line));
+				lore.add(plugin.getBasicPluginManager().toHex(player, line));
 			}
 
 			meta.setLore(lore);
@@ -132,12 +132,12 @@ public class JobsGUIManager {
 
 			ItemStack item = plugin.getItemManager().createOrGetItem("CatItemRewardsNormal", oc, player.getName(), 0);
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(plugin.getBasicPluginManager().toHex(display_start + cat));
+			meta.setDisplayName(plugin.getBasicPluginManager().toHex(player, display_start + cat));
 
 			ArrayList<String> lore = new ArrayList<String>();
 
 			for (String line : lored) {
-				lore.add(plugin.getBasicPluginManager().toHex(line));
+				lore.add(plugin.getBasicPluginManager().toHex(player, line));
 			}
 
 			meta.setLore(lore);
@@ -165,12 +165,12 @@ public class JobsGUIManager {
 
 			ItemStack item = plugin.getItemManager().createOrGetItem("CatItemRewardsRandom", oc, player.getName(), 0);
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(plugin.getBasicPluginManager().toHex(display_start + cat));
+			meta.setDisplayName(plugin.getBasicPluginManager().toHex(player, display_start + cat));
 
 			ArrayList<String> lore = new ArrayList<String>();
 
 			for (String line : lored) {
-				lore.add(plugin.getBasicPluginManager().toHex(line));
+				lore.add(plugin.getBasicPluginManager().toHex(player, line));
 			}
 
 			meta.setLore(lore);
@@ -187,12 +187,12 @@ public class JobsGUIManager {
 
 			ItemStack item = plugin.getItemManager().createOrGetItem("CatItemRewardsNormal", oc, player.getName(), 0);
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(plugin.getBasicPluginManager().toHex(display_start + cat));
+			meta.setDisplayName(plugin.getBasicPluginManager().toHex(player, display_start + cat));
 
 			ArrayList<String> lore = new ArrayList<String>();
 
 			for (String line : lored) {
-				lore.add(plugin.getBasicPluginManager().toHex(line));
+				lore.add(plugin.getBasicPluginManager().toHex(player, line));
 			}
 
 			meta.setLore(lore);
@@ -239,12 +239,12 @@ public class JobsGUIManager {
 
 				ItemStack item = real.getItemToDisplayInRewards();
 				ItemMeta meta = item.getItemMeta();
-				meta.setDisplayName(real.getDisplayInRewards());
+				meta.setDisplayName(real.getDisplayInRewards(player));
 
 				ArrayList<String> lore = new ArrayList<String>();
 
 				for (String line : real.getLore()) {
-					lore.add(plugin.getBasicPluginManager().toHex(line
+					lore.add(plugin.getBasicPluginManager().toHex(player, line
 
 							.replaceAll("<money>", "" + real.getMoneyReward()).replaceAll("<exp>", "" + real.getExp())
 							.replaceAll("<points>", "" + real.getPoints()).replaceAll("<chance>", "" + real.getChance())
@@ -257,7 +257,7 @@ public class JobsGUIManager {
 					JobStats stats = j.getJobStats().get(jb.toUpperCase());
 
 					for (String line : real.getLoreWhenOwnJob()) {
-						lore.add(plugin.getBasicPluginManager().toHex(line
+						lore.add(plugin.getBasicPluginManager().toHex(player, line
 
 								.replaceAll("<times>", "" + stats.getTimesBrokenBlockIfExist(get))
 								.replaceAll("<earned_today>", "" + stats.getEarningsByBlockToday(get))
@@ -292,12 +292,12 @@ public class JobsGUIManager {
 
 				ItemStack item = real.getItemToDisplayInRewards();
 				ItemMeta meta = item.getItemMeta();
-				meta.setDisplayName(real.getDisplayInRewards());
+				meta.setDisplayName(real.getDisplayInRewards(player));
 
 				ArrayList<String> lore = new ArrayList<String>();
 
 				for (String line : real.getLore()) {
-					lore.add(plugin.getBasicPluginManager().toHex(line
+					lore.add(plugin.getBasicPluginManager().toHex(player, line
 
 							.replaceAll("<money>", "" + real.getMoneyReward()).replaceAll("<exp>", "" + real.getExp())
 							.replaceAll("<points>", "" + real.getPoints()).replaceAll("<chance>", "" + real.getChance())
@@ -310,7 +310,7 @@ public class JobsGUIManager {
 					JobStats stats = j.getJobStats().get(jb.toUpperCase());
 
 					for (String line : real.getLoreWhenOwnJob()) {
-						lore.add(plugin.getBasicPluginManager().toHex(line
+						lore.add(plugin.getBasicPluginManager().toHex(player, line
 
 								.replaceAll("<times>", "" + stats.getTimesBrokenBlockIfExist(get))
 								.replaceAll("<earned_today>", "" + stats.getEarningsByBlockToday(get))
@@ -343,7 +343,7 @@ public class JobsGUIManager {
 
 			GUIType type = GUIType.BUY_CONFIRM;
 
-			setOther(type, inv, name);
+			setOther(player, type, inv, name);
 
 			// buttons
 			setButtons(player, name, inv);
@@ -369,7 +369,7 @@ public class JobsGUIManager {
 
 		plugin.executor.submit(() -> {
 
-			setOther(type, inv, name);
+			setOther(player, type, inv, name);
 
 			// buttons
 			setButtons(player, name, inv);
@@ -392,13 +392,13 @@ public class JobsGUIManager {
 
 			ItemStack item = plugin.getItemManager().createOrGetItem("ConfirmGUI_Button1", id, name, data);
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(plugin.getBasicPluginManager().toHex(display));
+			meta.setDisplayName(plugin.getBasicPluginManager().toHex(player, display));
 
 			ArrayList<String> lore = new ArrayList<String>();
 
 			if (c.contains("GUI_Buttons.Confirm.Lore")) {
 				for (String line : c.getStringList("GUI_Buttons.Confirm.Lore")) {
-					lore.add(plugin.getBasicPluginManager().toHex(line));
+					lore.add(plugin.getBasicPluginManager().toHex(player, line));
 				}
 			}
 
@@ -418,13 +418,13 @@ public class JobsGUIManager {
 
 			ItemStack item = plugin.getItemManager().createOrGetItem("ConfirmGUI_Button2", id, name, data);
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(plugin.getBasicPluginManager().toHex(display));
+			meta.setDisplayName(plugin.getBasicPluginManager().toHex(player, display));
 
 			ArrayList<String> lore = new ArrayList<String>();
 
 			if (c.contains("GUI_Buttons.Cancel.Lore")) {
 				for (String line : c.getStringList("GUI_Buttons.Cancel.Lore")) {
-					lore.add(plugin.getBasicPluginManager().toHex(line));
+					lore.add(plugin.getBasicPluginManager().toHex(player, line));
 				}
 			}
 
@@ -453,7 +453,7 @@ public class JobsGUIManager {
 
 		plugin.executor.submit(() -> {
 
-			setOther(type, inv, name);
+			setOther(player, type, inv, name);
 
 		});
 
@@ -470,7 +470,7 @@ public class JobsGUIManager {
 
 			GUIType type = GUIType.OPTIONS;
 
-			setOther(type, open, name);
+			setOther(player, type, open, name);
 
 		});
 
@@ -493,7 +493,7 @@ public class JobsGUIManager {
 
 		plugin.executor.submit(() -> {
 
-			setOther(type, inv, name);
+			setOther(player, type, inv, name);
 
 			setJobItems(type, inv, name, jb);
 		});
@@ -515,7 +515,7 @@ public class JobsGUIManager {
 
 				GUIType type = GUIType.JOBS;
 
-				setOther(type, open, name);
+				setOther(player, type, open, name);
 
 				setJobItems(type, open, name, jb);
 
@@ -529,15 +529,17 @@ public class JobsGUIManager {
 
 			plugin.getJobAPI().getLoadedJobsHash().forEach((id, job) -> {
 
+				Player player = Bukkit.getPlayer(jb.getUUID());
+				
 				ItemStack item = job.getIcon();
 
 				ItemMeta meta = item.getItemMeta();
-				meta.setDisplayName(job.getDisplay());
+				meta.setDisplayName(job.getDisplay(player));
 
 				ArrayList<String> lore = new ArrayList<String>();
 
 				if (job.getDescription() != null) {
-					lore.add(plugin.getBasicPluginManager().toHex(job.getDescription()));
+					lore.add(plugin.getBasicPluginManager().toHex(player, job.getDescription()));
 					lore.add("§8");
 				}
 
@@ -561,7 +563,7 @@ public class JobsGUIManager {
 					double need = stats.getNeed();
 
 					for (String line : add) {
-						lore.add(plugin.getBasicPluginManager().toHex(line).replaceAll("<level>", "" + level)
+						lore.add(plugin.getBasicPluginManager().toHex(player, line).replaceAll("<level>", "" + level)
 								.replaceAll("<earned_today>", plugin.getBasicPluginManager().Format(worked_today))
 								.replaceAll("<need>", plugin.getBasicPluginManager().Format(need))
 								.replaceAll("<times>", "" + times)
@@ -570,7 +572,7 @@ public class JobsGUIManager {
 								.replaceAll("<exp>", plugin.getBasicPluginManager().Format(exp)));
 					}
 
-					String message = plugin.getMessageManager().getMessage("job_gui_in");
+					String message = plugin.getMessageManager().getMessage(player, "job_gui_in");
 
 					lore.add(message);
 				} else if (jb.getOwnedJobs().contains(job.getID())) {
@@ -585,20 +587,20 @@ public class JobsGUIManager {
 					ArrayList<String> add = job.getMessageLook();
 
 					for (String line : add) {
-						lore.add(plugin.getBasicPluginManager().toHex(line)
+						lore.add(plugin.getBasicPluginManager().toHex(player, line)
 								.replaceAll("<need>", plugin.getBasicPluginManager().Format(need))
 								.replaceAll("<level>", "" + level)
 								.replaceAll("<exp>", plugin.getBasicPluginManager().Format(exp)));
 					}
 
-					String message = plugin.getMessageManager().getMessage("job_gui_join");
+					String message = plugin.getMessageManager().getMessage(player, "job_gui_join");
 
 					lore.add(message);
 				} else {
 
 					if (job.getPrice() == 0) {
 
-						String message = plugin.getMessageManager().getMessage("job_is_free_gui");
+						String message = plugin.getMessageManager().getMessage(player, "job_is_free_gui");
 
 						lore.add(message);
 						// free
@@ -607,7 +609,7 @@ public class JobsGUIManager {
 
 						// paid
 
-						String message = plugin.getMessageManager().getMessage("job_gui_buy").replaceAll("<money>",
+						String message = plugin.getMessageManager().getMessage(player, "job_gui_buy").replaceAll("<money>",
 								job.getPriceToDisplay());
 
 						lore.add(message);
@@ -625,7 +627,7 @@ public class JobsGUIManager {
 		}
 	}
 
-	public void setOther(GUIType type, Inventory open, String name) {
+	public void setOther(Player player, GUIType type, Inventory open, String name) {
 
 		LoadAndStoreGUIManager d = plugin.getLoadAndStoreGUIManager();
 
@@ -633,13 +635,13 @@ public class JobsGUIManager {
 
 			ItemStack item = custom.getIcon(name);
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(custom.getDisplay());
+			meta.setDisplayName(custom.getDisplay(player));
 
 			ArrayList<String> lore = new ArrayList<String>();
 
 			if (custom.hasLore()) {
 				for (String line : custom.getLore()) {
-					lore.add(plugin.getBasicPluginManager().toHex(line));
+					lore.add(plugin.getBasicPluginManager().toHex(player, line));
 				}
 			}
 
@@ -655,7 +657,7 @@ public class JobsGUIManager {
 
 			ItemStack item = place.getIcon(name);
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(place.getDisplay());
+			meta.setDisplayName(place.getDisplay(player));
 
 			item.setItemMeta(meta);
 
@@ -733,7 +735,7 @@ public class JobsGUIManager {
 
 					ItemStack item = job.getIcon();
 					ItemMeta meta = item.getItemMeta();
-					meta.setDisplayName("§8< " + job.getName() + " §8>");
+					meta.setDisplayName("§8< " + job.getName(player) + " §8>");
 					item.setItemMeta(meta);
 
 					inv.addItem(item);

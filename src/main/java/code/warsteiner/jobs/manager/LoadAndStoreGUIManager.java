@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import code.warsteiner.jobs.GreenJobs;
 import code.warsteiner.jobs.utils.enums.CustomItemAction;
@@ -29,8 +30,8 @@ public class LoadAndStoreGUIManager {
 		this.gui_customitems.clear();
 	}
 	
-	public String getName(GUIType type) {
-		return plugin.getBasicPluginManager().toHex(this.gui_names.get(type));
+	public String getName(Player player, GUIType type) {
+		return plugin.getBasicPluginManager().toHex(player, this.gui_names.get(type));
 	}
 	
 	public Integer getSize(GUIType type) {

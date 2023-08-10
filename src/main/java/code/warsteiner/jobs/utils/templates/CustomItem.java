@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import code.warsteiner.jobs.GreenJobs;
@@ -75,8 +76,8 @@ public class CustomItem {
 		return this.ID;
 	}
 	
-	public String getDisplay() {
-		return plugin.getBasicPluginManager().toHex(this.display);
+	public String getDisplay(Player player) {
+		return plugin.getBasicPluginManager().toHex(player, this.display);
 	}
 
   

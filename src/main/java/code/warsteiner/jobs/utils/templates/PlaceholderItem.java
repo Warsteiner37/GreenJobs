@@ -1,6 +1,7 @@
 package code.warsteiner.jobs.utils.templates;
  
 
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import code.warsteiner.jobs.GreenJobs;
@@ -38,8 +39,8 @@ public class PlaceholderItem {
 		return this.slot;
 	}
  
-	public String getDisplay() {
-		return plugin.getBasicPluginManager().toHex( this.display);
+	public String getDisplay(Player player) {
+		return plugin.getBasicPluginManager().toHex( player, this.display);
 	}
 
   

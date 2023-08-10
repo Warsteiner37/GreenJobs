@@ -13,18 +13,18 @@ import code.warsteiner.jobs.utils.admincommand.AdminSubCommand;
 import code.warsteiner.jobs.utils.templates.Job;
 import code.warsteiner.jobs.utils.templates.JobsPlayer;
 
-public class LevelSub extends AdminSubCommand {
+public class LimitSub extends AdminSubCommand {
 
 	private static GreenJobs plugin = GreenJobs.getPlugin();
 
 	@Override
 	public String getName() {
-		return "level";
+		return "limit";
 	}
 
 	@Override
 	public String getDescription() {
-		return "Update Player's Level in a Job";
+		return "Update Player's max Jobs";
 	}
 
 	@Override
@@ -37,11 +37,10 @@ public class LevelSub extends AdminSubCommand {
 
 			sender.sendMessage(m.getPrefix(sender) + " §7Correct Usage§8: §6" + getUsage());
 
-		} else if (args.length == 5 && args[1].toLowerCase().equalsIgnoreCase("set")) {
+		} else if (args.length == 4 && args[1].toLowerCase().equalsIgnoreCase("set")) {
 
 			String player = args[2];
-			String job = args[3].toUpperCase();
-			String value = args[4];
+			String value = args[3];
 
 			if (data.getPlayerByName(player) == null) {
 				sender.sendMessage(m.getPrefix(sender) + " §7Error! Player §c" + player + " §7does not exist!");
@@ -52,28 +51,15 @@ public class LevelSub extends AdminSubCommand {
 
 			if (isInt(value)) {
 
-				if (plugin.getJobAPI().existJob(job)) {
+				JobsPlayer jb = data.getJobsPlayerList().get(uuid);
 
-					JobsPlayer jb = data.getJobsPlayerList().get(uuid);
+				int rl = Integer.valueOf(value)-1;
+				
+				jb.setMax(rl);
 
-					Job rl = plugin.getJobAPI().getLoadedJobsHash().get(job);
-
-					if (jb.getOwnedJobs().contains(rl.getID())) {
-
-						jb.getJobStats().get(rl.getID()).setLevel(Integer.valueOf(value));
-
-						sender.sendMessage(m.getPrefix(sender) + " §7Set §c" + player + "'s §7Level in Job §a" + job + " §7to §6"
-								+ value + ".");
-						return;
-					} else {
-						sender.sendMessage(m.getPrefix(sender) + " §7Error! Player does not own that Job!");
-						return;
-					}
-
-				} else {
-					sender.sendMessage(m.getPrefix(sender) + " §7Error! Cannot find that Job!");
-					return;
-				}
+				sender.sendMessage(
+						m.getPrefix(sender) + " §7Set §c" + player + "'s §7Job-Limit to §a"+value+"§7!");
+				return;
 
 			} else {
 				sender.sendMessage(m.getPrefix(sender) + " §7Error! The value must be a Integer");
@@ -95,15 +81,15 @@ public class LevelSub extends AdminSubCommand {
 		}
 		return true;
 	}
- 
+
 	@Override
 	public String getUsage() {
-		return "§6/jpm level <set> <name> <job> <amount> §8| §7Manage Levels";
+		return "§6/jpm limit <set> <name> <amount> §8| §7Manage max Jobs";
 	}
 
 	@Override
 	public String getPermission() {
-		return "greenjobs.admin.level";
+		return "greenjobs.admin.limit";
 	}
 
 	@Override
@@ -112,8 +98,8 @@ public class LevelSub extends AdminSubCommand {
 	}
 
 	@Override
-	public String getArgsLayout() { 
-		return "level <set> <name> <job> <amount>";
+	public String getArgsLayout() {
+		return "limit <set> <name> <amount>";
 	}
-	
+
 }

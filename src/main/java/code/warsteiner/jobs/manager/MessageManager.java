@@ -9,8 +9,10 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import code.warsteiner.jobs.GreenJobs; 
 
@@ -26,14 +28,18 @@ public class MessageManager {
 		this.lists.clear();
 	}
 	
-	public String getMessage(String key) {
+	public String getMessage(Player player, String key) {
 		 
-		return plugin.getBasicPluginManager().toHex(this.messages.get(key).replaceAll("<prefix>", this.messages.get("prefix")));
+		return plugin.getBasicPluginManager().toHex(player, this.messages.get(key).replaceAll("<prefix>", this.messages.get("prefix")));
 		
 	}
 
-	public String getPrefix() {
-		return plugin.getBasicPluginManager().toHex(this.messages.get("prefix"));
+	public String getPrefix(Player player) {
+		return plugin.getBasicPluginManager().toHex(player, this.messages.get("prefix"));
+	}
+	
+	public String getPrefix(CommandSender sender) {
+		return plugin.getBasicPluginManager().toHex(sender, this.messages.get("prefix"));
 	}
 	
 	public boolean hasMessage(String key) {

@@ -35,7 +35,7 @@ public class NeedSub extends AdminSubCommand {
 
 		if (args.length == 1) {
 
-			sender.sendMessage(m.getPrefix() + " §7Correct Usage§8: §6" + getUsage());
+			sender.sendMessage(m.getPrefix(sender) + " §7Correct Usage§8: §6" + getUsage());
 
 		} else if (args.length == 5 && args[1].toLowerCase().equalsIgnoreCase("set")) {
 
@@ -44,7 +44,7 @@ public class NeedSub extends AdminSubCommand {
 			String value = args[4];
 
 			if (data.getPlayerByName(player) == null) {
-				sender.sendMessage(m.getPrefix() + " §7Error! Player §c" + player + " §7does not exist!");
+				sender.sendMessage(m.getPrefix(sender) + " §7Error! Player §c" + player + " §7does not exist!");
 				return;
 			}
 
@@ -62,27 +62,27 @@ public class NeedSub extends AdminSubCommand {
 
 						jb.getJobStats().get(rl.getID()).setNeed(Double.valueOf(value));
 
-						sender.sendMessage(m.getPrefix() + " §7Set §c" + player + "'s §7needed Exp in Job §a" + job + " §7to §6"
+						sender.sendMessage(m.getPrefix(sender) + " §7Set §c" + player + "'s §7needed Exp in Job §a" + job + " §7to §6"
 								+ value + ".");
 						return;
 					} else {
-						sender.sendMessage(m.getPrefix() + " §7Error! Player does not own that Job!");
+						sender.sendMessage(m.getPrefix(sender) + " §7Error! Player does not own that Job!");
 						return;
 					}
 
 				} else {
-					sender.sendMessage(m.getPrefix() + " §7Error! Cannot find that Job!");
+					sender.sendMessage(m.getPrefix(sender) + " §7Error! Cannot find that Job!");
 					return;
 				}
 
 			} else {
-				sender.sendMessage(m.getPrefix() + " §7Error! The value must be a Integer");
+				sender.sendMessage(m.getPrefix(sender) + " §7Error! The value must be a Integer");
 
 				return;
 			}
 
 		} else {
-			sender.sendMessage(m.getPrefix() + " §7Correct Usage§8: §6" + getUsage());
+			sender.sendMessage(m.getPrefix(sender) + " §7Correct Usage§8: §6" + getUsage());
 
 		}
 	}
