@@ -45,12 +45,7 @@ public class ShearAction  extends JobAction implements Listener {
 	 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerShearEntityEvent  event) {
-		
-		if(event.isCancelled()) {
-			event.setCancelled(true);
-			return;
-		}
-		
+		 
 		if (event.getEntity() instanceof Sheep) {
 
 			Sheep sheep = (Sheep) event.getEntity();

@@ -20,41 +20,43 @@ public class FileManager {
 
 	private FileConfiguration jobs;
 	private File jobs_file;
-	
+
 	private FileConfiguration confirm;
 	private File confirm_file;
-	
+
 	private FileConfiguration options;
 	private File options_file;
- 
+
 	private FileConfiguration rewards;
 	private File rewards_file;
-	
+
 	private FileConfiguration command;
 	private File command_file;
-	
+
 	private FileConfiguration sounds;
 	private File sounds_file;
-	
-	
+
 	private FileConfiguration papi;
 	private File papi_file;
-	
-	public void setFiles() {
-		this.locs = new FileTemplate("locations");
-		this.locs.create();
 
-		this.data = new FileTemplate("data");
-		this.data.create();
+	public void setFiles() {
 
 		checkConfigFile();
-		checkJobsGUIFile(); 
+		checkJobsGUIFile();
 		checkConfirmGUIFile();
 		checkOptionsGUIFile();
 		checkCommandsGUIFile();
 		checkRewardsGUIFile();
 		checkSoundsFile();
 		checkPlaceHolderFile();
+
+		String loc = getConfigConfig().getString("SaveDataIn");
+
+		this.locs = new FileTemplate("locations", loc);
+		this.locs.create();
+
+		this.data = new FileTemplate("data", loc);
+		this.data.create();
 	}
 
 	public FileTemplate getDataFile() {
@@ -72,7 +74,7 @@ public class FileManager {
 	public FileConfiguration getLocationConfig() {
 		return this.locs.get();
 	}
-	
+
 	public File getOptionsFile() {
 		return this.options_file;
 	}
@@ -80,9 +82,10 @@ public class FileManager {
 	public FileConfiguration getOptionsConfig() {
 		return this.options;
 	}
-	
+
 	public boolean checkPlaceHolderFile() {
-		papi_file = new File(GreenJobs.getPlugin().getDataFolder(), "integrations" + File.separatorChar + "placeholderapi.yml");
+		papi_file = new File(GreenJobs.getPlugin().getDataFolder(),
+				"integrations" + File.separatorChar + "placeholderapi.yml");
 		if (!papi_file.exists()) {
 			papi_file.getParentFile().mkdirs();
 			GreenJobs.getPlugin().saveResource("integrations" + File.separatorChar + "placeholderapi.yml", false);
@@ -97,7 +100,7 @@ public class FileManager {
 		}
 		return true;
 	}
- 
+
 	public File getPAPIFile() {
 		return this.papi_file;
 	}
@@ -105,7 +108,7 @@ public class FileManager {
 	public FileConfiguration getPAPIConfig() {
 		return this.papi;
 	}
-	
+
 	public boolean checkSoundsFile() {
 		sounds_file = new File(GreenJobs.getPlugin().getDataFolder(), "other" + File.separatorChar + "sounds.yml");
 		if (!sounds_file.exists()) {
@@ -122,7 +125,7 @@ public class FileManager {
 		}
 		return true;
 	}
- 
+
 	public File getSoundsFile() {
 		return this.sounds_file;
 	}
@@ -130,7 +133,7 @@ public class FileManager {
 	public FileConfiguration getSoundsConfig() {
 		return this.sounds;
 	}
-	
+
 	public boolean checkCommandsGUIFile() {
 		command_file = new File(GreenJobs.getPlugin().getDataFolder(), "commands.yml");
 		if (!command_file.exists()) {
@@ -147,7 +150,7 @@ public class FileManager {
 		}
 		return true;
 	}
- 
+
 	public File getCommandsFile() {
 		return this.command_file;
 	}
@@ -155,7 +158,7 @@ public class FileManager {
 	public FileConfiguration getCommandsConfig() {
 		return this.command;
 	}
-	
+
 	public boolean checkRewardsGUIFile() {
 		rewards_file = new File(GreenJobs.getPlugin().getDataFolder(), "guis" + File.separatorChar + "rewards.yml");
 		if (!rewards_file.exists()) {
@@ -172,7 +175,7 @@ public class FileManager {
 		}
 		return true;
 	}
- 
+
 	public File getRewardsFile() {
 		return this.rewards_file;
 	}
@@ -180,7 +183,6 @@ public class FileManager {
 	public FileConfiguration getRewardsConfig() {
 		return this.rewards;
 	}
-	
 
 	public boolean checkOptionsGUIFile() {
 		options_file = new File(GreenJobs.getPlugin().getDataFolder(), "guis" + File.separatorChar + "options.yml");
@@ -198,7 +200,7 @@ public class FileManager {
 		}
 		return true;
 	}
- 
+
 	public File getConfirmFile() {
 		return this.confirm_file;
 	}
@@ -208,7 +210,8 @@ public class FileManager {
 	}
 
 	public boolean checkConfirmGUIFile() {
-		confirm_file = new File(GreenJobs.getPlugin().getDataFolder(), "guis" + File.separatorChar + "confirm_purchase.yml");
+		confirm_file = new File(GreenJobs.getPlugin().getDataFolder(),
+				"guis" + File.separatorChar + "confirm_purchase.yml");
 		if (!confirm_file.exists()) {
 			confirm_file.getParentFile().mkdirs();
 			GreenJobs.getPlugin().saveResource("guis" + File.separatorChar + "confirm_purchase.yml", false);
@@ -223,12 +226,10 @@ public class FileManager {
 		}
 		return true;
 	}
- 
 
 	public FileConfiguration getJobsConfig() {
 		return this.jobs;
 	}
-	
 
 	public File getJobsFile() {
 		return this.jobs_file;
@@ -274,6 +275,6 @@ public class FileManager {
 			return false;
 		}
 		return true;
-	} 
+	}
 
 }

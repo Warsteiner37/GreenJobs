@@ -88,6 +88,7 @@ code\warsteiner\jobs\utils\actions\PlaceAction.class
 code\warsteiner\jobs\utils\actions\BreakAction.class
 code\warsteiner\jobs\basic\events\PlayerAsyncCheckForWork.class
 code\warsteiner\jobs\utils\Metrics$CustomChart.class
+code\warsteiner\jobs\utils\actions\FishAction.class
 code\warsteiner\jobs\basic\events\PlayerASyncInventoryClickEvent$5.class
 code\warsteiner\jobs\utils\BossBarHandler.class
 code\warsteiner\jobs\utils\actions\JobActionManager.class

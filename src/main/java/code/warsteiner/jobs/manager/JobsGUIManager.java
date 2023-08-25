@@ -496,7 +496,7 @@ public class JobsGUIManager {
 			setOther(player, type, inv, name);
 
 			setJobItems(type, inv, name, jb);
-		});
+			});
 
 		player.openInventory(inv);
 

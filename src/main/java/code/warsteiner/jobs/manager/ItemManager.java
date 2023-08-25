@@ -70,7 +70,6 @@ public class ItemManager {
 		meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
 		meta.addItemFlags(ItemFlag.HIDE_DYE);
 		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE); 
-		meta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
 		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		meta.addItemFlags(ItemFlag.HIDE_DYE);
 		

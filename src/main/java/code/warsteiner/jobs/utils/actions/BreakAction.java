@@ -43,11 +43,6 @@ public class BreakAction  extends JobAction implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(BlockBreakEvent event) {
 		
-		if(event.isCancelled()) {
-			event.setCancelled(true);
-			return;
-		}
-
 		if(!event.getBlock().hasMetadata("placed-by-player")) {
 			Player player = event.getPlayer();
 			UUID ID = player.getUniqueId();

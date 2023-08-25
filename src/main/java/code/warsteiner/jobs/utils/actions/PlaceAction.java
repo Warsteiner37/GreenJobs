@@ -39,12 +39,7 @@ public class PlaceAction  extends JobAction implements Listener {
  
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(BlockPlaceEvent event) {
-		
-		if(event.isCancelled()) {
-			event.setCancelled(true);
-			return;
-		}
- 
+		 
 			Player player = event.getPlayer();
 			UUID ID = player.getUniqueId();
 			Block block = event.getBlock();

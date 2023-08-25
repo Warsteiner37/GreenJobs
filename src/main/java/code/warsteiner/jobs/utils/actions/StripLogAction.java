@@ -41,30 +41,27 @@ public class StripLogAction extends JobAction implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerInteractEvent event) {
+ 
+		if(event.getClickedBlock() != null) {
+			if(event.getClickedBlock().getType() != null) {
+				Player player = event.getPlayer();
+				UUID ID = player.getUniqueId();
+				Block block = event.getClickedBlock();
+				String BlockID = block.getType().toString();
+				Action action = event.getAction();
+				Material item = event.getMaterial();
 
-		if (event.isCancelled()) {
-			event.setCancelled(true);
-			return;
-		}
+				if(action != null) {
+					if (action == Action.RIGHT_CLICK_BLOCK && item.toString().contains("_AXE")) {
 
-		if (event.getClickedBlock() == null) {
-			return;
-		}
+						if (block.toString().contains("LOG")) {
+							 
+							PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "STRIPLOG", BlockID);
+							Bukkit.getServer().getPluginManager().callEvent(ev);
 
-		Player player = event.getPlayer();
-		UUID ID = player.getUniqueId();
-		Block block = event.getClickedBlock();
-		String BlockID = block.getType().toString();
-		Action action = event.getAction();
-		Material item = event.getMaterial();
-
-		if (action == Action.RIGHT_CLICK_BLOCK && item.toString().contains("_AXE")) {
-
-			if (block.toString().contains("LOG")) {
-
-				PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "STRIPLOG", BlockID);
-				Bukkit.getServer().getPluginManager().callEvent(ev);
-
+						}
+					}
+				}
 			}
 		}
 

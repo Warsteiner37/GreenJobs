@@ -10,9 +10,11 @@ import code.warsteiner.jobs.GreenJobs;
 public class FileTemplate {
 
 	public String name;
+	private String location;
 	
-	public FileTemplate(String file) {
+	public FileTemplate(String file, String location) {
 		this.name = file;
+		this.location = location;
 	}
 	
 	public File cfile;
@@ -21,8 +23,7 @@ public class FileTemplate {
 	/**
 	 * Where the file is saved
 	*/
-
-	public String location = "plugins/GreenJobs/data/";
+ 
 	public GreenJobs plugin = GreenJobs.getPlugin();
 
 	/**
