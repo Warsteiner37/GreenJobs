@@ -22,6 +22,7 @@ code\warsteiner\jobs\utils\enums\MultiplierType.class
 code\warsteiner\jobs\utils\enums\MultiplierWeight.class
 code\warsteiner\jobs\manager\MessageManager.class
 code\warsteiner\jobs\manager\PlayerDataManager.class
+code\warsteiner\jobs\utils\actions\MilkAction.class
 code\warsteiner\jobs\basic\events\PlayerASyncInventoryClickEvent$2.class
 code\warsteiner\jobs\support\WorldGuardSupport.class
 code\warsteiner\jobs\utils\templates\FileTemplate.class
