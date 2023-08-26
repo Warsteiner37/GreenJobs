@@ -170,7 +170,41 @@ public class PlaceHolderManager extends PlaceholderExpansion {
 					return basic.toHex(player, cfg.getString("UnknownJob"));
 				}
 
-			}
+			} else if (pr.contains("_iscurrent")) {
+
+				String[] split = pr.split("_");
+
+				String d = split[0].toUpperCase();
+				if (job.existJob(d)) {
+
+					if (jb.getCurrentJobs().contains(d)) {
+						return cfg.getString("ValueTrue");
+					} else {
+						return cfg.getString("ValueFalse");
+					}
+
+				} else {
+					return cfg.getString("ValueFalse");
+				}
+
+			}  else if (pr.contains("_owning")) {
+
+				String[] split = pr.split("_");
+
+				String d = split[0].toUpperCase();
+				if (job.existJob(d)) {
+
+					if (jb.getOwnedJobs().contains(d)) {
+						return cfg.getString("ValueTrue");
+					} else {
+						return cfg.getString("ValueFalse");
+					}
+
+				} else {
+					return cfg.getString("ValueFalse");
+				}
+
+			} 
 		}
 		return null;
 

@@ -14,3 +14,7 @@ NoExp: "Unknown"
 NoNeed: "Unknown"
 
 UnknownJob: "&cJob Not Found"
+
+ValueTrue: "true"
+
+ValueFalse: "false"
