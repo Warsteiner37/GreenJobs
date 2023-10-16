@@ -124,7 +124,7 @@ public class PlayerAsyncCheckForWork implements Listener {
 
 											String bm = plugin.getBasicPluginManager()
 													.toHex(player, rw.get("BOSSBAR").replaceAll("<block>", rld.getDisplay(player))
-															.replaceAll("<job>", real.getDisplay(player))
+															.replaceAll("<exp>", ""+exp).replaceAll("<job>", real.getDisplay(player))
 															.replaceAll("<money>", "" + reward));
 
 											Date isago5seconds = new Date((new Date()).getTime() + 3000L);
@@ -152,14 +152,14 @@ public class PlayerAsyncCheckForWork implements Listener {
 													TextComponent.fromLegacyText(plugin.getBasicPluginManager()
 															.toHex(player, rw.get("ACTIONBAR")
 																	.replaceAll("<block>", rld.getDisplay(player))
-																	.replaceAll("<job>", real.getDisplay(player))
+																	.replaceAll("<exp>", ""+exp).replaceAll("<job>", real.getDisplay(player))
 																	.replaceAll("<money>", "" + reward))));
 
 										}
 										if (rw.containsKey("MESSAGE")) {
 											player.sendMessage(plugin.getBasicPluginManager()
 													.toHex(player, rw.get("MESSAGE").replaceAll("<block>", rld.getDisplay(player))
-															.replaceAll("<job>", real.getDisplay(player))
+															.replaceAll("<exp>", ""+exp).replaceAll("<job>", real.getDisplay(player))
 															.replaceAll("<money>", "" + reward)));
 										}
 									}

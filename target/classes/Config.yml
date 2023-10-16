@@ -30,6 +30,8 @@ MaxDefaultJobs: 1
 
 UseLevels: true
 
+GiveMoneyWhenPlacedByPlayer: false
+
 LevelUp:
 
   Titles:

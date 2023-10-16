@@ -14,6 +14,7 @@ public class FileManager {
 
 	private FileTemplate locs;
 	private FileTemplate data;
+	private FileTemplate blocks;
 
 	private FileConfiguration cfg;
 	private File cfg_file;
@@ -54,9 +55,21 @@ public class FileManager {
 
 		this.locs = new FileTemplate("locations", loc);
 		this.locs.create();
+		
+		this.blocks = new FileTemplate("blockdata", loc);
+		this.blocks.create();
+
 
 		this.data = new FileTemplate("data", loc);
 		this.data.create();
+	}
+	
+	public FileTemplate getBlockFile() {
+		return this.blocks;
+	}
+	
+	public FileConfiguration getBlockConfig() {
+		return this.blocks.get();
 	}
 
 	public FileTemplate getDataFile() {

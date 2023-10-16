@@ -29,6 +29,7 @@ code\warsteiner\jobs\utils\templates\FileTemplate.class
 code\warsteiner\jobs\utils\templates\JobsMultiplier.class
 code\warsteiner\jobs\utils\actions\KillMobAction.class
 code\warsteiner\jobs\api\SkullCreatorAPI.class
+code\warsteiner\jobs\utils\templates\BlockData.class
 code\warsteiner\jobs\commands\admin\sub\LimitSub.class
 code\warsteiner\jobs\utils\enums\GUIType.class
 code\warsteiner\jobs\utils\custom\PlayerFinishJobEvent.class
@@ -92,6 +93,7 @@ code\warsteiner\jobs\utils\Metrics$CustomChart.class
 code\warsteiner\jobs\utils\actions\FishAction.class
 code\warsteiner\jobs\basic\events\PlayerASyncInventoryClickEvent$5.class
 code\warsteiner\jobs\utils\BossBarHandler.class
+code\warsteiner\jobs\api\BlockAPI.class
 code\warsteiner\jobs\utils\actions\JobActionManager.class
 code\warsteiner\jobs\utils\actions\ShearAction.class
 code\warsteiner\jobs\utils\custom\PlayerLeaveAJobEvent.class

@@ -18,6 +18,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import code.warsteiner.jobs.api.BlockAPI;
 import code.warsteiner.jobs.api.JobAPI;
 import code.warsteiner.jobs.api.JobLoadAPI;
 import code.warsteiner.jobs.api.LevelAPI;
@@ -102,6 +103,7 @@ public class GreenJobs extends JavaPlugin {
 	private LevelAPI levels;
 	private JobActionManager acm;
 	private WorldGuardSupport wg;
+	private BlockAPI blocks;
 
 	public void onLoad() {
 
@@ -144,8 +146,10 @@ public class GreenJobs extends JavaPlugin {
 
 		FileConfiguration dt = f.getDataFile().get();
 
+		plugin.getBlockAPI().loadData();
+		  
 		executor.submit(() -> {
- 
+			 
 			ArrayList<String> people = (ArrayList<String>) dt.getStringList("PlayerList");
 
 			for (String guy : people) {
@@ -255,6 +259,8 @@ public class GreenJobs extends JavaPlugin {
 		java.io.File dt_file = f.getDataFile().getfile();
 
 		executor.submit(() -> {
+			
+			plugin.getBlockAPI().saveData();
 
 			HashMap<UUID, JobsPlayer> jlist = this.data_manager.getJobsPlayerList();
 
@@ -479,10 +485,15 @@ public class GreenJobs extends JavaPlugin {
 		this.acm = new JobActionManager();
 		this.as = new AdminSubCommandRegistry();
 		this.cp = new PlayerSubCommandRegistry();
-
+		this.blocks = new BlockAPI();
+		
 		this.files.setFiles();
 		this.gs.load();
 
+	}
+	
+	public BlockAPI getBlockAPI() {
+		return this.blocks;
 	}
 
 	public PlayerSubCommandRegistry getPlayerSubCommandManager() {

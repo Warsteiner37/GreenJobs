@@ -1,12 +1,12 @@
 main: code.warsteiner.jobs.GreenJobs
-version: 1.1.5
+version: 1.1.7
 name: GreenJobs
 author: Warsteiner37
 api-version: 1.13
 depend: [Vault]
 softdepend: [WorldGuard, WorldEdit, PlaceHolderAPI, MythicMobs, ItemsAdder, NoteBlockAPI]
 description: Let Players work!
-website: https://greenjobs.org
+website: https://warsteiner37.eu/
 
 commands:
   jpm:
