@@ -56,7 +56,7 @@ public class StripLogAction extends JobAction implements Listener {
 
 						if (block.toString().contains("LOG")) {
 							 
-							PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "STRIPLOG", BlockID);
+							PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "STRIPLOG", BlockID, 1);
 							Bukkit.getServer().getPluginManager().callEvent(ev);
 
 						}

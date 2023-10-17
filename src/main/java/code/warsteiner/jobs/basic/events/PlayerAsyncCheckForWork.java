@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.Player;
@@ -38,15 +39,20 @@ public class PlayerAsyncCheckForWork implements Listener {
 	private GreenJobs plugin = GreenJobs.getPlugin();
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onBlockPlace(BlockPlaceEvent e) {
+	public void onBlockPlace(BlockPlaceEvent event) {
+ 
+		event.getBlock().setMetadata("placed-by-player",
+				new FixedMetadataValue(GreenJobs.getPlugin(), "placed-by-player"));
 
-		if (e.isCancelled()) {
-			e.setCancelled(true);
-			return;
-		}
+		Block block = event.getBlock();
+		Location loc = block.getLocation();
+		String BlockID = block.getType().toString();
 
-		e.getBlock().setMetadata("placed-by-player",
-				new FixedMetadataValue(GreenJobs.getPlugin(), e.getPlayer().getUniqueId()));
+		Player player = event.getPlayer();
+	 
+		plugin.getBlockAPI().addBlockToList(loc, BlockID, player.getName(),
+				plugin.getBasicPluginManager().getDateTodayFromCal());
+
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -59,12 +65,14 @@ public class PlayerAsyncCheckForWork implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerCheckJobEvent event) {
 
- 	plugin.executor.submit(() -> {
+		plugin.executor.submit(() -> {
 
 			Player player = event.getPlayer();
 			UUID ID = player.getUniqueId();
 			String block = event.getWorkedID();
 			String action = event.getWorkedAction().toUpperCase();
+
+			int amount = event.getAmount();
 
 			String id = action + "_" + block;
 			String world = player.getLocation().getWorld().getName();
@@ -87,8 +95,8 @@ public class PlayerAsyncCheckForWork implements Listener {
 
 								JobStats stats = jbb.getJobStats().get(real.getID());
 
-								stats.addTimesBrokenABlock(id, 1);
-								stats.addTimesBrokenBlockDateToday(id, 1);
+								stats.addTimesBrokenABlock(id, amount);
+								stats.addTimesBrokenBlockDateToday(id, amount);
 
 								double chance = rld.getChance();
 
@@ -96,16 +104,16 @@ public class PlayerAsyncCheckForWork implements Listener {
 								int chance2 = r.nextInt(100);
 								if (chance2 < chance) {
 
-									double reward = rld.getMoneyReward();
-									double points = rld.getPoints();
-									double exp = rld.getExp();
+									double reward = amount * rld.getMoneyReward();
+									double points = amount * rld.getPoints();
+									double exp = amount * rld.getExp();
 
 									plugin.getEco().depositPlayer(player, reward);
 
 									stats.addEarnedMoneyByBlock(id, reward);
 									stats.addEarningsByBlockDateToday(id, reward);
 									stats.addEarningsForToday(reward);
-									stats.addWorkedTimes(1);
+									stats.addWorkedTimes(amount);
 									stats.addTotalEarnings(reward);
 
 									if (!plugin.getLevelAPI().isMaxLevel(jbb, real.getID())) {
@@ -122,9 +130,11 @@ public class PlayerAsyncCheckForWork implements Listener {
 
 										if (rw.containsKey("BOSSBAR")) {
 
-											String bm = plugin.getBasicPluginManager()
-													.toHex(player, rw.get("BOSSBAR").replaceAll("<block>", rld.getDisplay(player))
-															.replaceAll("<exp>", ""+exp).replaceAll("<job>", real.getDisplay(player))
+											String bm = plugin.getBasicPluginManager().toHex(player,
+													rw.get("BOSSBAR").replaceAll("<block>", rld.getDisplay(player))
+															.replaceAll("<amount>", "" + amount)
+															.replaceAll("<exp>", "" + exp)
+															.replaceAll("<job>", real.getDisplay(player))
 															.replaceAll("<money>", "" + reward));
 
 											Date isago5seconds = new Date((new Date()).getTime() + 3000L);
@@ -152,14 +162,18 @@ public class PlayerAsyncCheckForWork implements Listener {
 													TextComponent.fromLegacyText(plugin.getBasicPluginManager()
 															.toHex(player, rw.get("ACTIONBAR")
 																	.replaceAll("<block>", rld.getDisplay(player))
-																	.replaceAll("<exp>", ""+exp).replaceAll("<job>", real.getDisplay(player))
+																	.replaceAll("<amount>", "" + amount)
+																	.replaceAll("<exp>", "" + exp)
+																	.replaceAll("<job>", real.getDisplay(player))
 																	.replaceAll("<money>", "" + reward))));
 
 										}
 										if (rw.containsKey("MESSAGE")) {
-											player.sendMessage(plugin.getBasicPluginManager()
-													.toHex(player, rw.get("MESSAGE").replaceAll("<block>", rld.getDisplay(player))
-															.replaceAll("<exp>", ""+exp).replaceAll("<job>", real.getDisplay(player))
+											player.sendMessage(plugin.getBasicPluginManager().toHex(player,
+													rw.get("MESSAGE").replaceAll("<block>", rld.getDisplay(player))
+															.replaceAll("<amount>", "" + amount)
+															.replaceAll("<exp>", "" + exp)
+															.replaceAll("<job>", real.getDisplay(player))
 															.replaceAll("<money>", "" + reward)));
 										}
 									}
@@ -186,7 +200,7 @@ public class PlayerAsyncCheckForWork implements Listener {
 
 			}
 
-			 	});
+		});
 
 	}
 

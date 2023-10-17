@@ -34,6 +34,7 @@ code\warsteiner\jobs\commands\admin\sub\LimitSub.class
 code\warsteiner\jobs\utils\enums\GUIType.class
 code\warsteiner\jobs\utils\custom\PlayerFinishJobEvent.class
 code\warsteiner\jobs\basic\events\PlayerUpdateInventory.class
+code\warsteiner\jobs\utils\actions\BreakFarmAction.class
 code\warsteiner\jobs\utils\playercommand\PlayerSubCommandRegistry.class
 code\warsteiner\jobs\utils\UtilManager.class
 code\warsteiner\jobs\basic\events\PlayerASyncInventoryClickEvent$1.class

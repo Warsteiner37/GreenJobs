@@ -56,7 +56,7 @@ public class ShearAction  extends JobAction implements Listener {
 			UUID ID = player.getUniqueId();
 		  
 
-			PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "SHEAR", color.toString().toUpperCase());
+			PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "SHEAR", color.toString().toUpperCase(), 1);
 			Bukkit.getServer().getPluginManager().callEvent(ev);
 		}
 

@@ -58,7 +58,7 @@ public class KillMobAction extends JobAction implements Listener {
 			EntityType block = event.getEntity().getType();
 			String BlockID = block.toString();
 
-			PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "KILL_MOB", BlockID);
+			PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "KILL_MOB", BlockID, 1);
 			Bukkit.getServer().getPluginManager().callEvent(ev);
 
 		}

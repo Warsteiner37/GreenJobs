@@ -51,9 +51,8 @@ public class PlaceAction extends JobAction implements Listener {
 		Block block = event.getBlock();
 		String BlockID = block.getType().toString();
  
-		bapi.addBlock(block.getLocation(), BlockID, player.getName(), plugin.getBasicPluginManager().getDateTodayFromCal());
-		
-		PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "PLACE", BlockID);
+		  
+		PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "PLACE", BlockID, 1);
 		Bukkit.getServer().getPluginManager().callEvent(ev);
 
 	}

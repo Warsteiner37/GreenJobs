@@ -54,7 +54,7 @@ public class FishAction extends JobAction implements Listener {
 		Player player = event.getPlayer();
 		UUID ID = player.getUniqueId();
 
-		PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "FISH", rep.toUpperCase());
+		PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "FISH", rep.toUpperCase(), 1);
 		Bukkit.getServer().getPluginManager().callEvent(ev);
 
 	}

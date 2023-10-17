@@ -56,6 +56,7 @@ import code.warsteiner.jobs.utils.LocationManager;
 import code.warsteiner.jobs.utils.Metrics;
 import code.warsteiner.jobs.utils.UtilManager;
 import code.warsteiner.jobs.utils.actions.BreakAction;
+import code.warsteiner.jobs.utils.actions.BreakFarmAction;
 import code.warsteiner.jobs.utils.actions.FishAction;
 import code.warsteiner.jobs.utils.actions.JobActionManager;
 import code.warsteiner.jobs.utils.actions.KillMobAction;
@@ -423,6 +424,7 @@ public class GreenJobs extends JavaPlugin {
 		f.registerAction(new ShearAction());
 		f.registerAction(new FishAction());
 		f.registerAction(new MilkAction());
+		f.registerAction(new BreakFarmAction());
 
 		mg.registerEvents(new PlayerAsyncCheckForWork(), this);
 

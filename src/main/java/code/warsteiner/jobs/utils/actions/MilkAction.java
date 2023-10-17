@@ -65,7 +65,7 @@ public class MilkAction extends JobAction implements Listener {
 			
 			String ent = clicked.getType().toString().toUpperCase();
 
-			PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "MILK", ent);
+			PlayerCheckJobEvent ev = new PlayerCheckJobEvent(ID, "MILK", ent, 1);
 			Bukkit.getServer().getPluginManager().callEvent(ev);
 		}
 

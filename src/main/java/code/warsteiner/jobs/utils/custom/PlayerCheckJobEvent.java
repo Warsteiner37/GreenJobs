@@ -17,11 +17,17 @@ public class PlayerCheckJobEvent extends Event {
     private UUID ID; 
     private String block;
     private String act;
+    private int amount;
     
-    public PlayerCheckJobEvent(UUID iD2, String act, String block) { 
+    public PlayerCheckJobEvent(UUID iD2, String act, String block, int amount) { 
         this.ID = iD2;
         this.block = block;
         this.act = act;
+        this.amount = amount;
+    }
+     
+    public int getAmount() {
+    	return this.amount;
     }
     
     public String getWorkedAction() {
