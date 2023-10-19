@@ -33,6 +33,132 @@ public class JobsTemplates {
 		setMilkmanTemplate();
 		setFarmer_BreakTemplate();
 		setTameTemplate();
+		setBreedTemplate();
+	}
+	
+	public void setBreedTemplate() {
+
+		File file = new File("plugins/GreenJobs/jobs/", "BreedJob.yml");
+
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		FileConfiguration cfg = (FileConfiguration) YamlConfiguration.loadConfiguration(file);
+
+		ArrayList<String> actions = new ArrayList<String>();
+		actions.add("BREED");
+
+		ArrayList<String> worlds = new ArrayList<String>();
+		worlds.add("world");
+
+		cfg.set("Display", "&eBreed Animals");
+		cfg.set("Actions", actions);
+		cfg.set("Icon", "PIG_SPAWN_EGG");
+
+		cfg.set("RewardMessages.Actionbar", "&a&l+ &7<money>$ &7by <job> &7for <block>");
+		cfg.set("RewardMessages.BossBar", "&a&l+ &7<money>$ &7by <job> &7for <block>");
+ 
+		cfg.set("ColorOfBar", "GREEN");
+		cfg.set("CustomGlassPlateColor", "BLUE_STAINED_GLASS_PANE");
+		cfg.set("Slot", 20);
+		cfg.set("Price", 30000);
+		cfg.set("Worlds", worlds);
+
+		// stats messages
+		cfg.set("Desc", "&7Earn Money while breeding cute animals!");
+
+		ArrayList<String> stats = new ArrayList<String>();
+		stats.add("&7Level: &6#<level>");
+		stats.add("&7Exp: &7<exp>/<need>");
+		stats.add("&7Bought Date: &7<date_bought>");
+		stats.add("&7Joined Date: &7<joined_date>");
+		stats.add("&7");
+		stats.add("&7Times worked: &7<times>x");
+		stats.add("&7Earned Today: &7<earned_today>$");
+		stats.add("&7Earned all time: &7<earned_all>$");
+		stats.add("&8");
+
+		ArrayList<String> stats2 = new ArrayList<String>();
+		stats2.add("&7Level: &6#<level>");
+		stats2.add("&7Exp: &7<exp>/<need>");
+		stats2.add("&8");
+
+		cfg.set("Stats.In", stats);
+		cfg.set("Stats.Look", stats2);
+
+		// ids
+
+		ArrayList<String> ids = new ArrayList<String>();
+		ids.add("WOLF");
+		ids.add("CAT"); 
+		ids.add("COW");
+		ids.add("PIG");
+		ids.add("CHICKEN");
+		ids.add("SHEEP"); 
+
+		cfg.set("ID.BREED.List", ids);
+
+		for (String action : actions) {
+
+			for (String type : cfg.getStringList("ID." + action + ".List")) {
+				String d = WordUtils.capitalizeFully(type.toLowerCase()).replaceAll("_", " ");
+
+				cfg.set("ID." + action + "." + type + ".Chance", 90);
+				cfg.set("ID." + action + "." + type + ".ID", type);
+				cfg.set("ID." + action + "." + type + ".Icon", type+"_SPAWN_EGG");
+				cfg.set("ID." + action + "." + type + ".Money", 2);
+				cfg.set("ID." + action + "." + type + ".Exp", 3);
+				cfg.set("ID." + action + "." + type + ".Points", 0.5);
+				cfg.set("ID." + action + "." + type + ".Display", "&e" + d);
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Display", "&8< &e" + d + " &8>");
+
+				ArrayList<String> lore5 = new ArrayList<String>();
+				lore5.add("&8&m--------------");
+				lore5.add("&7Reward&8: &a<money>");
+				lore5.add("&7Exp&8: &a<exp>");
+				lore5.add("&7Chance&8: &c<chance>");
+				lore5.add("&7Points&8: &a<points>");
+
+				ArrayList<String> lorein7 = new ArrayList<String>();
+				lorein7.add("&a");
+				lorein7.add("&7You killed this Mob &b<times>x &7times");
+				lorein7.add("&7You earned &c<earned_today>$ &7by this Block today");
+				lorein7.add("&7You earned &c<earned>$ &7by this Block in total");
+
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Lore", lore5);
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.LoreAddWhenOwnJob", lorein7);
+
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Icon", type+"_SPAWN_EGG");
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Sorting", 2);
+			}
+
+		}
+
+		cfg.set("Levels.Config.Base", 29.5);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
+		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+
+		ArrayList<String> commands = new ArrayList<String>();
+
+		commands.add("say <name> just reached level 3 in <job>");
+
+		cfg.set("Levels.3.Commands", commands);
+
+		try {
+			cfg.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void setTameTemplate() {

@@ -67,6 +67,7 @@ code\warsteiner\jobs\commands\sub\RewardsSub.class
 code\warsteiner\jobs\commands\admin\sub\ExpSub.class
 code\warsteiner\jobs\utils\custom\PlayerCheckJobEvent.class
 code\warsteiner\jobs\GreenJobs.class
+code\warsteiner\jobs\utils\actions\BreedAction.class
 code\warsteiner\jobs\api\JobLoadAPI.class
 code\warsteiner\jobs\api\JobAPI.class
 code\warsteiner\jobs\commands\JobsCommand.class
