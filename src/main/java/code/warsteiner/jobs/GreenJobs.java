@@ -64,6 +64,7 @@ import code.warsteiner.jobs.utils.actions.MilkAction;
 import code.warsteiner.jobs.utils.actions.PlaceAction;
 import code.warsteiner.jobs.utils.actions.ShearAction;
 import code.warsteiner.jobs.utils.actions.StripLogAction;
+import code.warsteiner.jobs.utils.actions.TameAction;
 import code.warsteiner.jobs.utils.admincommand.AdminSubCommandRegistry;
 import code.warsteiner.jobs.utils.playercommand.PlayerSubCommandRegistry;
 import code.warsteiner.jobs.utils.templates.FileTemplate;
@@ -425,6 +426,7 @@ public class GreenJobs extends JavaPlugin {
 		f.registerAction(new FishAction());
 		f.registerAction(new MilkAction());
 		f.registerAction(new BreakFarmAction());
+		f.registerAction(new TameAction());
 
 		mg.registerEvents(new PlayerAsyncCheckForWork(), this);
 

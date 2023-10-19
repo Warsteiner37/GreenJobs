@@ -15,6 +15,7 @@ code\warsteiner\jobs\utils\templates\JobStats$1.class
 code\warsteiner\jobs\utils\Metrics$AdvancedPie.class
 code\warsteiner\jobs\utils\templates\JobsPlayer.class
 code\warsteiner\jobs\utils\admincommand\AdminSubCommandRegistry.class
+code\warsteiner\jobs\utils\actions\TameAction.class
 code\warsteiner\jobs\basic\events\PlayerASyncInventoryClickEvent$3.class
 code\warsteiner\jobs\utils\templates\PlaceholderItem.class
 code\warsteiner\jobs\utils\templates\JobsPlayer$2.class
