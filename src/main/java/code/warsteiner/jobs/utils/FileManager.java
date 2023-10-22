@@ -40,6 +40,9 @@ public class FileManager {
 	private FileConfiguration papi;
 	private File papi_file;
 
+	private FileConfiguration levels;
+	private File levels_file;
+	
 	public void setFiles() {
 
 		checkConfigFile();
@@ -50,6 +53,7 @@ public class FileManager {
 		checkRewardsGUIFile();
 		checkSoundsFile();
 		checkPlaceHolderFile();
+		checklevelsFile();
 
 		String loc = getConfigConfig().getString("SaveDataIn");
 
@@ -95,6 +99,32 @@ public class FileManager {
 	public FileConfiguration getOptionsConfig() {
 		return this.options;
 	}
+	
+	public boolean checklevelsFile() {
+		levels_file = new File(GreenJobs.getPlugin().getDataFolder(), "guis" + File.separatorChar + "levels.yml");
+		if (!levels_file.exists()) {
+			levels_file.getParentFile().mkdirs();
+			GreenJobs.getPlugin().saveResource("guis" + File.separatorChar + "levels.yml", false);
+		}
+
+		levels = new YamlConfiguration();
+		try {
+			levels.load(levels_file);
+		} catch (IOException | InvalidConfigurationException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public File getLevelsFile() {
+		return this.levels_file;
+	}
+
+	public FileConfiguration getLevelsConfig() {
+		return this.levels;
+	}
+
 
 	public boolean checkPlaceHolderFile() {
 		papi_file = new File(GreenJobs.getPlugin().getDataFolder(),

@@ -140,13 +140,23 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
 		cfg.set("Levels.3.CustomIcon", "EMERALD");
 		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> desc = new ArrayList<String>();
+
+		desc.add("&c");
+		desc.add("&7This is a Example Desc. for the Levels GUI.");
+		desc.add("&7");
+		desc.add("&7Rewards:");
+		desc.add("&a+ &71500$"); 
+
+		cfg.set("Levels.3.Description", desc);
 
 		ArrayList<String> commands = new ArrayList<String>();
 
@@ -261,8 +271,8 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -399,8 +409,8 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -538,8 +548,8 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -670,8 +680,8 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -726,10 +736,10 @@ public class JobsTemplates {
 
 		cfg.set("ColorOfBar", "YELLOW");
 		cfg.set("CustomGlassPlateColor", "BLUE_STAINED_GLASS_PANE");
-		cfg.set("Slot", 16);
+		cfg.set("Slot", 21);
 		cfg.set("Price", 0);
 		cfg.set("Worlds", worlds);
-
+ 
 		// stats messages
 		cfg.set("Desc", "&7Earn Money while placing everything!");
 
@@ -803,8 +813,8 @@ public class JobsTemplates {
 		cfg.set("ID." + action + "." + type + ".RewardsGUI.LoreAddWhenOwnJob", lorein7);
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -932,8 +942,8 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -1059,8 +1069,8 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -1191,8 +1201,8 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -1323,8 +1333,8 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -1452,8 +1462,8 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -1592,8 +1602,8 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 25.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 50);
-		cfg.set("Levels.Config.MaxLevel", 25);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
@@ -1726,13 +1736,23 @@ public class JobsTemplates {
 		}
 
 		cfg.set("Levels.Config.Base", 29.5);
-		cfg.set("Levels.Config.AddPercentValueLevelUp", 30);
-		cfg.set("Levels.Config.MaxLevel", 30);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
 		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
 
 		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
 		cfg.set("Levels.3.CustomIcon", "EMERALD");
 		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> desc = new ArrayList<String>();
+
+		desc.add("&c");
+		desc.add("&7This is a Example Desc. for the Levels GUI.");
+		desc.add("&7");
+		desc.add("&7Rewards:");
+		desc.add("&a+ &71500$"); 
+
+		cfg.set("Levels.3.Description", desc);
 
 		ArrayList<String> commands = new ArrayList<String>();
 

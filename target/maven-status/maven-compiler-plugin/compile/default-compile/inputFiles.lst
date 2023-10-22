@@ -9,6 +9,7 @@ C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\a
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\api\SkullCreatorAPI.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\actions\ShearAction.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\templates\PlaceholderItem.java
+C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\commands\sub\LevelsSub.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\templates\JobAction.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\UtilManager.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\basic\events\PlayerASyncInventoryClickEvent.java
@@ -63,7 +64,6 @@ C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\manager
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\templates\CustomItem.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\custom\PlayerCheckJobEvent.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\templates\BlockData.java
-C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\commands\admin\JobsManagerCommand.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\enums\MultiplierWeight.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\actions\PlaceAction.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\commands\admin\AdminTabComplete.java

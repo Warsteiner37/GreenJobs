@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.util.Map.entry;
+
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -19,6 +22,10 @@ import org.checkerframework.checker.units.qual.K;
 
 import code.warsteiner.jobs.GreenJobs;
 import code.warsteiner.jobs.support.PlaceHolderManager;
+import code.warsteiner.jobs.utils.templates.Job;
+import code.warsteiner.jobs.utils.templates.JobStats;
+import code.warsteiner.jobs.utils.templates.JobsPlayer;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 
 public class BasicPluginManager {
@@ -46,6 +53,52 @@ public class BasicPluginManager {
 
 		return trans;
 
+	}
+
+	public String replaceAll(String m, Player player, Job job) {
+
+		JobsPlayer jb = plugin.getPlayerDataManager().getJobsPlayerList().get(player.getUniqueId());
+
+		Map<String, String> replacer;
+		
+		if(jb.getJobStats().containsKey(job.getID())) {
+			JobStats stats = jb.getJobStats().get(job.getID());
+			
+			double exp = stats.getExp();
+			double need = stats.getNeed();
+			int level = stats.getLevel();
+			double more = need - exp;
+
+			replacer = Map.ofEntries(entry("<exp>", Format(exp)),
+					entry("<level>", "" + level),
+					entry("<need>", Format(need)),
+					entry("<player_name>", player.getName()),
+					entry("<player_display>", player.getDisplayName()),
+					entry("<more>", Format(more))
+					
+					);
+		} else {
+	
+			replacer = Map.ofEntries(entry("<player_name>", player.getName()),
+					entry("<player_display>", player.getDisplayName())
+					
+					);
+		}
+
+		return this.formatText(m, replacer, player);
+	}
+
+	public String formatText(String text, Map<String, String> replacer, Player player) {
+		text = toHex(player, text).replaceAll("&", "§");
+		for (String key : replacer.keySet()) {
+			text = text.replaceAll(key, replacer.get(key));
+		}
+
+		if (plugin.isInstalled("PlaceHolderAPI")) {
+			return PlaceholderAPI.setPlaceholders(player, text);
+		}
+
+		return text;
 	}
 
 	public String toHex(CommandSender player, String textToTranslate) {
@@ -82,31 +135,31 @@ public class BasicPluginManager {
 				if (file.contains("Sounds." + type + ".Vol") && file.contains("Sounds." + type + ".Pitch")) {
 
 					String ty = file.getString("Sounds." + type + ".Type");
-					
+
 					Sound sound = null;
 					float vol = 0;
 					float pitch = 0;
-					
+
 					try {
 						sound = Sound.valueOf(ty);
 					} catch (IllegalArgumentException ex) {
-						Bukkit.getConsoleSender().sendMessage("Failed to find Sound ~ "+sound+"!");
+						Bukkit.getConsoleSender().sendMessage("Failed to find Sound ~ " + sound + "!");
 					}
 
 					try {
-						 vol = Float.valueOf((float) file.getDouble("Sounds." + type + ".Vol"));
-					 
+						vol = Float.valueOf((float) file.getDouble("Sounds." + type + ".Vol"));
+
 					} catch (IllegalArgumentException ex) {
-						Bukkit.getConsoleSender().sendMessage("Failed to load Volume for ~ "+sound+"!");
+						Bukkit.getConsoleSender().sendMessage("Failed to load Volume for ~ " + sound + "!");
 					}
 
 					try {
 						pitch = Float.valueOf((float) file.getDouble("Sounds." + type + ".Pitch"));
-						  
+
 					} catch (IllegalArgumentException ex) {
-						Bukkit.getConsoleSender().sendMessage("Failed to load Pitch for ~ "+sound+"!");
+						Bukkit.getConsoleSender().sendMessage("Failed to load Pitch for ~ " + sound + "!");
 					}
- 
+
 					player.playSound(player, sound, vol, pitch);
 				}
 

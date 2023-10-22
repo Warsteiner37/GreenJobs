@@ -113,12 +113,24 @@ public class LevelAPI {
 		}
 		
 	}
+	
+	public boolean isLastLevelByInt(String job, int i) {
+		Job j = plugin.getJobAPI().getLoadedJobsHash().get(job);
+		
+		int max = Integer.parseInt( j.getLevelOptionsList().get("MaxLevel")) - 1;
+		
+		if(i >= max || i == max) {
+			return true;
+		}
+		return false;
+	 
+	}
  
 	public boolean isMaxLevel(JobsPlayer jb, String job) {
 		
 		Job j = plugin.getJobAPI().getLoadedJobsHash().get(job);
 		
-		int max = Integer.parseInt( j.getLevelOptionsList().get("MaxLevel"));
+		int max = Integer.parseInt( j.getLevelOptionsList().get("MaxLevel")) - 1;
 	 
 		if(jb.getJobStats().get(job.toUpperCase()).getLevel() >= max) {
 			return true;

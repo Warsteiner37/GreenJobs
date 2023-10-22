@@ -18,77 +18,78 @@ import code.warsteiner.jobs.utils.playercommand.PlayerSubCommand;
 import code.warsteiner.jobs.utils.templates.Job;
 import code.warsteiner.jobs.utils.templates.JobsPlayer;
 
-public class RewardsSub extends PlayerSubCommand {
+public class LevelsSub extends PlayerSubCommand {
 
 	private static GreenJobs plugin = GreenJobs.getPlugin();
 
 	@Override
 	public String getName() {
 		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
-		
-		return f.getString("CommandConfig.Rewards.Use").toLowerCase();
+
+		return f.getString("CommandConfig.Levels.Use").toLowerCase();
 	}
-	
+
 	private static HashMap<String, Integer> pages = new HashMap<String, Integer>();
 
 	public static HashMap<String, Integer> getPages() {
 		return pages;
 	}
 	
- 
 	@Override
 	public void perform(CommandSender sender, String[] args) {
-		
-		if(sender instanceof Player) {
+
+		if (sender instanceof Player) {
 			Player player = (Player) sender;
-			 
+
 			MessageManager m = plugin.getMessageManager();
-			
+
 			FileConfiguration f = plugin.getFileManager().getCommandsConfig();
 			BasicPluginManager v = plugin.getBasicPluginManager();
-			
+
 			String name = player.getName();
 			UUID id = player.getUniqueId();
-			
+
 			String prefix = plugin.getMessageManager().getPrefix(player);
-			
+
 			JobAPI jb = plugin.getJobAPI();
 
 			JobsPlayer jp = plugin.getPlayerDataManager().getJobsPlayer(name, id);
-			
+
 			String uk = f.getString("CommandConfig.GeneralUnknown");
-			
-			String use = f.getString("CommandConfig.Rewards.Use");
-	 
+
 			if (args.length == 1) {
 
-				if (!f.getBoolean("CommandConfig.Rewards.Enabled")) {
+				if (!f.getBoolean("CommandConfig.Levels.Enabled")) {
 					player.sendMessage(v.toHex(player, uk.replaceAll("<prefix>", prefix)));
 					return;
 				}
 
 				if (jp.getCurrentJobs().size() != 0) {
 
-					String job = jp.getCurrentJobs().get(0);
+					String job = jp.getCurrentJobs().get(0).toUpperCase();
+ 
+					String player_name = player.getName() + "_" + job;
 
-					String used = null;
-					if (plugin.getBasicGUIManager().getCurrentCate().containsKey(jp.getUUID())) {
-						used = plugin.getBasicGUIManager().getCurrentCate().get(jp.getUUID());
+					int page = 1;
+
+					if (pages.containsKey(player_name)) {
+						page = pages.get(player_name);
 					} else {
-						used = plugin.getFileManager().getRewardsConfig().getString("DefaultSorting").toUpperCase();
+						pages.put(player_name, page);
 					}
-					
-					plugin.getJobsGUIManager().openBlockRewardsMenu(player, job.toUpperCase(), 1, used, false);
+
+					plugin.getJobsGUIManager().openLevelsMenu(player, page, job, false);
 					return;
 				} else {
-					player.sendMessage(v.toHex(player, f.getString("CommandConfig.Rewards.NoJobs").replaceAll("<prefix>", prefix)));
+					player.sendMessage(v.toHex(player,
+							f.getString("CommandConfig.Rewards.NoJobs").replaceAll("<prefix>", prefix)));
 					return;
 
 				}
 
 			} else if (args.length == 2) {
 
-				if (!f.getBoolean("CommandConfig.Rewards.Enabled")) {
+				if (!f.getBoolean("CommandConfig.Levels.Enabled")) {
 					player.sendMessage(v.toHex(player, uk.replaceAll("<prefix>", prefix)));
 					return;
 				}
@@ -97,17 +98,21 @@ public class RewardsSub extends PlayerSubCommand {
 
 				if (jb.existJob(check)) {
 
-					String used = null;
-					if (plugin.getBasicGUIManager().getCurrentCate().containsKey(jp.getUUID())) {
-						used = plugin.getBasicGUIManager().getCurrentCate().get(jp.getUUID());
+					String player_name = player.getName() + "_" + check.toUpperCase();
+
+					int page = 1;
+
+					if (pages.containsKey(player_name)) {
+						page = pages.get(player_name);
 					} else {
-						used = plugin.getFileManager().getRewardsConfig().getString("DefaultSorting").toUpperCase();
+						pages.put(player_name, page);
 					}
-					
-					plugin.getJobsGUIManager().openBlockRewardsMenu(player, check.toUpperCase(), 1, used, false);
+ 
+					plugin.getJobsGUIManager().openLevelsMenu(player, page, check, false);
 					return;
 				} else {
-					player.sendMessage(v.toHex(player, f.getString("CommandConfig.Rewards.UnknownJob").replaceAll("<prefix>", prefix)));
+					player.sendMessage(v.toHex(player,
+							f.getString("CommandConfig.Rewards.UnknownJob").replaceAll("<prefix>", prefix)));
 					return;
 				}
 
@@ -126,22 +131,22 @@ public class RewardsSub extends PlayerSubCommand {
 		}
 		return true;
 	}
- 
+
 	@Override
 	public String getUsage(CommandSender player) {
 		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
-		
-		return plugin.getBasicPluginManager().toHex(player, f.getString("CommandConfig.Rewards.Usage"));
+
+		return plugin.getBasicPluginManager().toHex(player, f.getString("CommandConfig.Levels.Usage"));
 	}
- 
+
 	@Override
-	public String getArgsLayout() { 
-		
+	public String getArgsLayout() {
+
 		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
-		
-		String use = f.getString("CommandConfig.Rewards.Use");
-		
-		return use+" <job>";
+
+		String use = f.getString("CommandConfig.Levels.Use");
+
+		return use + " <job>";
 	}
 
 }

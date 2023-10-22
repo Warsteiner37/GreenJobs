@@ -15,6 +15,21 @@ DefaultSorting: "RANDOM"
 
 ItemsPerPage: 36
 
+BackToFirstPage:
+
+  Enabled: true
+  
+  ShowFromPage: 2
+  
+  Display: "&6Jump back to first Page"
+  
+  Icon: "SLIME_BALL"
+  
+  Slot: 52
+  
+  Lore:
+    - "&7Click to jump to the first page!"
+
 SortModes:
 
   Display: "&7Sorting Items &8: &7"

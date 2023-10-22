@@ -34,13 +34,13 @@ import code.warsteiner.jobs.basic.events.PlayerUpdateInventory;
 import code.warsteiner.jobs.commands.JobTabComplete;
 import code.warsteiner.jobs.commands.JobsCommand;
 import code.warsteiner.jobs.commands.admin.AdminCommand;
-import code.warsteiner.jobs.commands.admin.AdminTabComplete;
-import code.warsteiner.jobs.commands.admin.JobsManagerCommand;
+import code.warsteiner.jobs.commands.admin.AdminTabComplete; 
 import code.warsteiner.jobs.commands.admin.sub.ExpSub;
 import code.warsteiner.jobs.commands.admin.sub.LevelSub;
 import code.warsteiner.jobs.commands.admin.sub.LimitSub;
 import code.warsteiner.jobs.commands.admin.sub.NeedSub;
 import code.warsteiner.jobs.commands.sub.HelpSub;
+import code.warsteiner.jobs.commands.sub.LevelsSub;
 import code.warsteiner.jobs.commands.sub.RewardsSub;
 import code.warsteiner.jobs.manager.ItemManager;
 import code.warsteiner.jobs.manager.JobsGUIManager;
@@ -389,8 +389,7 @@ public class GreenJobs extends JavaPlugin {
 
 		executor.shutdown();
 
-		plugin.getBasicGUIManager().clearLists();
-		plugin.getJobsGUIManager().details_page_manager.clear();
+		plugin.getBasicGUIManager().clearLists(); 
 		plugin.getJobAPI().clearLists();
 		plugin.getMessageManager().clearLists();
 		plugin.getLoadAndStoreGUIManager().clearLists();
@@ -456,6 +455,7 @@ public class GreenJobs extends JavaPlugin {
 		getCommand("jobs").setTabCompleter(new JobTabComplete());
 
 		getPlayerSubCommandManager().getSubCommandList().add(new RewardsSub());
+		getPlayerSubCommandManager().getSubCommandList().add(new LevelsSub());
 		getPlayerSubCommandManager().getSubCommandList().add(new HelpSub());
 
 		// getCommand("jobsmanager").setExecutor(new JobsManagerCommand());

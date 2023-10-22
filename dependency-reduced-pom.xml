@@ -36,10 +36,6 @@
       <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
     </repository>
     <repository>
-      <id>sk89q-repo</id>
-      <url>https://maven.enginehub.org/repo/</url>
-    </repository>
-    <repository>
       <id>minecraft-repo</id>
       <url>https://libraries.minecraft.net/</url>
     </repository>
@@ -54,15 +50,15 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>org.spigotmc</groupId>
-      <artifactId>spigot-api</artifactId>
-      <version>1.20.1-R0.1-SNAPSHOT</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>com.mojang</groupId>
       <artifactId>authlib</artifactId>
       <version>1.5.21</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.20.1-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

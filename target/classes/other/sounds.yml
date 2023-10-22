@@ -38,10 +38,20 @@ Sounds:
     Vol: 1
     Pitch: 4
 
+  OPEN_LEVELS_GUI:
+    Type: "BLOCK_CHEST_OPEN"
+    Vol: 1
+    Pitch: 4
+
   OPEN_REWARDS_GUI:
     Type: "BLOCK_CHEST_OPEN"
     Vol: 1
     Pitch: 4
+
+  LEVELS_CHANGE_PAGE:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
 
   REWARDS_CHANGE_PAGE:
     Type: "BLOCK_NOTE_BLOCK_BASS"

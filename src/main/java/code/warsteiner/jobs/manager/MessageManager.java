@@ -96,7 +96,8 @@ public class MessageManager {
 			"job_nothing_to_leave",
 			"rewards_no_other_page",
 			"livegui_cancel_not_enough_money",
-			"too_many_jobs");
+			"too_many_jobs",
+			"levels_no_other_page");
 	
 	public void loadDefaultValues() {
 		
@@ -140,6 +141,7 @@ public class MessageManager {
 				messages_cfg.set("rewards_no_other_page", "<prefix> &cThere is no other Pages!");
 				messages_cfg.set("no_cat_found", "<prefix> &cCouldnt find any Categories!");
 				messages_cfg.set("livegui_cancel_not_enough_money", "<prefix> &cThe process was canceled because you dont have enough money anymore!");
+				messages_cfg.set("levels_no_other_page", "<prefix> &cThere is no other Pages!");
 				
 				try {
 					messages_cfg.save(messages_file);

@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -17,10 +18,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import code.warsteiner.jobs.GreenJobs;
 import code.warsteiner.jobs.basic.BasicGUIManager;
+import code.warsteiner.jobs.commands.sub.LevelsSub;
+import code.warsteiner.jobs.commands.sub.RewardsSub;
 import code.warsteiner.jobs.utils.enums.GUIType;
 import code.warsteiner.jobs.utils.templates.CustomItem;
 import code.warsteiner.jobs.utils.templates.Job;
 import code.warsteiner.jobs.utils.templates.JobID;
+import code.warsteiner.jobs.utils.templates.JobLevel;
 import code.warsteiner.jobs.utils.templates.JobStats;
 import code.warsteiner.jobs.utils.templates.JobsPlayer;
 import code.warsteiner.jobs.utils.templates.PlaceholderItem;
@@ -29,9 +33,536 @@ public class JobsGUIManager {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
 
-	public HashMap<UUID, Integer> details_page_manager = new HashMap<UUID, Integer>();
+	public void openLevelsMenu(Player player, int page, String job, boolean r) {
 
-	public void openBlockRewardsMenu(Player player, String string, int page, String sd, boolean r) {
+		JobsPlayer jb = plugin.getPlayerDataManager().getJobsPlayer(player.getName(), player.getUniqueId());
+		BasicGUIManager b = plugin.getBasicGUIManager();
+
+		if (!r) {
+			plugin.getBasicPluginManager().playSound(player, "OPEN_LEVELS_GUI");
+		}
+
+		String name = player.getName();
+
+		GUIType type = GUIType.LEVELS;
+
+		Inventory inv = plugin.getBasicGUIManager().openInventory(player, type, null, job.toUpperCase(), null);
+
+		plugin.executor.submit(() -> {
+
+			setOther(player, type, inv, name);
+
+			setLevelsItem(type, page, inv, player, jb, job.toUpperCase());
+
+		});
+
+		player.openInventory(inv);
+	}
+
+	public void setLevelsItem(GUIType type, int page, InventoryView inv, Player player, JobsPlayer j, Job job) {
+
+		FileConfiguration cfg = plugin.getFileManager().getLevelsConfig();
+
+		List<String> slots = cfg.getStringList("ItemPlaces");
+
+		int itemsPerPage = slots.size();
+
+		HashMap<String, Integer> p = LevelsSub.getPages();
+
+		String player_name = player.getName() + "_" + job.getID();
+
+		if (p.containsKey(player_name)) {
+			LevelsSub.getPages().remove(player_name);
+		}
+
+		LevelsSub.getPages().put(player_name, page);
+
+		HashMap<Integer, JobLevel> d = job.getLevels();
+
+		int total = d.size();
+
+		int startIndex = (page - 1) * itemsPerPage;
+		int endIndex = Math.min(startIndex + itemsPerPage, total);
+
+		int current = j.getJobStats().get(job.getID()).getLevel();
+
+		int where = 0;
+
+		for (String slot : slots) {
+
+			int wh = Integer.valueOf(slot);
+
+			inv.setItem(wh, null);
+
+		}
+
+		if (cfg.getBoolean("BackToFirstPage.Enabled")) {
+
+			int show_item = cfg.getInt("BackToFirstPage.ShowFromPage");
+
+			inv.setItem(cfg.getInt("BackToFirstPage.Slot"), null);
+
+			if (page == show_item || page >= show_item) {
+				ItemStack item = plugin.getItemManager().createOrGetItem("Levels.Back.To.First.Page",
+						cfg.getString("BackToFirstPage.Icon"), player.getName(),
+						cfg.getInt("BackToFirstPage.CustomModelData"));
+				ItemMeta meta = item.getItemMeta();
+
+				String display = plugin.getBasicPluginManager().replaceAll(cfg.getString("BackToFirstPage.Display"),
+						player, job);
+
+				meta.setDisplayName(display);
+
+				ArrayList<String> l = new ArrayList<String>();
+
+				for (String line : cfg.getStringList("BackToFirstPage.Lore")) {
+					l.add(plugin.getBasicPluginManager().replaceAll(line, player, job));
+				}
+
+				meta.setLore(l);
+
+				item.setItemMeta(meta);
+
+				inv.setItem(cfg.getInt("BackToFirstPage.Slot"), item);
+			}
+
+		}
+
+		for (int i = startIndex; i < endIndex; i++) {
+			if (i != 0) {
+
+				if (job.getLevels().size() >= i || job.getLevels().size() == i) {
+					JobLevel get = d.get(i);
+
+					int check = get.getLevel();
+
+					if (plugin.getLevelAPI().isLastLevelByInt(job.getID(), get.getLevel())) {
+
+						boolean enchanted_last = false;
+						boolean desc_last = false;
+
+						String display = cfg.getString("LastLevelIcon.Display");
+						String icon = cfg.getString("LastLevelIcon.Icon");
+						List<String> lore = null;
+
+						if (plugin.getLevelAPI().isMaxLevel(j, job.getID())) {
+
+							enchanted_last = true;
+							desc_last = true;
+							lore = cfg.getStringList("LastLevelIcon.Lore");
+
+						} else if (current + 1 == check) {
+							lore = cfg.getStringList("LevelLore.Currently");
+						} else {
+							lore = cfg.getStringList("LevelLore.Locked");
+						}
+
+						ItemStack item = plugin.getItemManager().createOrGetItem(
+								"ItemMaterials.LastIcon." + job.getID(), icon, player.getName(),
+								cfg.getInt("LastLevelIcon.CustomModelData"));
+
+						ItemMeta meta = item.getItemMeta();
+						meta.setDisplayName(plugin.getBasicPluginManager().toHex(player, display));
+
+						item.setAmount(get.getLevel());
+
+						ArrayList<String> l = new ArrayList<String>();
+
+						if (enchanted_last) {
+							meta.addEnchant(Enchantment.LUCK, 1, false);
+						}
+
+						if (lore != null) {
+							for (String line : lore) {
+								String tr = plugin.getBasicPluginManager().replaceAll(line, player, job);
+
+								l.add(tr);
+
+							}
+						}
+
+						if (desc_last) {
+							if (!get.getDescription().isEmpty()) {
+
+								for (String line : get.getDescription()) {
+
+									String tr = plugin.getBasicPluginManager().replaceAll(line, player, job);
+
+									l.add(tr);
+								}
+							}
+						}
+
+						meta.setLore(l);
+
+						item.setItemMeta(meta);
+
+						inv.setItem(Integer.valueOf(slots.get(where)), item);
+
+					} else {
+
+						ItemStack item = null;
+
+						List<String> lore = null;
+
+						boolean enchanted = false;
+						boolean desc = false;
+
+						if (current + 1 == check) {
+							item = plugin.getItemManager().createOrGetItem("ItemMaterials.Currently",
+									cfg.getString("ItemMaterials.Currently"), player.getName(),
+									cfg.getInt("ItemMaterials.CurrentlyCustomModel"));
+							lore = cfg.getStringList("LevelLore.Currently");
+							desc = cfg.getBoolean("LevelDesc.Currently");
+
+						} else if (current >= check) {
+							item = plugin.getItemManager().createOrGetItem("ItemMaterials.Reached",
+									cfg.getString("ItemMaterials.Reached"), player.getName(),
+									cfg.getInt("ItemMaterials.ReachedCustomModel"));
+							lore = cfg.getStringList("LevelLore.Reached");
+
+							if (cfg.getBoolean("EnchantAlreadyReachedLevels")) {
+								enchanted = true;
+							}
+
+							desc = cfg.getBoolean("LevelDesc.Reached");
+
+						} else {
+							item = plugin.getItemManager().createOrGetItem("ItemMaterials.Locked",
+									cfg.getString("ItemMaterials.Locked"), player.getName(),
+									cfg.getInt("ItemMaterials.LockedCustomModel"));
+							lore = cfg.getStringList("LevelLore.Locked");
+							desc = cfg.getBoolean("LevelDesc.Locked");
+
+						}
+
+						String display = plugin.getBasicPluginManager()
+								.replaceAll(cfg.getString("LevelDisplay"), player, job)
+								.replaceAll("<gui_level>", "" + get.getLevel());
+
+						ItemMeta meta = item.getItemMeta();
+						meta.setDisplayName(display);
+
+						item.setAmount(get.getLevel());
+
+						ArrayList<String> l = new ArrayList<String>();
+
+						if (enchanted) {
+							meta.addEnchant(Enchantment.LUCK, 1, false);
+						}
+
+						if (lore != null) {
+							for (String line : lore) {
+								String tr = plugin.getBasicPluginManager().replaceAll(line, player, job);
+
+								l.add(tr);
+
+							}
+						}
+
+						if (desc) {
+							if (!get.getDescription().isEmpty()) {
+
+								for (String line : get.getDescription()) {
+
+									String tr = plugin.getBasicPluginManager().replaceAll(line, player, job);
+
+									l.add(tr);
+								}
+							}
+						}
+
+						meta.setLore(l);
+
+						item.setItemMeta(meta);
+
+						inv.setItem(Integer.valueOf(slots.get(where)), item);
+					}
+
+				}
+
+			} else {
+
+				ItemStack item = plugin.getItemManager().createOrGetItem("InfoItem.Icon",
+						cfg.getString("InfoItem.Icon"), player.getName(), cfg.getInt("InfoItem.CustomModelData"));
+				ItemMeta meta = item.getItemMeta();
+
+				String display = plugin.getBasicPluginManager().replaceAll(cfg.getString("InfoItem.Display"), player,
+						job);
+
+				meta.setDisplayName(display);
+
+				ArrayList<String> l = new ArrayList<String>();
+
+				for (String line : cfg.getStringList("InfoItem.Lore")) {
+					l.add(plugin.getBasicPluginManager().replaceAll(line, player, job));
+				}
+
+				meta.setLore(l);
+
+				item.setItemMeta(meta);
+
+				inv.setItem(Integer.valueOf(slots.get(where)), item);
+			}
+
+			where++;
+		}
+	}
+
+	public void setLevelsItem(GUIType type, int page, Inventory inv, Player player, JobsPlayer j, String jb) {
+
+		FileConfiguration cfg = plugin.getFileManager().getLevelsConfig();
+
+		List<String> slots = cfg.getStringList("ItemPlaces");
+
+		Job job = plugin.getJobAPI().getLoadedJobsHash().get(jb);
+
+		int itemsPerPage = slots.size();
+
+		HashMap<String, Integer> p = LevelsSub.getPages();
+
+		String player_name = player.getName() + "_" + job.getID();
+
+		if (p.containsKey(player_name)) {
+			LevelsSub.getPages().remove(player_name);
+		}
+
+		LevelsSub.getPages().put(player_name, page);
+
+		HashMap<Integer, JobLevel> d = job.getLevels();
+
+		int current = j.getJobStats().get(jb).getLevel();
+
+		int total = d.size();
+
+		int startIndex = (page - 1) * itemsPerPage;
+		int endIndex = Math.min(startIndex + itemsPerPage, total);
+
+		int where = 0;
+
+		for (String slot : slots) {
+
+			int wh = Integer.valueOf(slot);
+
+			inv.setItem(wh, null);
+
+		}
+
+		if (cfg.getBoolean("BackToFirstPage.Enabled")) {
+
+			inv.setItem(cfg.getInt("BackToFirstPage.Slot"), null);
+
+			int show_item = cfg.getInt("BackToFirstPage.ShowFromPage");
+
+			if (page == show_item || page >= show_item) {
+				ItemStack item = plugin.getItemManager().createOrGetItem("Levels.Back.To.First.Page",
+						cfg.getString("BackToFirstPage.Icon"), player.getName(),
+						cfg.getInt("BackToFirstPage.CustomModelData"));
+				ItemMeta meta = item.getItemMeta();
+
+				String display = plugin.getBasicPluginManager().replaceAll(cfg.getString("BackToFirstPage.Display"),
+						player, job);
+
+				meta.setDisplayName(display);
+
+				ArrayList<String> l = new ArrayList<String>();
+
+				for (String line : cfg.getStringList("BackToFirstPage.Lore")) {
+					l.add(plugin.getBasicPluginManager().replaceAll(line, player, job));
+				}
+
+				meta.setLore(l);
+
+				item.setItemMeta(meta);
+
+				inv.setItem(cfg.getInt("BackToFirstPage.Slot"), item);
+			}
+
+		}
+
+		for (int i = startIndex; i < endIndex; i++) {
+			if (i != 0) {
+
+				if (job.getLevels().size() >= i || job.getLevels().size() == i) {
+					JobLevel get = d.get(i);
+
+					int check = get.getLevel();
+
+					if (plugin.getLevelAPI().isLastLevelByInt(job.getID(), get.getLevel())) {
+
+						boolean enchanted_last = false;
+						boolean desc_last = false;
+
+						String display = cfg.getString("LastLevelIcon.Display");
+						String icon = cfg.getString("LastLevelIcon.Icon");
+						List<String> lore = null;
+
+						if (plugin.getLevelAPI().isMaxLevel(j, job.getID())) {
+
+							enchanted_last = true;
+							desc_last = true;
+							lore = cfg.getStringList("LastLevelIcon.Lore");
+
+						} else if (current + 1 == check) {
+							lore = cfg.getStringList("LevelLore.Currently");
+						} else {
+							lore = cfg.getStringList("LevelLore.Locked");
+						}
+
+						ItemStack item = plugin.getItemManager().createOrGetItem(
+								"ItemMaterials.LastIcon." + job.getID(), icon, player.getName(),
+								cfg.getInt("LastLevelIcon.CustomModelData"));
+
+						ItemMeta meta = item.getItemMeta();
+						meta.setDisplayName(plugin.getBasicPluginManager().toHex(player, display));
+
+						item.setAmount(get.getLevel());
+
+						ArrayList<String> l = new ArrayList<String>();
+
+						if (enchanted_last) {
+							meta.addEnchant(Enchantment.LUCK, 1, false);
+						}
+
+						if (lore != null) {
+							for (String line : lore) {
+								String tr = plugin.getBasicPluginManager().replaceAll(line, player, job);
+
+								l.add(tr);
+
+							}
+						}
+
+						if (desc_last) {
+							if (!get.getDescription().isEmpty()) {
+
+								for (String line : get.getDescription()) {
+
+									String tr = plugin.getBasicPluginManager().replaceAll(line, player, job);
+
+									l.add(tr);
+								}
+							}
+						}
+
+						meta.setLore(l);
+
+						item.setItemMeta(meta);
+
+						inv.setItem(Integer.valueOf(slots.get(where)), item);
+
+					} else {
+
+						ItemStack item = null;
+
+						List<String> lore = null;
+
+						boolean enchanted = false;
+						boolean desc = false;
+
+						if (current + 1 == check) {
+							item = plugin.getItemManager().createOrGetItem("ItemMaterials.Currently",
+									cfg.getString("ItemMaterials.Currently"), player.getName(),
+									cfg.getInt("ItemMaterials.CurrentlyCustomModel"));
+							lore = cfg.getStringList("LevelLore.Currently");
+							desc = cfg.getBoolean("LevelDesc.Currently");
+
+						} else if (current >= check) {
+							item = plugin.getItemManager().createOrGetItem("ItemMaterials.Reached",
+									cfg.getString("ItemMaterials.Reached"), player.getName(),
+									cfg.getInt("ItemMaterials.ReachedCustomModel"));
+							lore = cfg.getStringList("LevelLore.Reached");
+
+							if (cfg.getBoolean("EnchantAlreadyReachedLevels")) {
+								enchanted = true;
+							}
+
+							desc = cfg.getBoolean("LevelDesc.Reached");
+
+						} else {
+							item = plugin.getItemManager().createOrGetItem("ItemMaterials.Locked",
+									cfg.getString("ItemMaterials.Locked"), player.getName(),
+									cfg.getInt("ItemMaterials.LockedCustomModel"));
+							lore = cfg.getStringList("LevelLore.Locked");
+							desc = cfg.getBoolean("LevelDesc.Locked");
+
+						}
+
+						String display = plugin.getBasicPluginManager()
+								.replaceAll(cfg.getString("LevelDisplay"), player, job)
+								.replaceAll("<gui_level>", "" + get.getLevel());
+
+						ItemMeta meta = item.getItemMeta();
+						meta.setDisplayName(display);
+
+						item.setAmount(get.getLevel());
+
+						ArrayList<String> l = new ArrayList<String>();
+
+						if (enchanted) {
+							meta.addEnchant(Enchantment.LUCK, 1, false);
+						}
+
+						if (lore != null) {
+							for (String line : lore) {
+								String tr = plugin.getBasicPluginManager().replaceAll(line, player, job);
+
+								l.add(tr);
+
+							}
+						}
+
+						if (desc) {
+							if (!get.getDescription().isEmpty()) {
+
+								for (String line : get.getDescription()) {
+
+									String tr = plugin.getBasicPluginManager().replaceAll(line, player, job);
+
+									l.add(tr);
+								}
+							}
+						}
+
+						meta.setLore(l);
+
+						item.setItemMeta(meta);
+
+						inv.setItem(Integer.valueOf(slots.get(where)), item);
+					}
+
+				}
+
+			} else {
+
+				ItemStack item = plugin.getItemManager().createOrGetItem("InfoItem.Icon",
+						cfg.getString("InfoItem.Icon"), player.getName(), cfg.getInt("InfoItem.CustomModelData"));
+				ItemMeta meta = item.getItemMeta();
+
+				String display = plugin.getBasicPluginManager().replaceAll(cfg.getString("InfoItem.Display"), player,
+						job);
+
+				meta.setDisplayName(display);
+
+				ArrayList<String> l = new ArrayList<String>();
+
+				for (String line : cfg.getStringList("InfoItem.Lore")) {
+					l.add(plugin.getBasicPluginManager().replaceAll(line, player, job));
+				}
+
+				meta.setLore(l);
+
+				item.setItemMeta(meta);
+
+				inv.setItem(Integer.valueOf(slots.get(where)), item);
+			}
+
+			where++;
+
+		}
+	}
+
+	public void openBlockRewardsMenu(Player player, String job_name, int page, String sd, boolean r) {
 
 		LoadAndStoreGUIManager d = plugin.getLoadAndStoreGUIManager();
 		JobsPlayer jb = plugin.getPlayerDataManager().getJobsPlayer(player.getName(), player.getUniqueId());
@@ -43,25 +574,33 @@ public class JobsGUIManager {
 			plugin.getBasicPluginManager().playSound(player, "OPEN_REWARDS_GUI");
 		}
 
+		String player_name = player.getName() + "_" + job_name;
+
+		if (RewardsSub.getPages().containsKey(player_name)) {
+			RewardsSub.getPages().remove(player_name);
+		}
+
+		RewardsSub.getPages().put(player_name, page);
+
 		String name = player.getName();
 
 		GUIType type = GUIType.REWARDS;
 
-		Inventory inv = plugin.getBasicGUIManager().openInventory(player, type, null, string, sd);
+		Inventory inv = plugin.getBasicGUIManager().openInventory(player, type, null, job_name, sd);
 
-	 	plugin.executor.submit(() -> {
+		plugin.executor.submit(() -> {
 
 			setOther(player, type, inv, name);
 
-			setItemsSorted(type, page, file.getInt("ItemsPerPage"), inv, player, sd, string, jb);
+			setItemsSorted(type, page, file.getInt("ItemsPerPage"), inv, player, sd, job_name, jb);
 
-			setCatItem(type, page, file.getInt("ItemsPerPage"), inv, player, sd, string, jb);
-		 });
+			setCatItem(type, page, file.getInt("ItemsPerPage"), inv, player, sd, job_name, jb);
+		});
 
 		player.openInventory(inv);
 	}
 
-	public void updateBlockRewardsGUI(Player player, String string, int page, String sd) {
+	public void updateBlockRewardsGUI(Player player, String job_name, int page, String sd) {
 
 		plugin.executor.submit(() -> {
 
@@ -78,18 +617,16 @@ public class JobsGUIManager {
 			GUIType type = GUIType.REWARDS;
 
 			Inventory inv = player.getOpenInventory().getTopInventory();
-			;
 
 			inv.clear();
 
 			plugin.getBasicGUIManager().getCurrentCate().put(player.getUniqueId(), sd);
-			m2.details_page_manager.put(player.getUniqueId(), page);
 
 			setOther(player, type, inv, name);
 
-			setItemsSorted(type, page, file.getInt("ItemsPerPage"), inv, player, sd, string, jb);
+			setItemsSorted(type, page, file.getInt("ItemsPerPage"), inv, player, sd, job_name, jb);
 
-			setCatItem(type, page, file.getInt("ItemsPerPage"), inv, player, sd, string, jb);
+			setCatItem(type, page, file.getInt("ItemsPerPage"), inv, player, sd, job_name, jb);
 		});
 
 	}
@@ -209,32 +746,63 @@ public class JobsGUIManager {
 
 		Job job = plugin.getJobAPI().getLoadedJobsHash().get(jb);
 
+		FileConfiguration cfg = plugin.getFileManager().getRewardsConfig();
+
 		int itemsPerPage = perpage;
 
-		UUID ID = player.getUniqueId();
+		String player_name = player.getName() + "_" + job.getID();
 
-		if (this.details_page_manager.containsKey(ID)) {
-			this.details_page_manager.remove(ID);
+		if (RewardsSub.getPages().containsKey(player_name)) {
+			RewardsSub.getPages().remove(player_name);
 		}
 
-		this.details_page_manager.put(ID, page);
+		RewardsSub.getPages().put(player_name, page);
+
+		if (cfg.getBoolean("BackToFirstPage.Enabled")) {
+
+			int show_item = cfg.getInt("BackToFirstPage.ShowFromPage");
+
+			inv.setItem(cfg.getInt("BackToFirstPage.Slot"), null);
+
+			if (page == show_item || page >= show_item) {
+				ItemStack item = plugin.getItemManager().createOrGetItem("Rewards.Back.To.First.Page",
+						cfg.getString("BackToFirstPage.Icon"), player.getName(),
+						cfg.getInt("BackToFirstPage.CustomModelData"));
+				ItemMeta meta = item.getItemMeta();
+
+				String display = plugin.getBasicPluginManager().replaceAll(cfg.getString("BackToFirstPage.Display"),
+						player, job);
+
+				meta.setDisplayName(display);
+
+				ArrayList<String> l = new ArrayList<String>();
+
+				for (String line : cfg.getStringList("BackToFirstPage.Lore")) {
+					l.add(plugin.getBasicPluginManager().replaceAll(line, player, job));
+				}
+
+				meta.setLore(l);
+
+				item.setItemMeta(meta);
+
+				inv.setItem(cfg.getInt("BackToFirstPage.Slot"), item);
+			}
+
+		}
 
 		if (sorted.equalsIgnoreCase("RANDOM")) {
 
 			HashMap<String, JobID> list = job.getEveryID();
 
-	 
 			int total = list.size();
 
 			int startIndex = (page - 1) * itemsPerPage;
 			int endIndex = Math.min(startIndex + itemsPerPage, total);
 
 			for (int i = startIndex; i < endIndex; i++) {
-				
-			 
+
 				String get = job.getArrayList2Sorted().get(i);
-				
-				 
+
 				JobID real = job.getEveryID().get(get);
 
 				ItemStack item = real.getItemToDisplayInRewards();
@@ -463,7 +1031,7 @@ public class JobsGUIManager {
 
 	public void updateOptionsGUI(Player player) {
 
-		plugin.executor.submit(() -> { 
+		plugin.executor.submit(() -> {
 			Inventory open = player.getOpenInventory().getTopInventory();
 
 			String name = player.getName();
@@ -496,7 +1064,7 @@ public class JobsGUIManager {
 			setOther(player, type, inv, name);
 
 			setJobItems(type, inv, name, jb);
-			});
+		});
 
 		player.openInventory(inv);
 
@@ -530,7 +1098,7 @@ public class JobsGUIManager {
 			plugin.getJobAPI().getLoadedJobsHash().forEach((id, job) -> {
 
 				Player player = Bukkit.getPlayer(jb.getUUID());
-				
+
 				ItemStack item = job.getIcon();
 
 				ItemMeta meta = item.getItemMeta();
@@ -609,8 +1177,8 @@ public class JobsGUIManager {
 
 						// paid
 
-						String message = plugin.getMessageManager().getMessage(player, "job_gui_buy").replaceAll("<money>",
-								job.getPriceToDisplay());
+						String message = plugin.getMessageManager().getMessage(player, "job_gui_buy")
+								.replaceAll("<money>", job.getPriceToDisplay());
 
 						lore.add(message);
 
@@ -664,88 +1232,6 @@ public class JobsGUIManager {
 			open.setItem(place.getSlot(), item);
 
 		}
-
-	}
-
-	public void openJobsManager(Player player, int page) {
-
-		Inventory inv = plugin.getBasicGUIManager().openInventory(player, GUIType.MANAGER, null, null, null);
-
-		plugin.executor.submit(() -> {
-
-			int itemsPerPage = 35;
-
-			UUID ID = player.getUniqueId();
-
-			if (this.details_page_manager.containsKey(ID)) {
-				this.details_page_manager.remove(ID);
-			}
-
-			this.details_page_manager.put(ID, page);
-
-			if (inv != null) {
-				ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-				ItemMeta meta = item.getItemMeta();
-				meta.setDisplayName("§8/");
-				item.setItemMeta(meta);
-
-				inv.setItem(36, item);
-				inv.setItem(37, item);
-				inv.setItem(38, item);
-				inv.setItem(39, item);
-				inv.setItem(40, item);
-				inv.setItem(41, item);
-				inv.setItem(42, item);
-				inv.setItem(43, item);
-				inv.setItem(44, item);
-
-			}
-
-			if (inv != null) {
-				ItemStack item = new ItemStack(Material.ARROW);
-				ItemMeta meta = item.getItemMeta();
-				meta.setDisplayName("§7Next Page §8->");
-				item.setItemMeta(meta);
-
-				inv.setItem(50, item);
-			}
-
-			if (inv != null) {
-				ItemStack item = new ItemStack(Material.ARROW);
-				ItemMeta meta = item.getItemMeta();
-				meta.setDisplayName("§8<- §7Go Back");
-				item.setItemMeta(meta);
-
-				inv.setItem(48, item);
-			}
-
-			if (plugin.getJobAPI().getLoadedJobsArray() != null) {
-
-				ArrayList<String> jobs = plugin.getJobAPI().getLoadedJobsArray();
-
-				int total = jobs.size();
-
-				int startIndex = (page - 1) * itemsPerPage;
-				int endIndex = Math.min(startIndex + itemsPerPage, total);
-
-				for (int i = startIndex; i < endIndex; i++) {
-
-					String job_by_id = jobs.get(i);
-					Job job = plugin.getJobAPI().getLoadedJobsHash().get(job_by_id);
-
-					ItemStack item = job.getIcon();
-					ItemMeta meta = item.getItemMeta();
-					meta.setDisplayName("§8< " + job.getName(player) + " §8>");
-					item.setItemMeta(meta);
-
-					inv.addItem(item);
-
-				}
-			}
-
-		});
-
-		player.openInventory(inv);
 
 	}
 

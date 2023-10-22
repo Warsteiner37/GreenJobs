@@ -7,7 +7,6 @@ code\warsteiner\jobs\basic\events\PlayerAsyncCheckForWork$1.class
 code\warsteiner\jobs\utils\templates\JobsPlayer$4.class
 code\warsteiner\jobs\utils\templates\JobsPlayer$1.class
 code\warsteiner\jobs\commands\sub\HelpSub.class
-code\warsteiner\jobs\commands\admin\JobsManagerCommand.class
 code\warsteiner\jobs\utils\BossBarHandler$1.class
 code\warsteiner\jobs\basic\events\PlayerASyncJoinEvent.class
 code\warsteiner\jobs\manager\ItemManager.class
@@ -95,6 +94,7 @@ code\warsteiner\jobs\basic\events\PlayerAsyncCheckForWork.class
 code\warsteiner\jobs\utils\Metrics$CustomChart.class
 code\warsteiner\jobs\utils\actions\FishAction.class
 code\warsteiner\jobs\basic\events\PlayerASyncInventoryClickEvent$5.class
+code\warsteiner\jobs\commands\sub\LevelsSub.class
 code\warsteiner\jobs\utils\BossBarHandler.class
 code\warsteiner\jobs\api\BlockAPI.class
 code\warsteiner\jobs\utils\actions\JobActionManager.class

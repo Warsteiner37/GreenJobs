@@ -47,10 +47,7 @@ public class LoadAndStoreGUIManager {
 	}
 	
 	public void load() { 
-		
-		gui_names.put(GUIType.MANAGER, "§a§lGreenJobs - Manager");
-		gui_size.put(GUIType.MANAGER, 6);
-		
+	 
 		for(GUIType gui : GUIType.values()) {
 			Bukkit.getConsoleSender().sendMessage("§aTrying to load "+gui+"...");
 			
@@ -142,6 +139,9 @@ public class LoadAndStoreGUIManager {
 		}
 		if(gui.equals(GUIType.REWARDS)) {
 			return plugin.getFileManager().getRewardsConfig();
+		}
+		if(gui.equals(GUIType.LEVELS)) {
+			return plugin.getFileManager().getLevelsConfig();
 		}
 		return null;
 	}

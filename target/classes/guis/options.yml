@@ -18,7 +18,7 @@ GUI_Items:
     - "LeaveItem"
     - "Back"
     - "Rewards"
-    - "Soon"
+    - "Levels"
 
   Back:
   
@@ -48,14 +48,20 @@ GUI_Items:
     
     Slot: 40
 
-  Soon:
+  Levels:
   
-    Display: "&8/ &cSoon &8/"
+    Display: "&8< &eJob Levels &8>"
+
+    Actions:
+      - "COMMANDS"
+      
+    Commands:
+      - "jobs levels <job>"
   
     Lore:
-      - "&8└ &7This is a Placeholder Item!"
+      - "&8└ &7Overview of Job Levels"
       
-    Icon: "BARRIER"
+    Icon: "EXPERIENCE_BOTTLE"
     
     Slot: 24
 

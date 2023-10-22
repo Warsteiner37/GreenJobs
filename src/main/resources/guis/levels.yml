@@ -1,0 +1,171 @@
+#  _      ________      ________ _       _____ 
+# | |    |  ____\ \    / /  ____| |     / ____|
+# | |    | |__   \ \  / /| |__  | |    | (___  
+# | |    |  __|   \ \/ / |  __| | |     \___ \ 
+# | |____| |____   \  /  | |____| |____ ____) |
+# |______|______|   \/   |______|______|_____/ 
+#                                              
+                                                                                                                                                      
+GUI_Size: 6
+
+GUI_Name: "&b&lLevels &8| <job>"
+
+LevelDisplay: "&8< &7Level &6#<gui_level> &8>"
+
+InfoItem:
+
+  Icon: "url;http://textures.minecraft.net/texture/352723aa0637ea5204447be536151f529fe4906826d8c066c4dcc50079a64465"
+  
+  Display: "&7Info Item"
+  
+  Lore:
+    - "&7Current Level: &a#<level>"
+    - "&7Current Exp: &6<exp>"
+
+EnchantAlreadyReachedLevels: false
+
+#
+# Show the Level's Description?
+#
+LevelDesc:
+
+  Reached: false
+  
+  Currently: true
+  
+  Locked: false
+
+LevelLore:
+
+  Reached:
+    - "&aYou completed this Level."
+  
+  Currently:
+    - "&7Progress&8: &a<exp>&8/&c<need>"
+    - "&8"
+    - "&7You need &6<more> &7more Exp to complete this Level." 
+  
+  Locked:
+    - "&7This Level is locked."
+
+ItemMaterials:
+
+  Reached: "GREEN_STAINED_GLASS_PANE"
+  
+  Currently: "ORANGE_STAINED_GLASS_PANE"
+  
+  Locked: "RED_STAINED_GLASS_PANE"
+
+#
+# Where are Levels Items getting placed? (Slots)
+# List from Top is first.
+#
+ItemPlaces:
+  - "0"
+  - "9"
+  - "18"
+  - "27"
+  - "28"
+  - "29"
+  - "20"
+  - "11"
+  - "2"
+  - "3"
+  - "4"
+  - "13"
+  - "22"
+  - "31"
+  - "32"
+  - "33"
+  - "24"
+  - "15"
+  - "6"
+  - "7" 
+  - "8"
+  - "17"
+  - "26"
+  - "35"
+
+LastLevelIcon:
+ 
+  Display: "&7The End of all Ends"
+  
+  Icon: "BARRIER"
+ 
+  Lore:
+    - "&7This is the last level you will ever reach!"
+
+BackToFirstPage:
+
+  Enabled: true
+  
+  ShowFromPage: 2
+  
+  Display: "&6Jump back to first Page"
+  
+  Icon: "SLIME_BALL"
+  
+  Slot: 46
+  
+  Lore:
+    - "&7Click to jump to the first page!"
+  
+GUI_Items:
+
+  List:
+    - "CloseButton"
+    - "Next"
+    - "Back"
+
+  Next:
+  
+    Display: "&7Next Page &8->"
+
+    Actions:
+      - "GO_NEXT_PAGE"
+  
+    Lore:
+      - "&8Next Page!"
+      
+    Icon: "ARROW"
+    
+    Slot: 50
+    
+  Back:
+  
+    Display: "&8<- &7Go Back"
+
+    Actions:
+      - "GO_BACK_PAGE"
+
+    Lore:
+      - "&8Go Back!"
+      
+    Icon: "ARROW"
+    
+    Slot: 48
+ 
+  CloseButton:
+  
+    Display: "&8< &cClose &8>"
+    
+    Actions:
+      - "CLOSE"
+    
+    Lore:
+      - "&8Close this menu!"
+      
+    Icon: "RED_DYE"
+    
+    Slot: 49
+
+GUI_Placeholders:
+  - "BLACK_STAINED_GLASS_PANE:36:&8/"
+  - "BLACK_STAINED_GLASS_PANE:37:&8/"
+  - "BLACK_STAINED_GLASS_PANE:38:&8/"
+  - "BLACK_STAINED_GLASS_PANE:39:&8/"
+  - "BLACK_STAINED_GLASS_PANE:40:&8/"
+  - "BLACK_STAINED_GLASS_PANE:41:&8/"
+  - "BLACK_STAINED_GLASS_PANE:42:&8/"
+  - "BLACK_STAINED_GLASS_PANE:43:&8/"
+  - "BLACK_STAINED_GLASS_PANE:44:&8/"

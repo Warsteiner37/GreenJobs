@@ -9,6 +9,18 @@ CommandConfig:
 
   GeneralUnknown: "<prefix> &7Unknown Command use &6/Jobs help"
 
+  Levels:
+  
+    Enabled: true
+    
+    NoJobs: "<prefix> &cYou are not in any Job. Use /Jobs levels <job>!"
+    
+    UnknownJob: "<prefix> &cCannot find this Job!"
+    
+    Usage: " &7Use &a/Jobs levels <job>"
+    
+    Use: "levels"
+
   Rewards:
   
     Enabled: true

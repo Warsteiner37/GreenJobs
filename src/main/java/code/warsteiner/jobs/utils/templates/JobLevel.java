@@ -60,12 +60,7 @@ public class JobLevel {
 	public double getReward() {
 		return this.reward;
 	}
-	
-
-	public boolean hasDescription() {
-		return this.des != null;
-	}
-	
+	  
 	public List<String> getDescription() {
 		return this.des;
 	}
