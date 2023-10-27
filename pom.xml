@@ -10,11 +10,8 @@
 	<packaging>jar</packaging>
 
 	<distributionManagement>
-    <repository>
-        <id>releases</id>
-        <url>https://github.com/Warsteiner37/GreenJobs/releases</url>
-    </repository>
-</distributionManagement>
+		<downloadUrl>https://github.com/Warsteiner37/GreenJobs/releases</downloadUrl>
+	</distributionManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
