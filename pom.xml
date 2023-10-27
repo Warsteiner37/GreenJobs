@@ -14,10 +14,6 @@
         <id>releases</id>
         <url>https://github.com/Warsteiner37/GreenJobs/releases</url>
     </repository>
-    <snapshotRepository>
-        <id>snapshots</id>
-        <url>https://github.com/Warsteiner37/GreenJobs/releases</url>
-    </snapshotRepository>
 </distributionManagement>
 
 	<properties>
