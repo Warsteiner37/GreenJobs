@@ -17,9 +17,7 @@ import code.warsteiner.jobs.GreenJobs;
 import io.lumine.mythic.api.adapters.AbstractBossBar.BarColor;
 
 public class JobsTemplates {
-
-	private GreenJobs plugin = GreenJobs.getPlugin();
-
+ 
 	public void createDefaultJobs() {
 		setMinerTemplate();
 		setLumberjackTemplate();
@@ -122,7 +120,7 @@ public class JobsTemplates {
 
 				ArrayList<String> lorein7 = new ArrayList<String>();
 				lorein7.add("&a");
-				lorein7.add("&7You killed this Mob &b<times>x &7times");
+				lorein7.add("&7Times carved &b<times>x &7times");
 				lorein7.add("&7You earned &c<earned_today>$ &7by this Block today");
 				lorein7.add("&7You earned &c<earned>$ &7by this Block in total");
 

@@ -60,6 +60,7 @@ code\warsteiner\jobs\utils\templates\JobAction.class
 code\warsteiner\jobs\utils\templates\JobsPlayer$3.class
 code\warsteiner\jobs\utils\Metrics$JsonObjectBuilder$JsonObject.class
 code\warsteiner\jobs\utils\Metrics$MultiLineChart.class
+code\warsteiner\jobs\utils\actions\CarveAction.class
 code\warsteiner\jobs\basic\BasicGUIManager.class
 code\warsteiner\jobs\utils\admincommand\AdminSubCommand.class
 code\warsteiner\jobs\commands\sub\RewardsSub.class
