@@ -33,8 +33,283 @@ public class JobsTemplates {
 		setTameTemplate();
 		setBreedTemplate();
 		setCarveTemplate();
+		setBerryTemplate();
+		setHoneyTemplate();
+	}
+	
+	public void setHoneyTemplate() {
+
+		File file = new File("plugins/GreenJobs/jobs/", "CollectHoney.yml");
+
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		FileConfiguration cfg = (FileConfiguration) YamlConfiguration.loadConfiguration(file);
+
+		ArrayList<String> actions = new ArrayList<String>();
+		actions.add("COLLECT_HONEY");
+
+		ArrayList<String> worlds = new ArrayList<String>();
+		worlds.add("world");
+	 
+		cfg.set("Display", "&eHoney Collector");
+		cfg.set("Actions", actions);
+		cfg.set("Icon", "HONEY_BOTTLE");
+	 
+		cfg.set("RewardMessages.Actionbar", "&a&l+ &7<money>$ &7by <job> &7for <block>");
+		cfg.set("RewardMessages.BossBar", "&a&l+ &7<money>$ &7by <job> &7for <block>");
+ 
+		cfg.set("ColorOfBar", "YELLOW");
+		cfg.set("CustomGlassPlateColor", "YELLOW_STAINED_GLASS_PANE");
+		cfg.set("Slot", 23);
+		cfg.set("Price", 50000);
+		cfg.set("Worlds", worlds);
+
+		// stats messages
+		cfg.set("Desc", "&7Earn Money while collecting some fresh honey!");
+
+		ArrayList<String> stats = new ArrayList<String>();
+		stats.add("&7Level: &6#<level>");
+		stats.add("&7Exp: &7<exp>/<need>");
+		stats.add("&7Bought Date: &7<date_bought>");
+		stats.add("&7Joined Date: &7<joined_date>");
+		stats.add("&7");
+		stats.add("&7Times worked: &7<times>x");
+		stats.add("&7Earned Today: &7<earned_today>$");
+		stats.add("&7Earned all time: &7<earned_all>$");
+		stats.add("&8");
+
+		ArrayList<String> stats2 = new ArrayList<String>();
+		stats2.add("&7Level: &6#<level>");
+		stats2.add("&7Exp: &7<exp>/<need>");
+		stats2.add("&8");
+
+		cfg.set("Stats.In", stats);
+		cfg.set("Stats.Look", stats2);
+
+		// ids
+
+		ArrayList<String> ids = new ArrayList<String>();
+		ids.add("BEE_NEST");
+		ids.add("BEEHIVE"); 
+
+		cfg.set("ID.COLLECT_HONEY.List", ids);
+
+		for (String action : actions) {
+
+			for (String type : cfg.getStringList("ID." + action + ".List")) {
+				String d = WordUtils.capitalizeFully(type.toLowerCase()).replaceAll("_", " ");
+
+				cfg.set("ID." + action + "." + type + ".Chance", 90);
+				cfg.set("ID." + action + "." + type + ".ID", type);
+				cfg.set("ID." + action + "." + type + ".Icon", type);
+				cfg.set("ID." + action + "." + type + ".Money", 2);
+				cfg.set("ID." + action + "." + type + ".Exp", 3);
+				cfg.set("ID." + action + "." + type + ".Points", 0.5);
+				cfg.set("ID." + action + "." + type + ".Display", "&e" + d);
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Display", "&8< &e" + d + " &8>");
+
+				ArrayList<String> lore5 = new ArrayList<String>();
+				lore5.add("&8&m--------------");
+				lore5.add("&7Reward&8: &a<money>");
+				lore5.add("&7Exp&8: &a<exp>");
+				lore5.add("&7Chance&8: &c<chance>");
+				lore5.add("&7Points&8: &a<points>");
+
+				ArrayList<String> lorein7 = new ArrayList<String>();
+				lorein7.add("&a");
+				lorein7.add("&7You killed this Mob &b<times>x &7times");
+				lorein7.add("&7You earned &c<earned_today>$ &7by this Block today");
+				lorein7.add("&7You earned &c<earned>$ &7by this Block in total");
+
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Lore", lore5);
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.LoreAddWhenOwnJob", lorein7);
+
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Icon", type);
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Sorting", 2);
+			}
+
+		}
+
+		cfg.set("Levels.Config.Base", 29.5);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> desc = new ArrayList<String>();
+
+		desc.add("&c");
+		desc.add("&7This is a Example Desc. for the Levels GUI.");
+		desc.add("&7");
+		desc.add("&7Rewards:");
+		desc.add("&a+ &71500$"); 
+
+		cfg.set("Levels.3.Description", desc);
+
+		ArrayList<String> commands = new ArrayList<String>();
+
+		commands.add("say <name> just reached level 3 in <job>");
+
+		cfg.set("Levels.3.Commands", commands);
+
+		try {
+			cfg.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
+	public void setBerryTemplate() {
+
+		File file = new File("plugins/GreenJobs/jobs/", "CollectBerrys.yml");
+
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		FileConfiguration cfg = (FileConfiguration) YamlConfiguration.loadConfiguration(file);
+
+		ArrayList<String> actions = new ArrayList<String>();
+		actions.add("COLLECT_BERRYS");
+
+		ArrayList<String> worlds = new ArrayList<String>();
+		worlds.add("world");
+	 
+		cfg.set("Display", "&aCollect Berrys");
+		cfg.set("Actions", actions);
+		cfg.set("Icon", "SWEET_BERRIES");
+	 
+		cfg.set("RewardMessages.Actionbar", "&a&l+ &7<money>$ &7by <job> &7for <block>");
+		cfg.set("RewardMessages.BossBar", "&a&l+ &7<money>$ &7by <job> &7for <block>");
+ 
+		cfg.set("ColorOfBar", "GREEN");
+		cfg.set("CustomGlassPlateColor", "GREEN_STAINED_GLASS_PANE");
+		cfg.set("Slot", 22);
+		cfg.set("Price", 50000);
+		cfg.set("Worlds", worlds);
+
+		// stats messages
+		cfg.set("Desc", "&7Earn Money while harvesting berries!");
+
+		ArrayList<String> stats = new ArrayList<String>();
+		stats.add("&7Level: &6#<level>");
+		stats.add("&7Exp: &7<exp>/<need>");
+		stats.add("&7Bought Date: &7<date_bought>");
+		stats.add("&7Joined Date: &7<joined_date>");
+		stats.add("&7");
+		stats.add("&7Times worked: &7<times>x");
+		stats.add("&7Earned Today: &7<earned_today>$");
+		stats.add("&7Earned all time: &7<earned_all>$");
+		stats.add("&8");
+
+		ArrayList<String> stats2 = new ArrayList<String>();
+		stats2.add("&7Level: &6#<level>");
+		stats2.add("&7Exp: &7<exp>/<need>");
+		stats2.add("&8");
+
+		cfg.set("Stats.In", stats);
+		cfg.set("Stats.Look", stats2);
+
+		// ids
+
+		ArrayList<String> ids = new ArrayList<String>();
+		ids.add("CAVE_VINES_PLANT");
+		ids.add("SWEET_BERRY_BUSH"); 
+	 
+		HashMap<String, String> icons = new HashMap<String, String>();
+		icons.put("CAVE_VINES_PLANT", "GLOW_BERRIES");
+		icons.put("SWEET_BERRY_BUSH", "SWEET_BERRIES"); 
+		
+		HashMap<String, String> names = new HashMap<String, String>();
+		names.put("CAVE_VINES_PLANT", "Glow Berries");
+		names.put("SWEET_BERRY_BUSH", "Sweet Berries"); 
+	  
+		cfg.set("ID.COLLECT_BERRYS.List", ids);
+
+		for (String action : actions) {
+
+			for (String type : cfg.getStringList("ID." + action + ".List")) {
+				String d = WordUtils.capitalizeFully(type.toLowerCase()).replaceAll("_", " ");
+
+				cfg.set("ID." + action + "." + type + ".Chance", 90);
+				cfg.set("ID." + action + "." + type + ".ID", type);
+
+				cfg.set("ID." + action + "." + type + ".Icon", icons.get(type));
+
+				cfg.set("ID." + action + "." + type + ".Money", 2);
+				cfg.set("ID." + action + "." + type + ".Exp", 3);
+				cfg.set("ID." + action + "." + type + ".Points", 0.5);
+				cfg.set("ID." + action + "." + type + ".Display", "&e" + d);
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Display", "&8< &e" + names.get(type) + " &8>");
+
+				ArrayList<String> lore5 = new ArrayList<String>();
+				lore5.add("&8&m--------------");
+				lore5.add("&7Reward&8: &a<money>");
+				lore5.add("&7Exp&8: &a<exp>");
+				lore5.add("&7Chance&8: &c<chance>");
+				lore5.add("&7Points&8: &a<points>");
+
+				ArrayList<String> lorein7 = new ArrayList<String>();
+				lorein7.add("&a");
+				lorein7.add("&7Harvested: &b<times>x &7times");
+				lorein7.add("&7You earned &c<earned_today>$ &7by this Block today");
+				lorein7.add("&7You earned &c<earned>$ &7by this Block in total");
+
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Lore", lore5);
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.LoreAddWhenOwnJob", lorein7);
+
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Icon", icons.get(type));
+
+				cfg.set("ID." + action + "." + type + ".RewardsGUI.Sorting", 2);
+			}
+
+		}
+
+		cfg.set("Levels.Config.Base", 29.5);
+		cfg.set("Levels.Config.AddPercentValueLevelUp", 48);
+		cfg.set("Levels.Config.MaxLevel", 48);
+		cfg.set("Levels.Config.DefaultDisplay", "&7Level <level>");
+
+		cfg.set("Levels.3.CustomDisplay", "&e&lLevel <level>");
+		cfg.set("Levels.3.CustomIcon", "EMERALD");
+		cfg.set("Levels.3.Reward", 1500);
+		
+		ArrayList<String> desc = new ArrayList<String>();
+
+		desc.add("&c");
+		desc.add("&7This is a Example Desc. for the Levels GUI.");
+		desc.add("&7");
+		desc.add("&7Rewards:");
+		desc.add("&a+ &71500$"); 
+
+		cfg.set("Levels.3.Description", desc);
+
+		ArrayList<String> commands = new ArrayList<String>();
+
+		commands.add("say <name> just reached level 3 in <job>");
+
+		cfg.set("Levels.3.Commands", commands);
+
+		try {
+			cfg.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void setCarveTemplate() {
 
 		File file = new File("plugins/GreenJobs/jobs/", "CarveArtist.yml");
@@ -62,7 +337,7 @@ public class JobsTemplates {
 		cfg.set("RewardMessages.Actionbar", "&a&l+ &7<money>$ &7by <job> &7for <block>");
 		cfg.set("RewardMessages.BossBar", "&a&l+ &7<money>$ &7by <job> &7for <block>");
  
-		cfg.set("ColorOfBar", "ORANGE");
+		cfg.set("ColorOfBar", "YELLOW");
 		cfg.set("CustomGlassPlateColor", "ORANGE_STAINED_GLASS_PANE");
 		cfg.set("Slot", 21);
 		cfg.set("Price", 40000);

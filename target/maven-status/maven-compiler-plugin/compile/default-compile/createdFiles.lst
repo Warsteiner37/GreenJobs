@@ -97,6 +97,7 @@ code\warsteiner\jobs\utils\actions\FishAction.class
 code\warsteiner\jobs\basic\events\PlayerASyncInventoryClickEvent$5.class
 code\warsteiner\jobs\commands\sub\LevelsSub.class
 code\warsteiner\jobs\utils\BossBarHandler.class
+code\warsteiner\jobs\utils\actions\CollectBerrysAction.class
 code\warsteiner\jobs\api\BlockAPI.class
 code\warsteiner\jobs\utils\actions\JobActionManager.class
 code\warsteiner\jobs\utils\actions\ShearAction.class
