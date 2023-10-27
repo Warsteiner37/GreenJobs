@@ -667,6 +667,25 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 						}, 2);
 
 					}
+					
+					if (actions.contains(CustomItemAction.OPEN_OVERVIEW)) {
+						Bukkit.getScheduler().runTaskLater(plugin, () -> {
+							
+							if(m.getJobData().containsKey(ID)) {
+								String d2 = m.getJobData().get(ID);
+
+								Job job_found = plugin.getJobAPI().getLoadedJobsHash().get(d2);
+								 
+
+								plugin.getBasicPluginManager().playSound(player, "RE_OPEN_OPTIONS_GUI");
+
+								plugin.getJobsGUIManager().openOptionsMenu(player, job_found.getID(), false);
+							}
+							
+							 
+						}, 2);
+
+					}
 
 					if (actions.contains(CustomItemAction.COMMANDS)) {
 						Bukkit.getScheduler().runTask(plugin, () -> {

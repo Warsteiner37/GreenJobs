@@ -8,6 +8,7 @@ public enum CustomItemAction {
 	GO_NEXT_PAGE,
 	GO_BACK_PAGE,
 	COMMANDS,
+	OPEN_OVERVIEW,
 	OPEN_MAIN;
 
 }
