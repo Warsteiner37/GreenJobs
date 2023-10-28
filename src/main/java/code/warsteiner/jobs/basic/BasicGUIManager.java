@@ -91,21 +91,25 @@ public class BasicGUIManager {
 							gui.updateOptionsGUI(player);
 						} else if (get.equals(GUIType.REWARDS) && isRewardsMenu(player, job, title)) {
 
-							String player_name = player.getName() + "_" + job;
+							if (plugin.getFileManager().isLoaded(GUIType.REWARDS)) {
+								String player_name = player.getName() + "_" + job;
 
-							int page = RewardsSub.getPages().get(player_name);
+								int page = RewardsSub.getPages().get(player_name);
 
-							String next = plugin.getBasicGUIManager().getCurrentCate().get(ID);
+								String next = plugin.getBasicGUIManager().getCurrentCate().get(ID);
 
-							gui.updateBlockRewardsGUI(player, job.getID(), page, next);
+								gui.updateBlockRewardsGUI(player, job.getID(), page, next);
+							}
 
 						} else if (get.equals(GUIType.LEVELS) && isLevelsMenu(player, job, title)) {
 
-							String player_name = player.getName() + "_" + job;
+							if (plugin.getFileManager().isLoaded(GUIType.LEVELS)) {
+								String player_name = player.getName() + "_" + job;
 
-							int page = LevelsSub.getPages().get(player_name);
+								int page = LevelsSub.getPages().get(player_name);
 
-							gui.setLevelsItem(GUIType.LEVELS, page, inv, player, jb, job);
+								gui.setLevelsItem(GUIType.LEVELS, page, inv, player, jb, job);
+							}
 						}
 
 					}
@@ -135,25 +139,28 @@ public class BasicGUIManager {
 		UUID ID = player.getUniqueId();
 		String name = player.getName();
 
-		if (this.guis.containsKey(ID)) {
+		if (plugin.getFileManager().isLoaded(GUIType.LEVELS)) {
 
-			GUIType get = this.guis.get(ID);
+			if (this.guis.containsKey(ID)) {
 
-			if (job != null) {
-				String translated = plugin.getBasicPluginManager()
-						.toHex(player, plugin.getLoadAndStoreGUIManager().getName(player, get))
-						.replaceAll("<name>", name).replaceAll("<job>", job.getDisplay(player));
+				GUIType get = this.guis.get(ID);
 
-				String title = plugin.getBasicPluginManager().toHex(player, right_now).replaceAll("<name>", name)
-						.replaceAll("<job>", job.getDisplay(player));
+				if (job != null) {
+					String translated = plugin.getBasicPluginManager()
+							.toHex(player, plugin.getLoadAndStoreGUIManager().getName(player, get))
+							.replaceAll("<name>", name).replaceAll("<job>", job.getDisplay(player));
 
-				if (translated.equalsIgnoreCase(title) && get.equals(GUIType.LEVELS)) {
+					String title = plugin.getBasicPluginManager().toHex(player, right_now).replaceAll("<name>", name)
+							.replaceAll("<job>", job.getDisplay(player));
+
+					if (translated.equalsIgnoreCase(title) && get.equals(GUIType.LEVELS)) {
+						return true;
+					}
+				} else if (get.equals(GUIType.LEVELS)) {
 					return true;
 				}
-			} else if (get.equals(GUIType.LEVELS)) {
-				return true;
-			}
 
+			}
 		}
 
 		return false;
@@ -164,25 +171,28 @@ public class BasicGUIManager {
 		UUID ID = player.getUniqueId();
 		String name = player.getName();
 
-		if (this.guis.containsKey(ID)) {
+		if (plugin.getFileManager().isLoaded(GUIType.REWARDS)) {
 
-			GUIType get = this.guis.get(ID);
+			if (this.guis.containsKey(ID)) {
 
-			if (job != null) {
-				String translated = plugin.getBasicPluginManager()
-						.toHex(player, plugin.getLoadAndStoreGUIManager().getName(player, get))
-						.replaceAll("<name>", name).replaceAll("<job>", job.getDisplay(player));
+				GUIType get = this.guis.get(ID);
 
-				String title = plugin.getBasicPluginManager().toHex(player, right_now).replaceAll("<name>", name)
-						.replaceAll("<job>", job.getDisplay(player));
+				if (job != null) {
+					String translated = plugin.getBasicPluginManager()
+							.toHex(player, plugin.getLoadAndStoreGUIManager().getName(player, get))
+							.replaceAll("<name>", name).replaceAll("<job>", job.getDisplay(player));
 
-				if (translated.equalsIgnoreCase(title) && get.equals(GUIType.REWARDS)) {
+					String title = plugin.getBasicPluginManager().toHex(player, right_now).replaceAll("<name>", name)
+							.replaceAll("<job>", job.getDisplay(player));
+
+					if (translated.equalsIgnoreCase(title) && get.equals(GUIType.REWARDS)) {
+						return true;
+					}
+				} else if (get.equals(GUIType.REWARDS)) {
 					return true;
 				}
-			} else if (get.equals(GUIType.REWARDS)) {
-				return true;
-			}
 
+			}
 		}
 
 		return false;
@@ -215,7 +225,7 @@ public class BasicGUIManager {
 
 		return false;
 	}
- 
+
 	public boolean isOptionsMenu(Player player, String right_now, Job job) {
 
 		UUID ID = player.getUniqueId();

@@ -116,6 +116,21 @@ GUI_Items:
     - "CloseButton"
     - "Next"
     - "Back"
+    - "BackToMain"
+
+  BackToMain:
+  
+    Display: "&cBack to Jobs Overview"
+
+    Actions:
+      - "OPEN_OVERVIEW"
+  
+    Lore:
+      - "&8Open Jobs Overview"
+      
+    Icon: "BARRIER"
+    
+    Slot: 51
 
   Next:
   

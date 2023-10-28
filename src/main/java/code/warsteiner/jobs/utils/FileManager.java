@@ -8,6 +8,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import code.warsteiner.jobs.GreenJobs;
+import code.warsteiner.jobs.basic.BasicGUIManager;
+import code.warsteiner.jobs.manager.LoadAndStoreGUIManager;
+import code.warsteiner.jobs.utils.enums.GUIType;
 import code.warsteiner.jobs.utils.templates.FileTemplate;
 
 public class FileManager {
@@ -49,12 +52,10 @@ public class FileManager {
 		checkJobsGUIFile();
 		checkConfirmGUIFile();
 		checkOptionsGUIFile();
-		checkCommandsGUIFile();
-		checkRewardsGUIFile();
+		checkCommandsGUIFile(); 
 		checkSoundsFile();
 		checkPlaceHolderFile();
-		checklevelsFile();
-
+		  
 		String loc = getConfigConfig().getString("SaveDataIn");
 
 		this.locs = new FileTemplate("locations", loc);
@@ -66,6 +67,23 @@ public class FileManager {
 
 		this.data = new FileTemplate("data", loc);
 		this.data.create();
+		
+		registerPRFiles();
+	}
+	
+	public void registerPRFiles() {
+		checklevelsFile(); 
+		checkRewardsGUIFile();
+	}
+	
+	public boolean isLoaded(GUIType type) {
+		
+		LoadAndStoreGUIManager basic = GreenJobs.getPlugin().getLoadAndStoreGUIManager();
+		
+		if(basic.getConfig(type)  != null) {
+			return true;
+		}
+		return false; 
 	}
 	
 	public FileTemplate getBlockFile() {

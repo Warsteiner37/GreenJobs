@@ -459,13 +459,9 @@ public class GreenJobs extends JavaPlugin {
 	public void registerCommands() {
 		getCommand("jobs").setExecutor(new JobsCommand());
 		getCommand("jobs").setTabCompleter(new JobTabComplete());
-
-		getPlayerSubCommandManager().getSubCommandList().add(new RewardsSub());
-		getPlayerSubCommandManager().getSubCommandList().add(new LevelsSub());
+ 
 		getPlayerSubCommandManager().getSubCommandList().add(new HelpSub());
-
-		// getCommand("jobsmanager").setExecutor(new JobsManagerCommand());
-
+ 
 		getCommand("jpm").setExecutor(new AdminCommand());
 		getCommand("jpm").setTabCompleter(new AdminTabComplete());
 
@@ -473,6 +469,13 @@ public class GreenJobs extends JavaPlugin {
 		getAdminSubCommandManager().getSubCommandList().add(new LevelSub());
 		getAdminSubCommandManager().getSubCommandList().add(new LimitSub());
 		getAdminSubCommandManager().getSubCommandList().add(new NeedSub());
+		
+		registerPRCommands();
+	}
+	
+	public void registerPRCommands() { 
+		getPlayerSubCommandManager().getSubCommandList().add(new RewardsSub()); 
+		getPlayerSubCommandManager().getSubCommandList().add(new LevelsSub());
 	}
 
 	public void setClassesv1() {

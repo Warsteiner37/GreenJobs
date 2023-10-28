@@ -40,18 +40,22 @@ public class CarveAction extends JobAction implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerInteractEvent event) {
-	 
-		Action action = event.getAction();
-		Material item = event.getMaterial();
-		Block block = event.getClickedBlock();
-		Material mat = block.getType();
-		 
+	  
 		Player player = event.getPlayer();
 		UUID ID = player.getUniqueId();
 		
 		if (event.getClickedBlock() == null) {
 			return;
 		}
+		
+		if (event.getClickedBlock().getType() == null) {
+			return;
+		}
+		
+		Action action = event.getAction();
+		Material item = event.getMaterial();
+		Block block = event.getClickedBlock();
+		Material mat = block.getType();
 		
 		if (action == Action.RIGHT_CLICK_BLOCK && item.equals(Material.SHEARS)) {
 			 
