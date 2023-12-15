@@ -1093,10 +1093,11 @@ public class JobsGUIManager {
 	}
 
 	public void setJobItems(GUIType type, Inventory inv, String name, JobsPlayer jb) {
+ 
 		if (plugin.getJobAPI().getLoadedJobsArray() != null) {
-
+ 
 			plugin.getJobAPI().getLoadedJobsHash().forEach((id, job) -> {
-
+ 
 				Player player = Bukkit.getPlayer(jb.getUUID());
 
 				ItemStack item = job.getIcon();
@@ -1110,8 +1111,6 @@ public class JobsGUIManager {
 					lore.add(plugin.getBasicPluginManager().toHex(player, job.getDescription()));
 					lore.add("§8");
 				}
-
-				String date = plugin.getBasicPluginManager().getDateTodayFromCal();
 
 				if (jb.getCurrentJobs().contains(job.getID())) {
 

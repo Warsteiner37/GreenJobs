@@ -14,8 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import code.warsteiner.jobs.GreenJobs;
-import code.warsteiner.jobs.utils.templates.Job;
-import code.warsteiner.jobs.utils.templates.JobAction;
+import code.warsteiner.jobs.utils.templates.Job; 
 import code.warsteiner.jobs.utils.templates.JobID;
 import code.warsteiner.jobs.utils.templates.JobLevel;
 

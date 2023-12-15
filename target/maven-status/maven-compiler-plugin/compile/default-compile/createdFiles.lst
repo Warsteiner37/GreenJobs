@@ -7,6 +7,7 @@ code\warsteiner\jobs\basic\events\PlayerAsyncCheckForWork$1.class
 code\warsteiner\jobs\utils\templates\JobsPlayer$4.class
 code\warsteiner\jobs\utils\templates\JobsPlayer$1.class
 code\warsteiner\jobs\commands\sub\HelpSub.class
+code\warsteiner\jobs\utils\actions\TreasureAction.class
 code\warsteiner\jobs\utils\BossBarHandler$1.class
 code\warsteiner\jobs\basic\events\PlayerASyncJoinEvent.class
 code\warsteiner\jobs\manager\ItemManager.class

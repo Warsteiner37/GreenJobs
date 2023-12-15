@@ -40,7 +40,7 @@ public class StripLogAction extends JobAction implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onJoin(PlayerInteractEvent event) {
+	public void onEvent(PlayerInteractEvent event) {
  
 		if(event.getClickedBlock() != null) {
 			if(event.getClickedBlock().getType() != null) {

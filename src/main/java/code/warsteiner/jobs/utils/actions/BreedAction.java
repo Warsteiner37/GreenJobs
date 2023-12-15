@@ -41,7 +41,7 @@ public class BreedAction extends JobAction implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onJoin(EntityBreedEvent event) {
+	public void onEvent(EntityBreedEvent event) {
 		
 		if (event.getEntity() == null) {
 			return;

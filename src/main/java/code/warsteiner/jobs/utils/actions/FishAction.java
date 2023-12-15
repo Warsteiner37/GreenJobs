@@ -42,7 +42,7 @@ public class FishAction extends JobAction implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onJoin(PlayerFishEvent event) {
+	public void onEvent(PlayerFishEvent event) {
 
 		if (event.getCaught() == null) {
 			return;

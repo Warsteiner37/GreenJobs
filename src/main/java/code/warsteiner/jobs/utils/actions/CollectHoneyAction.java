@@ -45,7 +45,7 @@ public class CollectHoneyAction extends JobAction implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onJoin(PlayerInteractEvent event) {
+	public void onEvent(PlayerInteractEvent event) {
   
 		Player player = event.getPlayer();
 		UUID ID = player.getUniqueId();

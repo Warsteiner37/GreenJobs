@@ -44,7 +44,7 @@ public class TameAction  extends JobAction implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onJoin(EntityTameEvent  event) {
+	public void onEvent(EntityTameEvent  event) {
 		
 		if (event.getEntity() == null) {
 			return;

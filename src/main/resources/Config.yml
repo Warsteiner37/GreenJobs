@@ -28,6 +28,13 @@ SaveDataIn: "plugins/GreenJobs/data/"
 #
 MaxDefaultJobs: 1
 
+Exp:
+
+  Display_Layout: "&7<exp>&8/&c<need_amount> &a<percent_amount>%"
+  
+  Display_Max: "&cMax Level &8- &c<percent_amount>%"
+
+
 UseLevels: true
 
 GiveMoneyWhenPlacedByPlayer: false
@@ -50,6 +57,9 @@ LevelUp:
 #if enabled, players can own default jobs
 EnabledDefaultJobs: false
 
+#if a job price is 0 should they automatically own it?
+AutoAddFreeJobsToOwn: false
+
 AutoJoinDefaultJobs: false
 
 #when a player gets created, he will own this job
@@ -63,3 +73,5 @@ NeedToConfirmWhileBuying: true
 
 #reopen the gui for a update or close it
 ReOpenForUpdate: true
+
+AutoAddFreeJobs: false

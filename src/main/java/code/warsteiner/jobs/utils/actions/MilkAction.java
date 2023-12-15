@@ -43,7 +43,7 @@ public class MilkAction extends JobAction implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onJoin(PlayerInteractAtEntityEvent event) {
+	public void onEvent(PlayerInteractAtEntityEvent event) {
 		Entity clicked = event.getRightClicked();
 
 		if (clicked instanceof Cow) {

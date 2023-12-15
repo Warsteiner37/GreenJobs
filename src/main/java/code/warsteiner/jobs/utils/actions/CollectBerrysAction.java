@@ -42,7 +42,7 @@ public class CollectBerrysAction extends JobAction implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onJoin(PlayerHarvestBlockEvent event) {
+	public void onEvent(PlayerHarvestBlockEvent event) {
  
 		if(event.getHarvestedBlock() == null) {
 			return;

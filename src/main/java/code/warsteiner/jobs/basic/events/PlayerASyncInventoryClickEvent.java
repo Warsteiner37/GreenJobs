@@ -61,8 +61,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 			String title = event.getView().getTitle();
 
-			BasicGUIManager m = plugin.getBasicGUIManager();
-			JobsGUIManager m2 = plugin.getJobsGUIManager();
+			BasicGUIManager m = plugin.getBasicGUIManager(); 
 			MessageManager mg = plugin.getMessageManager();
 
 			Player player = (Player) event.getWhoClicked();
@@ -122,82 +121,87 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 						executeCustomItemClick(player, display, item, GUIType.REWARDS);
 
-						String c1 = rewards.getString("SortModes.RANDOM.Icon");
-						String c2 = rewards.getString("SortModes.NORMAL.Icon");
+						if(rewards.getString("SortModes.RANDOM.Icon") != null && rewards.getString("SortModes.NORMAL.Icon") != null) {
+							String c1 = rewards.getString("SortModes.RANDOM.Icon");
+							String c2 = rewards.getString("SortModes.NORMAL.Icon");
 
-						Material i1 = plugin.getItemManager()
-								.createOrGetItem("CatItemRewardsRandom", c1, player.getName(), 0).getType();
-						Material i2 = plugin.getItemManager()
-								.createOrGetItem("CatItemRewardsNormal", c2, player.getName(), 0).getType();
+							Material i1 = plugin.getItemManager()
+									.createOrGetItem("CatItemRewardsRandom", c1, player.getName(), 0).getType();
+							Material i2 = plugin.getItemManager()
+									.createOrGetItem("CatItemRewardsNormal", c2, player.getName(), 0).getType();
 
-						List<String> modes = rewards.getStringList("SortModes.List");
-						;
+							List<String> modes = rewards.getStringList("SortModes.List");
+							;
 
-						if (item.getType().equals(i1) || item.getType().equals(i2)) {
+							if (item.getType().equals(i1) || item.getType().equals(i2)) {
 
-							plugin.getBasicPluginManager().playSound(player, "REWARDS_CHANGE_SORTING");
+								plugin.getBasicPluginManager().playSound(player, "REWARDS_CHANGE_SORTING");
 
-							List<String> used = null;
+								List<String> used = null;
 
-							List<String> test = modes;
+								List<String> test = modes;
 
-							String current = null;
-							if (plugin.getBasicGUIManager().getCurrentCate().containsKey(jb.getUUID())) {
-								current = plugin.getBasicGUIManager().getCurrentCate().get(jb.getUUID());
-							} else {
-								current = plugin.getFileManager().getRewardsConfig().getString("DefaultSorting")
-										.toUpperCase();
-							}
+								String current = null;
+								if (plugin.getBasicGUIManager().getCurrentCate().containsKey(jb.getUUID())) {
+									current = plugin.getBasicGUIManager().getCurrentCate().get(jb.getUUID());
+								} else {
+									current = plugin.getFileManager().getRewardsConfig().getString("DefaultSorting")
+											.toUpperCase();
+								}
 
-							test.remove(current);
+								test.remove(current);
 
-							used = test;
- 
-							String player_name = player.getName() + "_" + job.getID();
+								used = test;
+	 
+								String player_name = player.getName() + "_" + job.getID();
 
-							int page = 1;
-							
-							if (RewardsSub.getPages().containsKey(player_name)) {
-								page = RewardsSub.getPages().get(player_name);
-							}
-							
+								int page = 1;
+								
+								if (RewardsSub.getPages().containsKey(player_name)) {
+									page = RewardsSub.getPages().get(player_name);
+								}
+								
+								 
+								
+								if(RewardsSub.getPages().containsKey(player_name)) {
+									page = RewardsSub.getPages().get(player_name);
+								}
+								
+								if (used.size() != 0) {
+									String next = used.get(0).toUpperCase();
+
+									plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), page, next);
+
+								} else {
+									String def = rewards.getString("DefaultSorting").toUpperCase();
+
+									plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), page, def);
+
+								}
+
+							} else if(rewards.getBoolean("BackToFirstPage.Enabled")) {
+								
+								ItemStack item_got = plugin.getItemManager().createOrGetItem("Rewards.Back.To.First.Page",
+										rewards.getString("BackToFirstPage.Icon"), player.getName(), rewards.getInt("BackToFirstPage.CustomModelData"));
 							 
-							
-							if(RewardsSub.getPages().containsKey(player_name)) {
-								page = RewardsSub.getPages().get(player_name);
-							}
-							
-							if (used.size() != 0) {
-								String next = used.get(0).toUpperCase();
-
-								plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), page, next);
-
-							} else {
-								String def = rewards.getString("DefaultSorting").toUpperCase();
-
-								plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), page, def);
-
-							}
-
-						} else if(rewards.getBoolean("BackToFirstPage.Enabled")) {
-							
-							ItemStack item_got = plugin.getItemManager().createOrGetItem("Rewards.Back.To.First.Page",
-									rewards.getString("BackToFirstPage.Icon"), player.getName(), rewards.getInt("BackToFirstPage.CustomModelData"));
-						 
-							String got = plugin.getBasicPluginManager().replaceAll(rewards.getString("BackToFirstPage.Display"), player,
-									job);
-							
-							if(display.equalsIgnoreCase(got) && item.getType().equals(item_got.getType())) {
+								String got = plugin.getBasicPluginManager().replaceAll(rewards.getString("BackToFirstPage.Display"), player,
+										job);
 								
-								String current = plugin.getBasicGUIManager().getCurrentCate().get(jb.getUUID());
+								if(display.equalsIgnoreCase(got) && item.getType().equals(item_got.getType())) {
+									
+									String current = plugin.getBasicGUIManager().getCurrentCate().get(jb.getUUID());
+									
+									plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), 1,
+											current);
+									
+									plugin.getBasicPluginManager().playSound(player, "REWARDS_CHANGE_PAGE");
+								}
 								
-								plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), 1,
-										current);
-								
-								plugin.getBasicPluginManager().playSound(player, "REWARDS_CHANGE_PAGE");
 							}
-							
 						}
+						
+						
+						 
 
 					}
 				}.runTaskAsynchronously(plugin);
@@ -693,19 +697,21 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 							List<String> cmds = item.getConfig()
 									.getStringList("GUI_Items." + item.getID() + ".Commands");
 
-							if (m.getJobData().containsKey(ID)) {
+							if(cmds != null || !cmds.isEmpty()) {
+								if (m.getJobData().containsKey(ID)) {
 
-								String d2 = m.getJobData().get(ID);
+									String d2 = m.getJobData().get(ID);
 
-								Job job = plugin.getJobAPI().getLoadedJobsHash().get(d2);
+									Job job = plugin.getJobAPI().getLoadedJobsHash().get(d2);
 
-								for (String command : cmds) {
-									player.performCommand(command.replaceAll("<job>", job.getID()));
-								}
+									for (String command : cmds) {
+										player.performCommand(command.replaceAll("<job>", job.getID()));
+									}
 
-							} else {
-								for (String command : cmds) {
-									player.performCommand(command);
+								} else {
+									for (String command : cmds) {
+										player.performCommand(command);
+									}
 								}
 							}
 

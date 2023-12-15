@@ -45,7 +45,7 @@ public class BreakFarmAction extends JobAction implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onJoin(BlockBreakEvent event) {
+	public void onEvent(BlockBreakEvent event) {
 
 		BlockAPI bapi = plugin.getBlockAPI();
 
