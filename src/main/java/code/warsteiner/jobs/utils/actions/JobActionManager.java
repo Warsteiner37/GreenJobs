@@ -31,12 +31,18 @@ public class JobActionManager {
 		return this.maped;
 	}
 	
-	public void registerAction(JobAction e) {
+	public void addAction(JobAction e) {
 		this.list.add(e);
 		this.maped.put(e.getID(), e);
 		this.list2.add(e.getID());
-		e.register();
-		Bukkit.getConsoleSender().sendMessage("§2Register "+e.getID()+" Event...");
+	  
+	}
+	
+	public void regiserActions() {
+		for(JobAction ac : this.list) { 
+			Bukkit.getConsoleSender().sendMessage("§2Register "+ac.getID()+" Event...");
+			ac.register();
+		}
 	}
 	
 	public boolean isRealAction(String check) {

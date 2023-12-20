@@ -21,12 +21,7 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class BreakFarmAction extends JobAction implements Listener {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
-
-	@Override
-	public String getName() {
-		return "Farmer (Break)";
-	}
-
+ 
 	private List<Material> breakingMaterials = List.of(Material.SUGAR_CANE, Material.CACTUS, Material.BAMBOO);
 
 	@Override

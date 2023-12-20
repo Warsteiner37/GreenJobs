@@ -18,12 +18,7 @@ import code.warsteiner.jobs.utils.custom.PlayerCheckJobEvent;
 import code.warsteiner.jobs.utils.templates.JobAction;
 
 public class StripLogAction extends JobAction implements Listener {
-
-	@Override
-	public String getName() {
-		return "Striplog Action";
-	}
-
+ 
 	@Override
 	public String getID() {
 		return "STRIPLOG";

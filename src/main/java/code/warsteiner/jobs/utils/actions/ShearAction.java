@@ -20,13 +20,7 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class ShearAction  extends JobAction implements Listener {
 	
 	private GreenJobs plugin = GreenJobs.getPlugin();
-
-
-	@Override
-	public String getName() { 
-		return "Shear";
-	}
-
+ 
 	@Override
 	public String getID() { 
 		return "SHEAR";

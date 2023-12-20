@@ -116,8 +116,7 @@ public class WorldGuardSupport {
 					state = "DENY";
 				}
 			}
-		}
-
+		} 
 		return state;
 
 	}

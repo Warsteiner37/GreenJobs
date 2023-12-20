@@ -42,6 +42,7 @@ C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\c
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\basic\events\PlayerASyncJoinEvent.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\custom\PlayerAddNewCurrentJobEvent.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\api\JobLoadAPI.java
+C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\commands\admin\sub\CheckSub.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\commands\admin\sub\ExpSub.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\basic\events\PlayerAsyncCheckForWork.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\api\JobAPI.java
@@ -57,6 +58,7 @@ C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\e
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\manager\LoadAndStoreGUIManager.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\playercommand\PlayerSubCommand.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\api\LevelAPI.java
+C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\enums\AdminCommandCategory.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\templates\JobID.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\actions\BreedAction.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\GreenJobs.java
@@ -66,16 +68,18 @@ C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\command
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\admincommand\AdminSubCommand.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\manager\JobsGUIManager.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\templates\CustomItem.java
+C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\commands\admin\sub\VersionSub.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\custom\PlayerCheckJobEvent.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\templates\BlockData.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\enums\MultiplierWeight.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\actions\PlaceAction.java
+C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\actions\SmeltAction.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\commands\admin\AdminTabComplete.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\actions\StripLogAction.java
+C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\commands\admin\sub\ReloadSub.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\admincommand\AdminSubCommandRegistry.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\manager\ItemManager.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\custom\PlayerLeaveAJobEvent.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\templates\JobsPlayer.java
-C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\basic\events\PlayerUpdateInventory.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\manager\MultiplierManager.java
 C:\Users\hypas\eclipse-workspace\Jobs\src\main\java\code\warsteiner\jobs\utils\custom\PlayerAddNewOwnedJobEvent.java

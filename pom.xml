@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>code.warsteiner.jobs</groupId>
 	<artifactId>GreenJobs</artifactId>
-	<version>1.2.3</version>
+	<version>1.2.4</version>
 	<name>GreenJobs</name>
 
 	<packaging>jar</packaging>
@@ -68,13 +68,7 @@
 			<version>1.20.1-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>xyz.upperlevel.spigot.book</groupId>
-			<artifactId>spigot-book-api</artifactId>
-			<version>1.6</version>
-		</dependency>
-
+ 
 		<dependency>
 			<groupId>com.github.LoneDev6</groupId>
 			<artifactId>api-itemsadder</artifactId>
@@ -85,16 +79,10 @@
 		<dependency>
 			<groupId>me.clip</groupId>
 			<artifactId>placeholderapi</artifactId>
-			<version>2.11.1</version>
+			<version>2.11.5</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>com.googlecode.json-simple</groupId>
-			<artifactId>json-simple</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-
+ 
 		<dependency>
 			<groupId>com.sk89q.worldguard</groupId>
 			<artifactId>worldguard-bukkit</artifactId>

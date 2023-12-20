@@ -22,12 +22,7 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class TameAction  extends JobAction implements Listener {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
-
-	@Override
-	public String getName() {
-		return "Animal Tame";
-	}
-
+ 
 	@Override
 	public String getID() {
 		return "TAME";

@@ -1095,7 +1095,7 @@ public class JobsGUIManager {
 	public void setJobItems(GUIType type, Inventory inv, String name, JobsPlayer jb) {
  
 		if (plugin.getJobAPI().getLoadedJobsArray() != null) {
- 
+
 			plugin.getJobAPI().getLoadedJobsHash().forEach((id, job) -> {
  
 				Player player = Bukkit.getPlayer(jb.getUUID());

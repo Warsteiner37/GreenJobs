@@ -61,7 +61,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 			String title = event.getView().getTitle();
 
-			BasicGUIManager m = plugin.getBasicGUIManager(); 
+			BasicGUIManager m = plugin.getBasicGUIManager();
 			MessageManager mg = plugin.getMessageManager();
 
 			Player player = (Player) event.getWhoClicked();
@@ -79,49 +79,52 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 			Job job = plugin.getJobAPI().getLoadedJobsHash().get(d);
 
 			if (m.isLevelsMenu(player, job, title)) {
-				
+
 				FileConfiguration levels = plugin.getFileManager().getLevelsConfig();
- 
+
 				event.setCancelled(true);
- 
+
 				new BukkitRunnable() {
 					@Override
 					public void run() {
-						
-						if(levels.getBoolean("BackToFirstPage.Enabled")) {
-							
+
+						if (levels.getBoolean("BackToFirstPage.Enabled")) {
+
 							ItemStack item_got = plugin.getItemManager().createOrGetItem("Levels.Back.To.First.Page",
-									levels.getString("BackToFirstPage.Icon"), player.getName(), levels.getInt("BackToFirstPage.CustomModelData"));
-						 
-							String got = plugin.getBasicPluginManager().replaceAll(levels.getString("BackToFirstPage.Display"), player,
-									job);
-							
-							if(display.equalsIgnoreCase(got) && item.getType().equals(item_got.getType())) {
-								plugin.getJobsGUIManager().setLevelsItem(GUIType.LEVELS, 1, player.getOpenInventory(), player, jb, job);
-								 
+									levels.getString("BackToFirstPage.Icon"), player.getName(),
+									levels.getInt("BackToFirstPage.CustomModelData"));
+
+							String got = plugin.getBasicPluginManager()
+									.replaceAll(levels.getString("BackToFirstPage.Display"), player, job);
+
+							if (display.equalsIgnoreCase(got) && item.getType().equals(item_got.getType())) {
+								plugin.getJobsGUIManager().setLevelsItem(GUIType.LEVELS, 1, player.getOpenInventory(),
+										player, jb, job);
+
 								plugin.getBasicPluginManager().playSound(player, "LEVELS_CHANGE_PAGE");
 							}
-							
+
 						}
-						 
+
 						executeCustomItemClick(player, display, item, GUIType.LEVELS);
-   
+
 					}
 				}.runTaskAsynchronously(plugin);
 
-			}  else if (m.isRewardsMenu(player, job, title)) {
+			} else if (m.isRewardsMenu(player, job, title)) {
 
 				event.setCancelled(true);
- 
+
 				new BukkitRunnable() {
 					@Override
 					public void run() {
-						
+
 						FileConfiguration rewards = plugin.getFileManager().getRewardsConfig();
 
 						executeCustomItemClick(player, display, item, GUIType.REWARDS);
 
-						if(rewards.getString("SortModes.RANDOM.Icon") != null && rewards.getString("SortModes.NORMAL.Icon") != null) {
+						if (rewards.getString("SortModes.RANDOM.Icon") != null
+								&& rewards.getString("SortModes.NORMAL.Icon") != null) {
 							String c1 = rewards.getString("SortModes.RANDOM.Icon");
 							String c2 = rewards.getString("SortModes.NORMAL.Icon");
 
@@ -152,21 +155,19 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 								test.remove(current);
 
 								used = test;
-	 
+
 								String player_name = player.getName() + "_" + job.getID();
 
 								int page = 1;
-								
+
 								if (RewardsSub.getPages().containsKey(player_name)) {
 									page = RewardsSub.getPages().get(player_name);
 								}
-								
-								 
-								
-								if(RewardsSub.getPages().containsKey(player_name)) {
+
+								if (RewardsSub.getPages().containsKey(player_name)) {
 									page = RewardsSub.getPages().get(player_name);
 								}
-								
+
 								if (used.size() != 0) {
 									String next = used.get(0).toUpperCase();
 
@@ -179,29 +180,26 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 								}
 
-							} else if(rewards.getBoolean("BackToFirstPage.Enabled")) {
-								
-								ItemStack item_got = plugin.getItemManager().createOrGetItem("Rewards.Back.To.First.Page",
-										rewards.getString("BackToFirstPage.Icon"), player.getName(), rewards.getInt("BackToFirstPage.CustomModelData"));
-							 
-								String got = plugin.getBasicPluginManager().replaceAll(rewards.getString("BackToFirstPage.Display"), player,
-										job);
-								
-								if(display.equalsIgnoreCase(got) && item.getType().equals(item_got.getType())) {
-									
+							} else if (rewards.getBoolean("BackToFirstPage.Enabled")) {
+
+								ItemStack item_got = plugin.getItemManager().createOrGetItem(
+										"Rewards.Back.To.First.Page", rewards.getString("BackToFirstPage.Icon"),
+										player.getName(), rewards.getInt("BackToFirstPage.CustomModelData"));
+
+								String got = plugin.getBasicPluginManager()
+										.replaceAll(rewards.getString("BackToFirstPage.Display"), player, job);
+
+								if (display.equalsIgnoreCase(got) && item.getType().equals(item_got.getType())) {
+
 									String current = plugin.getBasicGUIManager().getCurrentCate().get(jb.getUUID());
-									
-									plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), 1,
-											current);
-									
+
+									plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), 1, current);
+
 									plugin.getBasicPluginManager().playSound(player, "REWARDS_CHANGE_PAGE");
 								}
-								
+
 							}
 						}
-						
-						
-						 
 
 					}
 				}.runTaskAsynchronously(plugin);
@@ -247,16 +245,16 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 										if (jb.getCurrentJobs().size() >= jb.getMaxJobs() + 1) {
 											if (mg.hasMessage("too_many_jobs")) {
-												player.sendMessage(mg.getMessage(player, "too_many_jobs").replaceAll("<job>",
-														job.getDisplay(player)));
+												player.sendMessage(mg.getMessage(player, "too_many_jobs")
+														.replaceAll("<job>", job.getDisplay(player)));
 											}
 											return;
 										} else {
 											jb.addCurrentJob(job.getID(), date);
 
 											if (mg.hasMessage("job_join_message")) {
-												player.sendMessage(mg.getMessage(player, "job_join_message").replaceAll("<job>",
-														job.getDisplay(player)));
+												player.sendMessage(mg.getMessage(player, "job_join_message")
+														.replaceAll("<job>", job.getDisplay(player)));
 											}
 
 											plugin.getBasicPluginManager().playSound(player, "PLAYER_JOINED_JOB");
@@ -287,7 +285,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 											if (plugin.getFileManager().getConfigConfig()
 													.getBoolean("ReOpenForUpdate")) {
-												 
+
 												plugin.getJobsGUIManager().updateJobMenu(player);
 											} else {
 												Bukkit.getScheduler().runTask(plugin, () -> {
@@ -300,7 +298,6 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 											if (plugin.getEco().getBalance(player) >= job.getPrice()
 													|| plugin.getEco().getBalance(player) == job.getPrice()) {
-												// paid
 
 												if (plugin.getFileManager().getConfigConfig()
 														.getBoolean("NeedToConfirmWhileBuying")) {
@@ -308,7 +305,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 													Bukkit.getScheduler().runTaskLater(plugin, () -> {
 														plugin.getJobsGUIManager().openConfPurchaseMenu(player,
 																job.getID(), false);
-													}, 2);
+													}, 1);
 
 												} else {
 
@@ -371,15 +368,11 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 							String trans = plugin.getBasicPluginManager().toHex(player, displayc);
 
+							final double money = plugin.getEco().getBalance(player);
+
 							if (display.equalsIgnoreCase(trans)) {
-								if (plugin.getEco().getBalance(player) >= job.getPrice()
-										|| plugin.getEco().getBalance(player) == job.getPrice()) {
-									// paid
-
-									plugin.getEco().withdrawPlayer(player, job.getPrice());
-
-									jb.addOwnedJob(job.getID());
-
+								if (money >= job.getPrice() || money == job.getPrice()) {
+								 
 									plugin.getBasicPluginManager().playSound(player, "PLAYER_BOUGHT_JOB");
 
 									player.sendMessage(mg.getMessage(player, "job_buy_message")
@@ -390,7 +383,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 										Bukkit.getScheduler().runTaskLater(plugin, () -> {
 											plugin.getJobsGUIManager().openJobsMenu(player, true);
-										}, 2);
+										}, 0);
 
 									} else {
 										Bukkit.getScheduler().runTask(plugin, () -> {
@@ -398,11 +391,14 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 										});
 									}
 
+									jb.addOwnedJob(job.getID());
+									plugin.getEco().withdrawPlayer(player, job.getPrice());
+
 									return;
 								} else {
 									if (mg.hasMessage("job_not_enough_money")) {
-										player.sendMessage(mg.getMessage(player, "job_not_enough_money").replaceAll("<job>",
-												job.getDisplay(player)));
+										player.sendMessage(mg.getMessage(player, "job_not_enough_money")
+												.replaceAll("<job>", job.getDisplay(player)));
 									}
 								}
 								return;
@@ -486,7 +482,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 						Bukkit.getScheduler().runTaskLater(plugin, () -> {
 							plugin.getJobsGUIManager().openJobsMenu(player, true);
-						}, 2);
+						}, 1);
 
 						plugin.getBasicPluginManager().playSound(player, "PLAYER_LEAVE_A_JOB");
 
@@ -529,17 +525,18 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 						Job job = plugin.getJobAPI().getLoadedJobsHash().get(d2);
 						if (gui.equals(GUIType.REWARDS)) {
-							
+
 							String player_name = player.getName() + "_" + job.getID();
- 
+
 							if (RewardsSub.getPages().containsKey(player_name)) {
- 
+
 								int page = RewardsSub.getPages().get(player_name);
 
 								int total = job.getEveryID().size();
 
-								int startIndex = page * plugin.getFileManager().getRewardsConfig().getInt("ItemsPerPage") + 1;
-							 
+								int startIndex = page
+										* plugin.getFileManager().getRewardsConfig().getInt("ItemsPerPage") + 1;
+
 								String used = null;
 								if (plugin.getBasicGUIManager().getCurrentCate().containsKey(jb.getUUID())) {
 									used = plugin.getBasicGUIManager().getCurrentCate().get(jb.getUUID());
@@ -549,7 +546,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 								}
 
 								if (total >= startIndex) {
-									
+
 									int next_page = page + 1;
 
 									plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), next_page,
@@ -559,43 +556,46 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 									return;
 								} else {
-									player.sendMessage(plugin.getMessageManager().getMessage(player, "rewards_no_other_page"));
+									player.sendMessage(
+											plugin.getMessageManager().getMessage(player, "rewards_no_other_page"));
 									return;
 								}
 							}
 						} else if (gui.equals(GUIType.LEVELS)) {
-							 
+
 							FileConfiguration cfg = plugin.getFileManager().getLevelsConfig();
- 
+
 							HashMap<String, Integer> p = LevelsSub.getPages();
-							
+
 							String player_name = player.getName() + "_" + job.getID();
-						 
+
 							if (p.containsKey(player_name)) {
-							 
+
 								HashMap<Integer, JobLevel> levels = job.getLevels();
 
 								List<String> slots = cfg.getStringList("ItemPlaces");
 
 								int itemsPerPage = slots.size();
-								 
+
 								int page = p.get(player_name);
 
 								int total = levels.size();
 
 								int startIndex = page * itemsPerPage + 1;
-							 
+
 								if (total >= startIndex) {
-								 
+
 									int next_page = page + 1;
 
-									plugin.getJobsGUIManager().setLevelsItem(GUIType.LEVELS, next_page, player.getOpenInventory(), player, jb, job);
+									plugin.getJobsGUIManager().setLevelsItem(GUIType.LEVELS, next_page,
+											player.getOpenInventory(), player, jb, job);
 
 									plugin.getBasicPluginManager().playSound(player, "LEVELS_CHANGE_PAGE");
 
 									return;
 								} else {
-									player.sendMessage(plugin.getMessageManager().getMessage(player, "levels_no_other_page"));
+									player.sendMessage(
+											plugin.getMessageManager().getMessage(player, "levels_no_other_page"));
 									return;
 								}
 							}
@@ -609,9 +609,9 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 						Job job = plugin.getJobAPI().getLoadedJobsHash().get(d2);
 						if (gui.equals(GUIType.REWARDS)) {
 							String player_name = player.getName() + "_" + job.getID();
-							 
+
 							if (RewardsSub.getPages().containsKey(player_name)) {
- 
+
 								int page = RewardsSub.getPages().get(player_name);
 
 								String used = null;
@@ -621,9 +621,10 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 									used = plugin.getFileManager().getRewardsConfig().getString("DefaultSorting")
 											.toUpperCase();
 								}
- 
+
 								if (page == 1) {
-									player.sendMessage(plugin.getMessageManager().getMessage(player, "rewards_no_other_page"));
+									player.sendMessage(
+											plugin.getMessageManager().getMessage(player, "rewards_no_other_page"));
 									return;
 								} else {
 
@@ -636,24 +637,26 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 								}
 							}
 						} else if (gui.equals(GUIType.LEVELS)) {
-							 
+
 							HashMap<String, Integer> p = LevelsSub.getPages();
-							
+
 							String player_name = player.getName() + "_" + job.getID();
-							
+
 							if (p.containsKey(player_name)) {
- 
+
 								int page = p.get(player_name);
 
 								if (page == 1) {
-									player.sendMessage(plugin.getMessageManager().getMessage(player, "levels_no_other_page"));
+									player.sendMessage(
+											plugin.getMessageManager().getMessage(player, "levels_no_other_page"));
 									return;
 								} else {
 
 									int next_page = page - 1;
-							 
-									plugin.getJobsGUIManager().setLevelsItem(GUIType.LEVELS, next_page, player.getOpenInventory(), player, jb, job);
- 
+
+									plugin.getJobsGUIManager().setLevelsItem(GUIType.LEVELS, next_page,
+											player.getOpenInventory(), player, jb, job);
+
 									plugin.getBasicPluginManager().playSound(player, "LEVELS_CHANGE_PAGE");
 
 									return;
@@ -671,22 +674,20 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 						}, 2);
 
 					}
-					
+
 					if (actions.contains(CustomItemAction.OPEN_OVERVIEW)) {
 						Bukkit.getScheduler().runTaskLater(plugin, () -> {
-							
-							if(m.getJobData().containsKey(ID)) {
+
+							if (m.getJobData().containsKey(ID)) {
 								String d2 = m.getJobData().get(ID);
 
 								Job job_found = plugin.getJobAPI().getLoadedJobsHash().get(d2);
-								 
 
 								plugin.getBasicPluginManager().playSound(player, "RE_OPEN_OPTIONS_GUI");
 
 								plugin.getJobsGUIManager().openOptionsMenu(player, job_found.getID(), false);
 							}
-							
-							 
+
 						}, 2);
 
 					}
@@ -697,7 +698,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 							List<String> cmds = item.getConfig()
 									.getStringList("GUI_Items." + item.getID() + ".Commands");
 
-							if(cmds != null || !cmds.isEmpty()) {
+							if (cmds != null || !cmds.isEmpty()) {
 								if (m.getJobData().containsKey(ID)) {
 
 									String d2 = m.getJobData().get(ID);

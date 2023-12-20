@@ -25,11 +25,6 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class CollectHoneyAction extends JobAction implements Listener {
  
 	@Override
-	public String getName() {
-		return "Collect Honey Action";
-	}
-
-	@Override
 	public String getID() {
 		return "COLLECT_HONEY";
 	}

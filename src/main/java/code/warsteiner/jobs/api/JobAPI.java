@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 import code.warsteiner.jobs.GreenJobs; 
 import code.warsteiner.jobs.utils.templates.Job;
@@ -18,7 +19,7 @@ public class JobAPI {
 
 	private HashMap<String, Job> jobs = new HashMap<String, Job>();
 	private ArrayList<String> listed = new ArrayList<String>();
-	
+ 
 	public HashMap<String, Job> getLoadedJobsHash() {
 		return this.jobs;
 	}
@@ -30,6 +31,7 @@ public class JobAPI {
 	public void clearLists() {
 		this.jobs.clear();
 		this.listed.clear();
+		this.sorted_actions.clear();
 	}
 	
 	public void AddActiveJob(Job job) {
@@ -44,6 +46,16 @@ public class JobAPI {
 	}
 	
 	private HashMap<String, ArrayList<String>> sorted_actions = new HashMap<String, ArrayList<String>>();
+	
+	public String canWorkInRegion(Location loc, String flag) {
+		if (plugin.isInstalled("WorldGuard")) {
+
+			return plugin.getWorldGuardSupport().checkFlag(loc, flag);
+
+		}
+		return "ALLOW";
+	}
+
 	
 	public void sortJobsAfterActions() {
 	 

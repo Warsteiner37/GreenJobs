@@ -19,11 +19,6 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class CarveAction extends JobAction implements Listener {
  
 	@Override
-	public String getName() {
-		return "Carve Action";
-	}
-
-	@Override
 	public String getID() {
 		return "CARVE";
 	}

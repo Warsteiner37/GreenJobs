@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.Player;
@@ -20,8 +21,13 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import static java.util.Map.entry;
+
+import java.text.DecimalFormat;
+import java.util.Map;
 
 import code.warsteiner.jobs.GreenJobs;
+import code.warsteiner.jobs.basic.BasicPluginManager;
 import code.warsteiner.jobs.utils.BossBarHandler;
 import code.warsteiner.jobs.utils.custom.PlayerAddNewOwnedJobEvent;
 import code.warsteiner.jobs.utils.custom.PlayerCheckJobEvent;
@@ -40,7 +46,7 @@ public class PlayerAsyncCheckForWork implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(BlockPlaceEvent event) {
- 
+
 		event.getBlock().setMetadata("placed-by-player",
 				new FixedMetadataValue(GreenJobs.getPlugin(), "placed-by-player"));
 
@@ -49,7 +55,7 @@ public class PlayerAsyncCheckForWork implements Listener {
 		String BlockID = block.getType().toString();
 
 		Player player = event.getPlayer();
-	 
+
 		plugin.getBlockAPI().addBlockToList(loc, BlockID, player.getName(),
 				plugin.getBasicPluginManager().getDateTodayFromCal());
 
@@ -75,6 +81,7 @@ public class PlayerAsyncCheckForWork implements Listener {
 			int amount = event.getAmount();
 
 			String id = action + "_" + block;
+			 
 			String world = player.getLocation().getWorld().getName();
 			Location loc = player.getLocation();
 			JobAction rl = plugin.getJobActionManager().getHashMap().get(action);
@@ -87,8 +94,11 @@ public class PlayerAsyncCheckForWork implements Listener {
 				Job real = plugin.getJobAPI().getLoadedJobsHash().get(jb);
 
 				if (jbb.getCurrentJobs().contains(real.getID())) {
+
 					if (real.getWorlds().contains(world)) {
-						if (canWorkInRegion(loc, rl.getWorldGuardFlag()).equalsIgnoreCase("ALLOW")) {
+
+						if (plugin.getJobAPI().canWorkInRegion(loc, rl.getWorldGuardFlag()).equalsIgnoreCase("ALLOW")) {
+
 							if (real.getEveryID().containsKey(id.toUpperCase())) {
 
 								JobID rld = real.getEveryID().get(id.toUpperCase());
@@ -125,57 +135,11 @@ public class PlayerAsyncCheckForWork implements Listener {
 
 									plugin.getBasicPluginManager().playSound(player, "PLAYER_FINISH_WORK");
 
-									if (real.getRewardMessages() != null) {
-										HashMap<String, String> rw = real.getRewardMessages();
-
-										if (rw.containsKey("BOSSBAR")) {
-
-											String bm = plugin.getBasicPluginManager().toHex(player,
-													rw.get("BOSSBAR").replaceAll("<block>", rld.getDisplay(player))
-															.replaceAll("<amount>", "" + amount)
-															.replaceAll("<exp>", "" + exp)
-															.replaceAll("<job>", real.getDisplay(player))
-															.replaceAll("<money>", "" + reward));
-
-											Date isago5seconds = new Date((new Date()).getTime() + 3000L);
-											if (BossBarHandler.last_work.containsKey(ID))
-												BossBarHandler.last_work.remove(ID);
-											BossBarHandler.last_work.put(ID, isago5seconds);
-
-											double use = BossBarHandler.calculate(stats.getExp(),
-													plugin.getLevelAPI().isMaxLevel(jbb, real.getID()),
-													stats.getNeed());
-
-											BarColor color = real.getBarColor();
-
-											if (!BossBarHandler.exist(ID)) {
-												BossBarHandler.createBar(player, bm, color, ID, use);
-											} else {
-												BossBarHandler.renameBossBar(bm, ID);
-												BossBarHandler.recolorBossBar(color, ID);
-												BossBarHandler.updateProgress(use, ID);
-											}
-
-										}
-										if (rw.containsKey("ACTIONBAR")) {
-											player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-													TextComponent.fromLegacyText(plugin.getBasicPluginManager()
-															.toHex(player, rw.get("ACTIONBAR")
-																	.replaceAll("<block>", rld.getDisplay(player))
-																	.replaceAll("<amount>", "" + amount)
-																	.replaceAll("<exp>", "" + exp)
-																	.replaceAll("<job>", real.getDisplay(player))
-																	.replaceAll("<money>", "" + reward))));
-
-										}
-										if (rw.containsKey("MESSAGE")) {
-											player.sendMessage(plugin.getBasicPluginManager().toHex(player,
-													rw.get("MESSAGE").replaceAll("<block>", rld.getDisplay(player))
-															.replaceAll("<amount>", "" + amount)
-															.replaceAll("<exp>", "" + exp)
-															.replaceAll("<job>", real.getDisplay(player))
-															.replaceAll("<money>", "" + reward)));
-										}
+									if (plugin.getFileManager().getConfigConfig().getBoolean("UseLevels")) {
+										plugin.getLevelAPI().checkLevel(jbb, real);
+									}
+									if (Bukkit.getPlayer(player.getName()).isOnline()) {
+										this.sendRewardMessage(real, player, stats, jbb, amount, rld, action);
 									}
 
 									new BukkitRunnable() {
@@ -187,10 +151,6 @@ public class PlayerAsyncCheckForWork implements Listener {
 											Bukkit.getServer().getPluginManager().callEvent(event);
 										}
 									}.runTask(plugin);
-
-									if (plugin.getFileManager().getConfigConfig().getBoolean("UseLevels")) {
-										plugin.getLevelAPI().checkLevel(jbb, real);
-									}
 								}
 
 							}
@@ -204,13 +164,92 @@ public class PlayerAsyncCheckForWork implements Listener {
 
 	}
 
-	public String canWorkInRegion(Location loc, String flag) {
-		if (plugin.isInstalled("WorldGuard")) {
+	public void sendRewardMessage(Job job, Player player, JobStats stats, JobsPlayer jbb, int amount, JobID block,
+			String action) {
 
-			return plugin.getWorldGuardSupport().checkFlag(loc, flag);
+		BasicPluginManager basic = plugin.getBasicPluginManager();
 
+		UUID ID = player.getUniqueId();
+
+		double reward = amount * block.getMoneyReward();
+		double points = amount * block.getPoints();
+		double exp = amount * block.getExp();
+		double level_req = stats.getNeed();
+		int level_int = stats.getLevel();
+		double level_exp_total = stats.getExp();
+
+		String level_name = plugin.getLevelAPI().getDisplayOfLevel(player, job, level_int);
+
+		double percent = (level_exp_total / level_req) * 100;
+		DecimalFormat format = new DecimalFormat("0.00");
+		String output = format.format(percent);
+
+		Map<String, String> replacs = Map.ofEntries(
+
+				entry("<job>", "" + job.getDisplay(player)), entry("<job_id>", "" + job.getID().toLowerCase()),
+
+				entry("<points>", "" + points),
+
+				entry("<level_req>", "" + basic.Format(level_req)), entry("<level_exp>", "" + exp),
+				entry("<level_int>", "" + level_int), entry("<level_name>", "" + level_name),
+				entry("<level_exp_total>", "" + level_exp_total), entry("<level_progress_percent>", "" + output + "%"),
+
+				entry("<block>", "" + block.getDisplay(player)), entry("<block_action>", "" + action.toLowerCase()),
+
+				entry("<money_total>", "" + stats.getEarnedToday()), entry("<money>", "" + reward),
+
+				entry("<amount>", "" + amount));
+
+		if (job.getRewardMessages() != null) {
+			HashMap<String, String> rw = job.getRewardMessages();
+
+			if (rw.containsKey("BOSSBAR")) {
+
+				String bossbar_message = rw.get("BOSSBAR");
+				String converted = convertText(bossbar_message, replacs, player);
+
+				Date isago5seconds = new Date((new Date()).getTime() + 3000L);
+				if (BossBarHandler.last_work.containsKey(ID))
+					BossBarHandler.last_work.remove(ID);
+				BossBarHandler.last_work.put(ID, isago5seconds);
+
+				double use = BossBarHandler.calculate(stats.getExp(), plugin.getLevelAPI().isMaxLevel(jbb, job.getID()),
+						stats.getNeed());
+
+				BarColor color = job.getBarColor();
+
+				if (!BossBarHandler.exist(ID)) {
+					BossBarHandler.createBar(player, converted, color, ID, use);
+				} else {
+					BossBarHandler.renameBossBar(converted, ID);
+					BossBarHandler.recolorBossBar(color, ID);
+					BossBarHandler.updateProgress(use, ID);
+				}
+			}
+			if (rw.containsKey("ACTIONBAR")) {
+
+				String bossbar_message = rw.get("ACTIONBAR");
+				String converted = convertText(bossbar_message, replacs, player);
+
+				player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(converted));
+
+			}
+			if (rw.containsKey("MESSAGE")) {
+
+				String bossbar_message = rw.get("MESSAGE");
+				String converted = convertText(bossbar_message, replacs, player);
+
+				player.sendMessage(converted);
+			}
 		}
-		return "ALLOW";
 	}
 
+	public String convertText(String text, Map<String, String> replacer, Player player) {
+		for (String key : replacer.keySet()) {
+			text = text.replaceAll(key, replacer.get(key));
+		}
+		return plugin.getBasicPluginManager().toHex(player, text);
+	}
+
+ 
 }

@@ -20,12 +20,7 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class PlaceAction extends JobAction implements Listener {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
-
-	@Override
-	public String getName() {
-		return "Block Place";
-	}
-
+ 
 	@Override
 	public String getID() {
 		return "PLACE";

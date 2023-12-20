@@ -19,12 +19,7 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class BreakAction extends JobAction implements Listener {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
-
-	@Override
-	public String getName() {
-		return "Block Break";
-	}
-
+ 
 	@Override
 	public String getID() {
 		return "BREAK";
@@ -54,7 +49,7 @@ public class BreakAction extends JobAction implements Listener {
 				return;
 			}
 		}
-
+	 
 		Player player = event.getPlayer();
 		UUID ID = player.getUniqueId();
 

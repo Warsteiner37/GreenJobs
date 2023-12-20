@@ -224,8 +224,7 @@ public class JobLoadAPI {
 					lvl.put("AddPercentValueLevelUp", "" + add);
 					lvl.put("MaxLevel", "" + maxlevel);
 					lvl.put("DefaultDisplay", default_display);
-					
-					//levels stuff
+					 
 					for(int i1=0; i1<maxlevel; i1++) {
 						
 						String custom_display = cfg.getString("Levels."+i1+".CustomDisplay");
@@ -234,12 +233,13 @@ public class JobLoadAPI {
 						List<String> custom_desc  = cfg.getStringList("Levels."+i1+".Description");
 						String song  = cfg.getString("Levels."+i1+".PlaySong");
 						double reward = cfg.getDouble("Levels."+i1+".Reward");
+						boolean fireworks = cfg.getBoolean("Levels."+i1+".Firework");
 						List<String> commands  = cfg.getStringList("Levels."+i1+".Commands");
 						
 						double earn_more = cfg.getDouble("Levels."+i1+".EarnMorePercent");
 						double earn_less = cfg.getDouble("Levels."+i1+".EarnLessPercent");
 					 
-						JobLevel level = new JobLevel(job_id, i1, custom_desc, custom_display, reward, earn_more, earn_less, commands, custom_item, custom_data, song);
+						JobLevel level = new JobLevel(job_id, i1, custom_desc, custom_display, reward, earn_more, earn_less, commands, custom_item, custom_data, song, fireworks);
 						
 						levels.put(i1, level);
 					}

@@ -1,9 +1,11 @@
+code\warsteiner\jobs\commands\admin\sub\ReloadSub.class
 code\warsteiner\jobs\utils\FileManager.class
 code\warsteiner\jobs\utils\playercommand\PlayerSubCommand.class
 code\warsteiner\jobs\manager\MultiplierManager.class
 code\warsteiner\jobs\utils\Metrics$JsonObjectBuilder.class
 code\warsteiner\jobs\commands\admin\AdminCommand.class
 code\warsteiner\jobs\basic\events\PlayerAsyncCheckForWork$1.class
+code\warsteiner\jobs\utils\enums\AdminCommandCategory.class
 code\warsteiner\jobs\utils\templates\JobsPlayer$4.class
 code\warsteiner\jobs\utils\templates\JobsPlayer$1.class
 code\warsteiner\jobs\commands\sub\HelpSub.class
@@ -24,6 +26,8 @@ code\warsteiner\jobs\utils\enums\MultiplierWeight.class
 code\warsteiner\jobs\manager\MessageManager.class
 code\warsteiner\jobs\manager\PlayerDataManager.class
 code\warsteiner\jobs\utils\actions\MilkAction.class
+code\warsteiner\jobs\commands\admin\sub\VersionSub.class
+code\warsteiner\jobs\utils\actions\SmeltAction.class
 code\warsteiner\jobs\basic\events\PlayerASyncInventoryClickEvent$2.class
 code\warsteiner\jobs\support\WorldGuardSupport.class
 code\warsteiner\jobs\utils\templates\FileTemplate.class
@@ -34,7 +38,6 @@ code\warsteiner\jobs\utils\templates\BlockData.class
 code\warsteiner\jobs\commands\admin\sub\LimitSub.class
 code\warsteiner\jobs\utils\enums\GUIType.class
 code\warsteiner\jobs\utils\custom\PlayerFinishJobEvent.class
-code\warsteiner\jobs\basic\events\PlayerUpdateInventory.class
 code\warsteiner\jobs\utils\actions\BreakFarmAction.class
 code\warsteiner\jobs\utils\actions\CollectHoneyAction.class
 code\warsteiner\jobs\utils\playercommand\PlayerSubCommandRegistry.class
@@ -57,6 +60,7 @@ code\warsteiner\jobs\utils\Metrics.class
 code\warsteiner\jobs\commands\JobTabComplete.class
 code\warsteiner\jobs\basic\events\PlayerASyncQuitEvent$1.class
 code\warsteiner\jobs\commands\admin\sub\NeedSub.class
+code\warsteiner\jobs\basic\BasicGUIManager$1.class
 code\warsteiner\jobs\support\PlaceHolderManager.class
 code\warsteiner\jobs\utils\templates\JobAction.class
 code\warsteiner\jobs\utils\templates\JobsPlayer$3.class
@@ -97,6 +101,7 @@ code\warsteiner\jobs\basic\events\PlayerAsyncCheckForWork.class
 code\warsteiner\jobs\utils\Metrics$CustomChart.class
 code\warsteiner\jobs\utils\actions\FishAction.class
 code\warsteiner\jobs\basic\events\PlayerASyncInventoryClickEvent$5.class
+code\warsteiner\jobs\commands\admin\sub\CheckSub.class
 code\warsteiner\jobs\commands\sub\LevelsSub.class
 code\warsteiner\jobs\utils\BossBarHandler.class
 code\warsteiner\jobs\utils\actions\CollectBerrysAction.class

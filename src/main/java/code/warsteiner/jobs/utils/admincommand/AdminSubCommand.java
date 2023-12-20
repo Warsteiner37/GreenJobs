@@ -1,11 +1,15 @@
 package code.warsteiner.jobs.utils.admincommand;
 
 import org.bukkit.command.CommandSender;
+
+import code.warsteiner.jobs.utils.enums.AdminCommandCategory;
  
 
 public abstract class AdminSubCommand {
 	
     public abstract String getName();
+    
+    public abstract AdminCommandCategory getCategory();
 
     public abstract String getUsage();
     

@@ -19,12 +19,7 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class BreedAction extends JobAction implements Listener {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
-
-	@Override
-	public String getName() {
-		return "Breed Animals";
-	}
-
+ 
 	@Override
 	public String getID() {
 		return "BREED";

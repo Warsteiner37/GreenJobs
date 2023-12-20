@@ -29,16 +29,18 @@ import code.warsteiner.jobs.basic.events.CommandListeners;
 import code.warsteiner.jobs.basic.events.PlayerASyncInventoryClickEvent;
 import code.warsteiner.jobs.basic.events.PlayerASyncJoinEvent;
 import code.warsteiner.jobs.basic.events.PlayerASyncQuitEvent;
-import code.warsteiner.jobs.basic.events.PlayerAsyncCheckForWork;
-import code.warsteiner.jobs.basic.events.PlayerUpdateInventory;
+import code.warsteiner.jobs.basic.events.PlayerAsyncCheckForWork; 
 import code.warsteiner.jobs.commands.JobTabComplete;
 import code.warsteiner.jobs.commands.JobsCommand;
 import code.warsteiner.jobs.commands.admin.AdminCommand;
-import code.warsteiner.jobs.commands.admin.AdminTabComplete; 
+import code.warsteiner.jobs.commands.admin.AdminTabComplete;
+import code.warsteiner.jobs.commands.admin.sub.CheckSub;
 import code.warsteiner.jobs.commands.admin.sub.ExpSub;
 import code.warsteiner.jobs.commands.admin.sub.LevelSub;
 import code.warsteiner.jobs.commands.admin.sub.LimitSub;
 import code.warsteiner.jobs.commands.admin.sub.NeedSub;
+import code.warsteiner.jobs.commands.admin.sub.ReloadSub;
+import code.warsteiner.jobs.commands.admin.sub.VersionSub;
 import code.warsteiner.jobs.commands.sub.HelpSub;
 import code.warsteiner.jobs.commands.sub.LevelsSub;
 import code.warsteiner.jobs.commands.sub.RewardsSub;
@@ -67,6 +69,7 @@ import code.warsteiner.jobs.utils.actions.KillMobAction;
 import code.warsteiner.jobs.utils.actions.MilkAction;
 import code.warsteiner.jobs.utils.actions.PlaceAction;
 import code.warsteiner.jobs.utils.actions.ShearAction;
+import code.warsteiner.jobs.utils.actions.SmeltAction;
 import code.warsteiner.jobs.utils.actions.StripLogAction;
 import code.warsteiner.jobs.utils.actions.TameAction;
 import code.warsteiner.jobs.utils.actions.TreasureAction;
@@ -116,15 +119,19 @@ public class GreenJobs extends JavaPlugin {
 
 		plugin = this;
 		executor = Executors.newCachedThreadPool();
-
-		createFolders();
-
+  
+		this.createFolders();
+ 
 		this.setClassesv1();
-
-		if (isInstalled("WorldGuard")) {
+		this.setClassesv2();
+  
+		this.loadJobEvents();
+ 
+		if (this.isInstalled("WorldGuard")) {
 			this.wg = new WorldGuardSupport();
 			this.wg.setClass();
 			this.wg.load();
+			Bukkit.getConsoleSender().sendMessage("§aLoading WorldGuard Support...");
 		}
 
 	}
@@ -134,19 +141,13 @@ public class GreenJobs extends JavaPlugin {
 
 		this.hook();
 
-		this.registerJobEvents();
-
 		this.registerEvents();
 
 		this.registerCommands();
-
-		this.setClassesv2();
-
-		if (isInstalled("PlaceHolderAPI")) {
-			Bukkit.getConsoleSender().sendMessage("§aLoading PlaceHolderAPI Support...");
-			new PlaceHolderManager().register();
-		}
-
+		
+		this.load.loadJobsbyStart();
+		this.jobapi.sortJobsAfterActions();
+ 
 		BossBarHandler.startSystemCheck();
 
 		FileManager f = plugin.getFileManager();
@@ -154,9 +155,16 @@ public class GreenJobs extends JavaPlugin {
 		FileConfiguration dt = f.getDataFile().get();
 
 		plugin.getBlockAPI().loadData();
-		  
+
+		if (this.isInstalled("PlaceholderAPI")) {
+			Bukkit.getConsoleSender().sendMessage("§aLoading PlaceHolderAPI Support...");
+			new PlaceHolderManager().register();
+		} else {
+			Bukkit.getConsoleSender().sendMessage("§cSkipping PlaceHolderAPI Support...");
+		}
+
 		executor.submit(() -> {
-			 
+
 			ArrayList<String> people = (ArrayList<String>) dt.getStringList("PlayerList");
 
 			for (String guy : people) {
@@ -164,7 +172,7 @@ public class GreenJobs extends JavaPlugin {
 				UUID d = UUID.fromString(guy.toString());
 
 				String name = dt.getString("Player." + d + ".Name");
- 
+
 				int max = dt.getInt("Player." + d + ".Max");
 				double points = dt.getDouble("Player." + d + ".Points");
 				double sal = dt.getDouble("Player." + d + ".Salary");
@@ -243,16 +251,16 @@ public class GreenJobs extends JavaPlugin {
 
 				plugin.getPlayerDataManager().addToList(d, jobs_player);
 
-				 
-
 			}
-			
+
 			int total = plugin.getPlayerDataManager().getJobsPlayerList().size();
-			
-			Bukkit.getConsoleSender().sendMessage("§4§lLoaded a total of "+total+"x Player's Data!");
+
+			Bukkit.getConsoleSender().sendMessage("§4§lLoaded a total of " + total + "x Player's Data!");
 
 		});
 
+		this.getBasicGUIManager().startUpdate();
+		
 		new Metrics(this, 19287);
 
 	}
@@ -266,15 +274,15 @@ public class GreenJobs extends JavaPlugin {
 		java.io.File dt_file = f.getDataFile().getfile();
 
 		executor.submit(() -> {
-			
+
 			plugin.getBlockAPI().saveData();
 
 			HashMap<UUID, JobsPlayer> jlist = this.data_manager.getJobsPlayerList();
 
 			int total = jlist.size();
-			
+
 			ArrayList<String> my_list = new ArrayList<String>();
-  
+
 			jlist.forEach((ID, jb) -> {
 
 				my_list.add("" + ID);
@@ -327,9 +335,10 @@ public class GreenJobs extends JavaPlugin {
 						HashMap<String, Integer> test = real.getTimesBrokenABlockDates().get(date);
 						HashMap<String, HashMap<String, Double>> test2 = real.getEarningsByBlockDates();
 
-						if(test != null) {
-							test.forEach((id, amount) -> { 
-								dt.set("JobDates." + d + ".Job." + job + "." + date + ".BrokenTimesBlock." + id, amount);
+						if (test != null) {
+							test.forEach((id, amount) -> {
+								dt.set("JobDates." + d + ".Job." + job + "." + date + ".BrokenTimesBlock." + id,
+										amount);
 							});
 
 							test2.get(date).forEach((id, amount) -> {
@@ -341,7 +350,7 @@ public class GreenJobs extends JavaPlugin {
 
 					HashMap<String, Integer> test3 = real.getTimesBrokenABlock();
 
-					if(test3 != null) {
+					if (test3 != null) {
 						test3.forEach((id, amount) -> {
 							dt.set("JobDates." + d + ".Job." + job + ".TimesBrokenThisBlock." + id, amount);
 						});
@@ -349,26 +358,24 @@ public class GreenJobs extends JavaPlugin {
 
 					HashMap<String, Double> test4 = real.getEarnedMoneyByBlock();
 
-					if(test4 != null) {
+					if (test4 != null) {
 						test4.forEach((id, amount) -> {
 							dt.set("JobDates." + d + ".Job." + job + ".EarnedByThisBlock." + id, amount);
 						});
 					}
 
 				});
- 
 
 			});
 
 			dt.set("PlayerList", my_list);
- 
-			Bukkit.getConsoleSender().sendMessage("§4§lSaving a total of "+total+"x Player's Data!");
 
+			Bukkit.getConsoleSender().sendMessage("§4§lSaving a total of " + total + "x Player's Data!");
 
 			if (!getDataFolder().exists()) {
 				getDataFolder().mkdir();
 			}
-			
+
 			File folder_2 = new File(getDataFolder(), "data");
 
 			if (!folder_2.exists()) {
@@ -381,10 +388,9 @@ public class GreenJobs extends JavaPlugin {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
-			
+
 		});
-		 
+
 		BossBarHandler.clearLists();
 
 		if (isInstalled("WorldGuard")) {
@@ -393,7 +399,7 @@ public class GreenJobs extends JavaPlugin {
 
 		executor.shutdown();
 
-		plugin.getBasicGUIManager().clearLists(); 
+		plugin.getBasicGUIManager().clearLists();
 		plugin.getJobAPI().clearLists();
 		plugin.getMessageManager().clearLists();
 		plugin.getLoadAndStoreGUIManager().clearLists();
@@ -411,39 +417,34 @@ public class GreenJobs extends JavaPlugin {
 
 		mg.registerEvents(new PlayerASyncJoinEvent(), this);
 		mg.registerEvents(new PlayerASyncQuitEvent(), this);
-		mg.registerEvents(new PlayerASyncInventoryClickEvent(), this);
-		mg.registerEvents(new PlayerUpdateInventory(), this);
+		mg.registerEvents(new PlayerASyncInventoryClickEvent(), this); 
 		mg.registerEvents(new CommandListeners(), this);
+
+		mg.registerEvents(new PlayerAsyncCheckForWork(), this); 
+		
+		this.getJobActionManager().regiserActions();
 	}
 
-	public void registerJobEvents() {
-
-		PluginManager mg = Bukkit.getPluginManager();
-
+	public void loadJobEvents() {
+ 
 		JobActionManager f = plugin.getJobActionManager();
 
-		f.registerAction(new StripLogAction());
-		f.registerAction(new BreakAction());
-		f.registerAction(new PlaceAction());
-		f.registerAction(new KillMobAction());
-		f.registerAction(new ShearAction());
-		f.registerAction(new FishAction());
-		f.registerAction(new MilkAction());
-		f.registerAction(new BreakFarmAction());
-		f.registerAction(new TameAction());
-		f.registerAction(new BreedAction());
-		f.registerAction(new CarveAction());
-		f.registerAction(new CollectBerrysAction());
-		f.registerAction(new CollectHoneyAction());
-		f.registerAction(new TreasureAction());
-
-		mg.registerEvents(new PlayerAsyncCheckForWork(), this);
-
-		executor.submit(() -> {
-			this.load.loadJobsbyStart();
-			this.jobapi.sortJobsAfterActions();
-		});
-
+		f.addAction(new StripLogAction());
+		f.addAction(new BreakAction());
+		f.addAction(new PlaceAction());
+		f.addAction(new KillMobAction());
+		f.addAction(new ShearAction());
+		f.addAction(new FishAction());
+		f.addAction(new MilkAction());
+		f.addAction(new BreakFarmAction());
+		f.addAction(new TameAction());
+		f.addAction(new BreedAction());
+		f.addAction(new CarveAction());
+		f.addAction(new CollectBerrysAction());
+		f.addAction(new CollectHoneyAction());
+		f.addAction(new TreasureAction());
+		f.addAction(new SmeltAction());
+  
 	}
 
 	public JobActionManager getJobActionManager() {
@@ -461,22 +462,25 @@ public class GreenJobs extends JavaPlugin {
 	public void registerCommands() {
 		getCommand("jobs").setExecutor(new JobsCommand());
 		getCommand("jobs").setTabCompleter(new JobTabComplete());
- 
+
 		getPlayerSubCommandManager().getSubCommandList().add(new HelpSub());
- 
-		getCommand("jpm").setExecutor(new AdminCommand());
-		getCommand("jpm").setTabCompleter(new AdminTabComplete());
+
+		getCommand("jobsadmin").setExecutor(new AdminCommand());
+		getCommand("jobsadmin").setTabCompleter(new AdminTabComplete());
 
 		getAdminSubCommandManager().getSubCommandList().add(new ExpSub());
 		getAdminSubCommandManager().getSubCommandList().add(new LevelSub());
 		getAdminSubCommandManager().getSubCommandList().add(new LimitSub());
-		getAdminSubCommandManager().getSubCommandList().add(new NeedSub());
-		
+		getAdminSubCommandManager().getSubCommandList().add(new NeedSub()); 
+		getAdminSubCommandManager().getSubCommandList().add(new CheckSub()); 
+		getAdminSubCommandManager().getSubCommandList().add(new ReloadSub());
+		getAdminSubCommandManager().getSubCommandList().add(new VersionSub());
+
 		registerPRCommands();
 	}
-	
-	public void registerPRCommands() { 
-		getPlayerSubCommandManager().getSubCommandList().add(new RewardsSub()); 
+
+	public void registerPRCommands() {
+		getPlayerSubCommandManager().getSubCommandList().add(new RewardsSub());
 		getPlayerSubCommandManager().getSubCommandList().add(new LevelsSub());
 	}
 
@@ -503,12 +507,12 @@ public class GreenJobs extends JavaPlugin {
 		this.as = new AdminSubCommandRegistry();
 		this.cp = new PlayerSubCommandRegistry();
 		this.blocks = new BlockAPI();
-		
+
 		this.files.setFiles();
 		this.gs.load();
 
 	}
-	
+
 	public BlockAPI getBlockAPI() {
 		return this.blocks;
 	}

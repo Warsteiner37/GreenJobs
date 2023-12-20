@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -90,13 +91,28 @@ public class PlayerDataManager {
 				owned = cfg.getStringList("DefaultJobs");
 				String date = plugin.getBasicPluginManager().getDateTodayFromCal();
 
-				for (String job : owned) {
+				for (String got : owned) {
 					
-					Job d = plugin.getJobAPI().getLoadedJobsHash().get(job);
+					String job = got.toUpperCase();
+			
+					if(plugin.getJobAPI().getLoadedJobsHash().containsKey(job)) {
+						Job job_found = plugin.getJobAPI().getLoadedJobsHash().get(job);
 
-					JobStats stat = new JobStats(id,1, 0, plugin.getLevelAPI().getNeedForLvlOne(d), 0, date, date, 0, null, null, null, null, null, null);
+						double need_level = 0;
+						
+						if(cfg.getBoolean("UseLevels")) {
+							if(job_found.getLevelOptionsList() != null && !job_found.getLevelOptionsList().isEmpty()) {
+								need_level = plugin.getLevelAPI().getNeedForLvlOne(job_found);
+							} 
+						}
+						 
+						JobStats stat = new JobStats(id,1, 0, need_level, 0, date, date, 0, null, null, null, null, null, null);
 
-					stats.put(job, stat);
+						stats.put(job, stat);
+					} else {
+						Bukkit.getConsoleSender().sendMessage("§4§l[GreenJobs] Found Invalid Job called "+job+" in the Cache! (ignore used)");
+					}
+ 					 
 				}
 
 				if (cfg.getBoolean("AutoJoinDefaultJobs")) {

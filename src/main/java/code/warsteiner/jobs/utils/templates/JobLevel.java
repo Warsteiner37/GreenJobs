@@ -25,8 +25,9 @@ public class JobLevel {
 	private String job;
 	private int icon_data;
 	private String song;
+	private boolean firework;
 	
-	public JobLevel(String job, int level,  List<String> custom_desc, String display, double reward, double earn_more, double earn_less, List<String> commands2, String icon, int data, String song) {
+	public JobLevel(String job, int level,  List<String> custom_desc, String display, double reward, double earn_more, double earn_less, List<String> commands2, String icon, int data, String song, boolean firework) {
 	 
 		this.lvel = level;
 		this.des = custom_desc; 
@@ -39,6 +40,11 @@ public class JobLevel {
 		this.job = job;
 		this.icon_data = data;
 		this.song = song;
+		this.firework = firework;
+	}
+	
+	public boolean hasFirework() {
+		return this.firework;
 	}
 	
 	public String getSongPath() {

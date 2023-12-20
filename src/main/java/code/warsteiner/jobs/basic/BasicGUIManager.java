@@ -36,92 +36,102 @@ public class BasicGUIManager {
 		this.details_cat.clear();
 		this.details_job.clear();
 	}
+	
+	public void startUpdate() {
+		 
+		MessageManager mg = plugin.getMessageManager();
+		JobsGUIManager gui = plugin.getJobsGUIManager();
+ 
+		new BukkitRunnable() {
 
-	public void updateInventory(Player player) {
+			public void run() {
+ 
+				plugin.executor.submit(() -> {
+					
+					guis.forEach((UUID, type) -> {
+						
+						Player player = Bukkit.getPlayer(UUID);
+						
+						if (player.getOpenInventory() != null) {
 
-		plugin.executor.submit(() -> {
+							InventoryView inv = player.getOpenInventory();
+							String title = inv.getTitle();
 
-			MessageManager mg = plugin.getMessageManager();
-			JobsGUIManager gui = plugin.getJobsGUIManager();
+							if (inv.getTitle() != null) {
 
-			if (player.getOpenInventory() != null) {
+								JobsPlayer jb = plugin.getPlayerDataManager().getJobsPlayer(player.getName(), player.getUniqueId());
 
-				InventoryView inv = player.getOpenInventory();
-				String title = inv.getTitle();
+								UUID ID = player.getUniqueId();
+								String name = player.getName();
 
-				if (inv.getTitle() != null) {
+								if (guis.containsKey(ID)) {
+ 
+									String d = getJobData().get(ID);
 
-					JobsPlayer jb = plugin.getPlayerDataManager().getJobsPlayer(player.getName(), player.getUniqueId());
+									Job job = plugin.getJobAPI().getLoadedJobsHash().get(d);
 
-					UUID ID = player.getUniqueId();
-					String name = player.getName();
+									if (type.equals(GUIType.BUY_CONFIRM) && isConfirmBuyMenu(player, job, title)) {
 
-					if (guis.containsKey(ID)) {
+										if (job.getPrice() != 0) {
+											double bal = plugin.getEco().getBalance(player);
+											double price = job.getPrice();
 
-						GUIType get = guis.get(ID);
+											if (bal >= price || bal == price) { 
+												plugin.getJobsGUIManager().updateConfPurchasMenu(player, name);
+											} else {
+											 
+												player.sendMessage(mg.getMessage(player, "livegui_cancel_not_enough_money")
+														.replaceAll("<job>", job.getDisplay(player)));
 
-						String d = getJobData().get(ID);
+												plugin.getBasicPluginManager().playSound(player, "LIVEGUI_PROGRESS_CANCELED");
 
-						Job job = plugin.getJobAPI().getLoadedJobsHash().get(d);
+												Bukkit.getScheduler().runTask(plugin, () -> {
+													gui.openJobsMenu(player, true);
+												});
+											}
+										}
 
-						if (get.equals(GUIType.BUY_CONFIRM) && isConfirmBuyMenu(player, job, title)) {
+									} else if (type.equals(GUIType.JOBS) && isJobsMenu(player, title)) {
+										gui.updateJobMenu(player);
+									} else if (type.equals(GUIType.OPTIONS) && isOptionsMenu(player, title, job)) {
+										gui.updateOptionsGUI(player);
+									} else if (type.equals(GUIType.REWARDS) && isRewardsMenu(player, job, title)) {
 
-							if (job.getPrice() != 0) {
-								double bal = plugin.getEco().getBalance(player);
-								double price = job.getPrice() - 0.05;
+										if (plugin.getFileManager().isLoaded(GUIType.REWARDS)) {
+											String player_name = player.getName() + "_" + job;
 
-								if (bal <= price) {
+											int page = RewardsSub.getPages().get(player_name);
 
-									player.sendMessage(mg.getMessage(player, "livegui_cancel_not_enough_money")
-											.replaceAll("<job>", job.getDisplay(player)));
+											String next = plugin.getBasicGUIManager().getCurrentCate().get(ID);
 
-									plugin.getBasicPluginManager().playSound(player, "LIVEGUI_PROGRESS_CANCELED");
+											gui.updateBlockRewardsGUI(player, job.getID(), page, next);
+										}
 
-									Bukkit.getScheduler().runTask(plugin, () -> {
-										gui.openJobsMenu(player, true);
-									});
-								} else {
-									plugin.getJobsGUIManager().updateConfPurchasMenu(player, name);
+									} else if (type.equals(GUIType.LEVELS) && isLevelsMenu(player, job, title)) {
+
+										if (plugin.getFileManager().isLoaded(GUIType.LEVELS)) {
+											String player_name = player.getName() + "_" + job;
+
+											int page = LevelsSub.getPages().get(player_name);
+
+											gui.setLevelsItem(GUIType.LEVELS, page, inv, player, jb, job);
+										}
+									}
+
 								}
+
 							}
 
-						} else if (get.equals(GUIType.JOBS) && isJobsMenu(player, title)) {
-							gui.updateJobMenu(player);
-						} else if (get.equals(GUIType.OPTIONS) && isOptionsMenu(player, title, job)) {
-							gui.updateOptionsGUI(player);
-						} else if (get.equals(GUIType.REWARDS) && isRewardsMenu(player, job, title)) {
-
-							if (plugin.getFileManager().isLoaded(GUIType.REWARDS)) {
-								String player_name = player.getName() + "_" + job;
-
-								int page = RewardsSub.getPages().get(player_name);
-
-								String next = plugin.getBasicGUIManager().getCurrentCate().get(ID);
-
-								gui.updateBlockRewardsGUI(player, job.getID(), page, next);
-							}
-
-						} else if (get.equals(GUIType.LEVELS) && isLevelsMenu(player, job, title)) {
-
-							if (plugin.getFileManager().isLoaded(GUIType.LEVELS)) {
-								String player_name = player.getName() + "_" + job;
-
-								int page = LevelsSub.getPages().get(player_name);
-
-								gui.setLevelsItem(GUIType.LEVELS, page, inv, player, jb, job);
-							}
 						}
+					});
+ 
 
-					}
-
-				}
+				});
 
 			}
-
-		});
-
+		}.runTaskTimer(plugin, 25, 0);
 	}
-
+ 
 	public HashMap<UUID, GUIType> getGUIData() {
 		return this.guis;
 	}

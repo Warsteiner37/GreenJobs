@@ -19,12 +19,7 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class KillMobAction extends JobAction implements Listener {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
-
-	@Override
-	public String getName() {
-		return "Kill Mob Action";
-	}
-
+ 
 	@Override
 	public String getID() {
 		return "KILL_MOB";

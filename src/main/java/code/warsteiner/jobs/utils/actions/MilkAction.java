@@ -21,12 +21,7 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class MilkAction extends JobAction implements Listener {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
-
-	@Override
-	public String getName() {
-		return "Milk Cows";
-	}
-
+ 
 	@Override
 	public String getID() {
 		return "MILK";

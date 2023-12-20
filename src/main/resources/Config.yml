@@ -57,7 +57,7 @@ LevelUp:
 #if enabled, players can own default jobs
 EnabledDefaultJobs: false
 
-#if a job price is 0 should they automatically own it?
+#Thos Option is for existing players : in case you change prices
 AutoAddFreeJobsToOwn: false
 
 AutoJoinDefaultJobs: false
@@ -74,4 +74,5 @@ NeedToConfirmWhileBuying: true
 #reopen the gui for a update or close it
 ReOpenForUpdate: true
 
+#This Option is for default-Jobs
 AutoAddFreeJobs: false

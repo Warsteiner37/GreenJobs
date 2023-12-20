@@ -18,12 +18,7 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class TreasureAction extends JobAction implements Listener {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
-
-	@Override
-	public String getName() {
-		return "Find a Treasure";
-	}
-
+ 
 	@Override
 	public String getID() {
 		return "FIND_TREASURE";

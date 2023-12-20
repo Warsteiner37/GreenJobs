@@ -20,12 +20,7 @@ import code.warsteiner.jobs.utils.templates.JobAction;
 public class CollectBerrysAction extends JobAction implements Listener {
 
 	private GreenJobs plugin = GreenJobs.getPlugin();
-
-	@Override
-	public String getName() {
-		return "Collect Berrys Action";
-	}
-
+ 
 	@Override
 	public String getID() {
 		return "COLLECT_BERRYS";
