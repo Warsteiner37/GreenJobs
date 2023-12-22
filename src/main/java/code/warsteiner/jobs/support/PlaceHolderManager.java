@@ -48,7 +48,7 @@ public class PlaceHolderManager extends PlaceholderExpansion {
 		PlayerDataManager data = plugin.getPlayerDataManager();
 		JobAPI job = plugin.getJobAPI();
 
-		FileConfiguration cfg = plugin.getFileManager().getPAPIConfig();
+		FileConfiguration cfg = plugin.getFileManager().getPlaceholderConfig();
 		BasicPluginManager basic = plugin.getBasicPluginManager();
 
 		if (data.getUUIDArrayList().contains("" + UUID)) {

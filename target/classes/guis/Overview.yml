@@ -1,0 +1,131 @@
+#   ____                       _               
+#  / __ \                     (_)              
+# | |  | |_   _____ _ ____   ___  _____      __
+# | |  | \ \ / / _ \ '__\ \ / / |/ _ \ \ /\ / /
+# | |__| |\ V /  __/ |   \ V /| |  __/\ V  V / 
+#  \____/  \_/ \___|_|    \_/ |_|\___| \_/\_/  
+#                                              
+
+GUI_Size: 5
+
+GUI_Name: "&a&lYour Job &8- <job>"
+
+GUI_Items:
+
+  List:
+    - "CloseButton"
+    - "InfoItem"
+    - "LeaveItem"
+    - "Back"
+    - "Rewards"
+    - "Levels"
+
+  Back:
+  
+    Display: "&8✘ &cGo Back &8✘"
+    
+    Actions:
+      - "OPEN_MAIN"
+    
+    Lore:
+      - "&8└ &8Go back to Main GUI."
+      
+    Icon: "url;http://textures.minecraft.net/texture/d59be1557201c7ff1a0b3696d19eab4104880d6a9cdb4d5fa21b6daa9db2d1"
+    
+    Slot: 39
+ 
+  CloseButton:
+  
+    Display: "&8✘ &cClose &8✘"
+    
+    Actions:
+      - "CLOSE"
+    
+    Lore:
+      - "&8└ &8Close this menu!"
+      
+    Icon: "url;http://textures.minecraft.net/texture/afd2400002ad9fbbbd0066941eb5b1a384ab9b0e48a178ee96e4d129a5208654"
+    
+    Slot: 40
+
+  Levels:
+  
+    Display: "&8< &eJob Levels &8>"
+
+    Actions:
+      - "COMMANDS"
+      
+    Commands:
+      - "jobs levels <job>"
+  
+    Lore:
+      - "&8└ &7Overview of Job Levels"
+      
+    Icon: "EXPERIENCE_BOTTLE"
+    
+    Slot: 24
+
+  Rewards:
+  
+    Display: "&8$ &aJob Rewards &8$"
+    
+    Actions:
+      - "COMMANDS"
+      
+    Commands:
+      - "jobs rewards <job>"
+  
+    Lore:
+      - "&8└ &7Open the Rewards GUI."
+      
+    Icon: "EMERALD"
+    
+    Slot: 20
+    
+  InfoItem:
+  
+    Display: "&8» &cInfomation &8«"
+  
+    Lore:
+      - "&8└ &7This is a Sub Menu! Change these Items in the Config files!"
+      
+    Icon: "url;http://textures.minecraft.net/texture/352723aa0637ea5204447be536151f529fe4906826d8c066c4dcc50079a64465"
+    
+    Slot: 22
+    
+  LeaveItem:
+  
+    Display: "&8⌧ &cLeave this Job &8⌧"
+    
+    Actions:
+      - "LEAVE_JOB"
+    
+    Lore:
+      - "&8✔ &8Leave this Job "
+      
+    Icon: "REDSTONE"
+    
+    Slot: 41
+    
+GUI_Placeholders:
+  - "BLACK_STAINED_GLASS_PANE:0:&8/"
+  - "BLACK_STAINED_GLASS_PANE:1:&8/"
+  - "BLACK_STAINED_GLASS_PANE:2:&8/"
+  - "BLACK_STAINED_GLASS_PANE:3:&8/"
+  - "BLACK_STAINED_GLASS_PANE:4:&8/"
+  - "BLACK_STAINED_GLASS_PANE:5:&8/"
+  - "BLACK_STAINED_GLASS_PANE:6:&8/"
+  - "BLACK_STAINED_GLASS_PANE:7:&8/"
+  - "BLACK_STAINED_GLASS_PANE:8:&8/"
+  - "BLACK_STAINED_GLASS_PANE:9:&8/"
+  - "BLACK_STAINED_GLASS_PANE:17:&8/"
+  - "BLACK_STAINED_GLASS_PANE:18:&8/"
+  - "BLACK_STAINED_GLASS_PANE:26:&8/"
+  - "BLACK_STAINED_GLASS_PANE:27:&8/"
+  - "BLACK_STAINED_GLASS_PANE:35:&8/"
+  - "BLACK_STAINED_GLASS_PANE:36:&8/"
+  - "BLACK_STAINED_GLASS_PANE:37:&8/"
+  - "BLACK_STAINED_GLASS_PANE:38:&8/" 
+  - "BLACK_STAINED_GLASS_PANE:42:&8/"
+  - "BLACK_STAINED_GLASS_PANE:43:&8/"
+  - "BLACK_STAINED_GLASS_PANE:44:&8/"

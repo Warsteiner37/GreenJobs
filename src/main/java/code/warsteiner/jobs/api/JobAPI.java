@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import code.warsteiner.jobs.GreenJobs; 
 import code.warsteiner.jobs.utils.templates.Job;
@@ -54,6 +55,24 @@ public class JobAPI {
 
 		}
 		return "ALLOW";
+	}
+	
+	public boolean isInWorlds(Location loc, Job job) {
+		
+		FileConfiguration config = plugin.getFileManager().getJobsSettings();
+		
+		String world = loc.getWorld().getName();
+		
+		if(job.getWorlds().contains(world)) {
+			return true;
+		}
+		
+		if(config.getStringList("GlobalJobWorlds").contains(world)) {
+			return true;
+		}
+		
+		return false;
+		
 	}
 
 	

@@ -50,12 +50,11 @@ import code.warsteiner.jobs.manager.LoadAndStoreGUIManager;
 import code.warsteiner.jobs.manager.MessageManager;
 import code.warsteiner.jobs.manager.MultiplierManager;
 import code.warsteiner.jobs.manager.PlayerDataManager;
+import code.warsteiner.jobs.support.Metrics;
 import code.warsteiner.jobs.support.PlaceHolderManager;
 import code.warsteiner.jobs.support.WorldGuardSupport;
 import code.warsteiner.jobs.utils.BossBarHandler;
-import code.warsteiner.jobs.utils.FileManager;
 import code.warsteiner.jobs.utils.LocationManager;
-import code.warsteiner.jobs.utils.Metrics;
 import code.warsteiner.jobs.utils.UtilManager;
 import code.warsteiner.jobs.utils.actions.BreakAction;
 import code.warsteiner.jobs.utils.actions.BreakFarmAction;
@@ -74,8 +73,9 @@ import code.warsteiner.jobs.utils.actions.StripLogAction;
 import code.warsteiner.jobs.utils.actions.TameAction;
 import code.warsteiner.jobs.utils.actions.TreasureAction;
 import code.warsteiner.jobs.utils.admincommand.AdminSubCommandRegistry;
+import code.warsteiner.jobs.utils.files.FileManager;
+import code.warsteiner.jobs.utils.files.FileTemplate;
 import code.warsteiner.jobs.utils.playercommand.PlayerSubCommandRegistry;
-import code.warsteiner.jobs.utils.templates.FileTemplate;
 import code.warsteiner.jobs.utils.templates.Job;
 import code.warsteiner.jobs.utils.templates.JobAction;
 import code.warsteiner.jobs.utils.templates.JobStats;
@@ -261,7 +261,10 @@ public class GreenJobs extends JavaPlugin {
 
 		this.getBasicGUIManager().startUpdate();
 		
-		new Metrics(this, 19287);
+		if(this.getFileManager().getbStatsConfig().getBoolean("Enabled")) {
+			new Metrics(this, 19287);
+			Bukkit.getConsoleSender().sendMessage("§aLoaded bStats!");
+		}
 
 	}
 
@@ -559,10 +562,8 @@ public class GreenJobs extends JavaPlugin {
 		if (!folder_1.exists()) {
 			folder_1.mkdir();
 
-			executor.submit(() -> {
-
-				this.jtmp.createDefaultJobs();
-
+			executor.submit(() -> { 
+				this.jtmp.createDefaultJobs(); 
 			});
 		}
 
@@ -590,6 +591,12 @@ public class GreenJobs extends JavaPlugin {
 			folder_5.mkdir();
 		}
 
+		File folder_6 = new File(getDataFolder(), "settings");
+
+		if (!folder_6.exists()) {
+			folder_6.mkdir();
+		}
+		
 	}
 
 	public LevelAPI getLevelAPI() {

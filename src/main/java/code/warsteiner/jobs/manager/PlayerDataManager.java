@@ -77,18 +77,19 @@ public class PlayerDataManager {
 
 	public void createAJobsPlayer(String name, UUID id) {
 
-		FileConfiguration cfg = plugin.getFileManager().getConfigConfig();
+		FileConfiguration jobs_settings = plugin.getFileManager().getJobsSettings();
+		FileConfiguration levels_settings = plugin.getFileManager().getLevelsSettings();
 
-		int default_max = cfg.getInt("MaxDefaultJobs") - 1;
+		int default_max = jobs_settings.getInt("MaxDefaultJobs") - 1;
 
 		List<String> owned = null;
 		List<String> current = null;
 
 		HashMap<String, JobStats> stats = new HashMap<String, JobStats>();
 
-		if (cfg.getBoolean("EnabledDefaultJobs")) {
-			if (cfg.contains("DefaultJobs")) {
-				owned = cfg.getStringList("DefaultJobs");
+		if (jobs_settings.getBoolean("EnabledDefaultJobs")) {
+			if (jobs_settings.contains("DefaultJobs")) {
+				owned = jobs_settings.getStringList("DefaultJobs");
 				String date = plugin.getBasicPluginManager().getDateTodayFromCal();
 
 				for (String got : owned) {
@@ -100,7 +101,7 @@ public class PlayerDataManager {
 
 						double need_level = 0;
 						
-						if(cfg.getBoolean("UseLevels")) {
+						if(levels_settings.getBoolean("UseLevels")) {
 							if(job_found.getLevelOptionsList() != null && !job_found.getLevelOptionsList().isEmpty()) {
 								need_level = plugin.getLevelAPI().getNeedForLvlOne(job_found);
 							} 
@@ -115,7 +116,7 @@ public class PlayerDataManager {
  					 
 				}
 
-				if (cfg.getBoolean("AutoJoinDefaultJobs")) {
+				if (jobs_settings.getBoolean("AutoJoinDefaultJobs")) {
 					current = owned;
 				}
 

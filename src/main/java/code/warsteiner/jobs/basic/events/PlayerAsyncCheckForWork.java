@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.boss.BarColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -70,7 +71,10 @@ public class PlayerAsyncCheckForWork implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerCheckJobEvent event) {
-
+		
+		FileConfiguration jobs_settings = plugin.getFileManager().getJobsSettings();
+		FileConfiguration levels_settings = plugin.getFileManager().getLevelsSettings();
+ 
 		plugin.executor.submit(() -> {
 
 			Player player = event.getPlayer();
@@ -95,7 +99,7 @@ public class PlayerAsyncCheckForWork implements Listener {
 
 				if (jbb.getCurrentJobs().contains(real.getID())) {
 
-					if (real.getWorlds().contains(world)) {
+					if (plugin.getJobAPI().isInWorlds(loc, real)) {
 
 						if (plugin.getJobAPI().canWorkInRegion(loc, rl.getWorldGuardFlag()).equalsIgnoreCase("ALLOW")) {
 
@@ -135,7 +139,7 @@ public class PlayerAsyncCheckForWork implements Listener {
 
 									plugin.getBasicPluginManager().playSound(player, "PLAYER_FINISH_WORK");
 
-									if (plugin.getFileManager().getConfigConfig().getBoolean("UseLevels")) {
+									if (levels_settings.getBoolean("UseLevels")) {
 										plugin.getLevelAPI().checkLevel(jbb, real);
 									}
 									if (Bukkit.getPlayer(player.getName()).isOnline()) {

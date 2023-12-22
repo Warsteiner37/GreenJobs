@@ -132,7 +132,7 @@ public class BossBarHandler {
 				});
 
 			}
-		}.runTaskTimer(plugin, 0, 30);
+		}.runTaskTimer(plugin, 0, plugin.getFileManager().getJobsSettings().getInt("BossBarShowTime"));
 	}
 
 	public static double calculate(double exp, boolean ismaxlevel, double need) {

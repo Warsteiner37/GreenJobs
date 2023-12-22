@@ -24,7 +24,7 @@ public class LevelsSub extends PlayerSubCommand {
 
 	@Override
 	public String getName() {
-		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
+		FileConfiguration f = plugin.getFileManager().getCommandSettings();
 
 		return f.getString("CommandConfig.Levels.Use").toLowerCase();
 	}
@@ -43,7 +43,7 @@ public class LevelsSub extends PlayerSubCommand {
 
 			MessageManager m = plugin.getMessageManager();
 
-			FileConfiguration f = plugin.getFileManager().getCommandsConfig();
+			FileConfiguration f = plugin.getFileManager().getCommandSettings();
 			BasicPluginManager v = plugin.getBasicPluginManager();
 
 			String name = player.getName();
@@ -134,7 +134,7 @@ public class LevelsSub extends PlayerSubCommand {
 
 	@Override
 	public String getUsage(CommandSender player) {
-		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
+		FileConfiguration f = plugin.getFileManager().getCommandSettings();
 
 		return plugin.getBasicPluginManager().toHex(player, f.getString("CommandConfig.Levels.Usage"));
 	}
@@ -142,7 +142,7 @@ public class LevelsSub extends PlayerSubCommand {
 	@Override
 	public String getArgsLayout() {
 
-		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
+		FileConfiguration f = plugin.getFileManager().getCommandSettings();
 
 		String use = f.getString("CommandConfig.Levels.Use");
 

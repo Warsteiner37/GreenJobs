@@ -64,7 +64,9 @@ public class LevelAPI {
 
 		JobStats stats = jb.getJobStats().get(job.getID());
 
-		FileConfiguration m = plugin.getFileManager().getConfigConfig();
+		FileConfiguration jobs_settings = plugin.getFileManager().getJobsSettings();
+		FileConfiguration levels_settings = plugin.getFileManager().getLevelsSettings();
+
 		BasicPluginManager bc = plugin.getBasicPluginManager();
 
 		double exp = stats.getExp();
@@ -119,18 +121,27 @@ public class LevelAPI {
 
 				plugin.getEco().depositPlayer(player, lvl.getReward());
 
-				if (m.getBoolean("LevelUp.Titles.Enabled")) {
+				if (levels_settings.getBoolean("LevelUp.Titles.Enabled")) {
 
-					String t1 = m.getString("LevelUp.Titles.T1").replaceAll("<level>", "" + new_level)
+					String t1 = levels_settings.getString("LevelUp.Titles.T1").replaceAll("<level>", "" + new_level)
 							.replaceAll("<job>", job.getDisplay(player));
-					String t2 = m.getString("LevelUp.Titles.T2").replaceAll("<level>", "" + new_level)
+					String t2 = levels_settings.getString("LevelUp.Titles.T2").replaceAll("<level>", "" + new_level)
 							.replaceAll("<job>", job.getDisplay(player));
 
 					player.sendTitle(bc.toHex(player, t1), bc.toHex(player, t2));
 				}
+				
+				if (levels_settings.getBoolean("LevelUp.Broadcast.Enabled")) {
+					
+					String me = levels_settings.getString("LevelUp.Broadcast.Message")
+							.replaceAll("<name>", player.getName()).replaceAll("<prefix>", plugin.getMessageManager().getPrefix(player))
+							.replaceAll("<level>", "" + new_level).replaceAll("<job>", job.getDisplay(player));
+					
+					Bukkit.broadcastMessage(bc.toHex(player, me));
+				}
 
-				if (m.getBoolean("LevelUp.Message.Enabled")) {
-					String me = m.getString("LevelUp.Message.Message")
+				if (levels_settings.getBoolean("LevelUp.Message.Enabled")) {
+					String me = levels_settings.getString("LevelUp.Message.Message")
 							.replaceAll("<prefix>", plugin.getMessageManager().getPrefix(player))
 							.replaceAll("<level>", "" + new_level).replaceAll("<job>", job.getDisplay(player));
 					;

@@ -63,7 +63,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 
 			BasicGUIManager m = plugin.getBasicGUIManager();
 			MessageManager mg = plugin.getMessageManager();
-
+			 
 			Player player = (Player) event.getWhoClicked();
 
 			UUID ID = player.getUniqueId();
@@ -77,364 +77,365 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 			String d = m.getJobData().get(ID);
 
 			Job job = plugin.getJobAPI().getLoadedJobsHash().get(d);
+  
+				FileConfiguration jobs_settings = plugin.getFileManager().getJobsSettings();
+				FileConfiguration levels_settings = plugin.getFileManager().getLevelsSettings();
+				FileConfiguration gui_settings = plugin.getFileManager().getGuiSettings();
+				
+				if (m.isLevelsMenu(player, job, title)) {
 
-			if (m.isLevelsMenu(player, job, title)) {
+					FileConfiguration levels = plugin.getFileManager().getLevelsConfig();
 
-				FileConfiguration levels = plugin.getFileManager().getLevelsConfig();
+					event.setCancelled(true);
 
-				event.setCancelled(true);
+					new BukkitRunnable() {
+						@Override
+						public void run() {
 
-				new BukkitRunnable() {
-					@Override
-					public void run() {
+							if (levels.getBoolean("BackToFirstPage.Enabled")) {
 
-						if (levels.getBoolean("BackToFirstPage.Enabled")) {
-
-							ItemStack item_got = plugin.getItemManager().createOrGetItem("Levels.Back.To.First.Page",
-									levels.getString("BackToFirstPage.Icon"), player.getName(),
-									levels.getInt("BackToFirstPage.CustomModelData"));
-
-							String got = plugin.getBasicPluginManager()
-									.replaceAll(levels.getString("BackToFirstPage.Display"), player, job);
-
-							if (display.equalsIgnoreCase(got) && item.getType().equals(item_got.getType())) {
-								plugin.getJobsGUIManager().setLevelsItem(GUIType.LEVELS, 1, player.getOpenInventory(),
-										player, jb, job);
-
-								plugin.getBasicPluginManager().playSound(player, "LEVELS_CHANGE_PAGE");
-							}
-
-						}
-
-						executeCustomItemClick(player, display, item, GUIType.LEVELS);
-
-					}
-				}.runTaskAsynchronously(plugin);
-
-			} else if (m.isRewardsMenu(player, job, title)) {
-
-				event.setCancelled(true);
-
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-
-						FileConfiguration rewards = plugin.getFileManager().getRewardsConfig();
-
-						executeCustomItemClick(player, display, item, GUIType.REWARDS);
-
-						if (rewards.getString("SortModes.RANDOM.Icon") != null
-								&& rewards.getString("SortModes.NORMAL.Icon") != null) {
-							String c1 = rewards.getString("SortModes.RANDOM.Icon");
-							String c2 = rewards.getString("SortModes.NORMAL.Icon");
-
-							Material i1 = plugin.getItemManager()
-									.createOrGetItem("CatItemRewardsRandom", c1, player.getName(), 0).getType();
-							Material i2 = plugin.getItemManager()
-									.createOrGetItem("CatItemRewardsNormal", c2, player.getName(), 0).getType();
-
-							List<String> modes = rewards.getStringList("SortModes.List");
-							;
-
-							if (item.getType().equals(i1) || item.getType().equals(i2)) {
-
-								plugin.getBasicPluginManager().playSound(player, "REWARDS_CHANGE_SORTING");
-
-								List<String> used = null;
-
-								List<String> test = modes;
-
-								String current = null;
-								if (plugin.getBasicGUIManager().getCurrentCate().containsKey(jb.getUUID())) {
-									current = plugin.getBasicGUIManager().getCurrentCate().get(jb.getUUID());
-								} else {
-									current = plugin.getFileManager().getRewardsConfig().getString("DefaultSorting")
-											.toUpperCase();
-								}
-
-								test.remove(current);
-
-								used = test;
-
-								String player_name = player.getName() + "_" + job.getID();
-
-								int page = 1;
-
-								if (RewardsSub.getPages().containsKey(player_name)) {
-									page = RewardsSub.getPages().get(player_name);
-								}
-
-								if (RewardsSub.getPages().containsKey(player_name)) {
-									page = RewardsSub.getPages().get(player_name);
-								}
-
-								if (used.size() != 0) {
-									String next = used.get(0).toUpperCase();
-
-									plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), page, next);
-
-								} else {
-									String def = rewards.getString("DefaultSorting").toUpperCase();
-
-									plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), page, def);
-
-								}
-
-							} else if (rewards.getBoolean("BackToFirstPage.Enabled")) {
-
-								ItemStack item_got = plugin.getItemManager().createOrGetItem(
-										"Rewards.Back.To.First.Page", rewards.getString("BackToFirstPage.Icon"),
-										player.getName(), rewards.getInt("BackToFirstPage.CustomModelData"));
+								ItemStack item_got = plugin.getItemManager().createOrGetItem("Levels.Back.To.First.Page",
+										levels.getString("BackToFirstPage.Icon"), player.getName(),
+										levels.getInt("BackToFirstPage.CustomModelData"));
 
 								String got = plugin.getBasicPluginManager()
-										.replaceAll(rewards.getString("BackToFirstPage.Display"), player, job);
+										.replaceAll(levels.getString("BackToFirstPage.Display"), player, job);
 
 								if (display.equalsIgnoreCase(got) && item.getType().equals(item_got.getType())) {
+									plugin.getJobsGUIManager().setLevelsItem(GUIType.LEVELS, 1, player.getOpenInventory(),
+											player, jb, job);
 
-									String current = plugin.getBasicGUIManager().getCurrentCate().get(jb.getUUID());
-
-									plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), 1, current);
-
-									plugin.getBasicPluginManager().playSound(player, "REWARDS_CHANGE_PAGE");
+									plugin.getBasicPluginManager().playSound(player, "LEVELS_CHANGE_PAGE");
 								}
 
 							}
+
+							executeCustomItemClick(player, display, item, GUIType.LEVELS);
+
 						}
+					}.runTaskAsynchronously(plugin);
 
-					}
-				}.runTaskAsynchronously(plugin);
+				} else if (m.isRewardsMenu(player, job, title)) {
 
-			} else if (m.isJobsMenu(player, title)) {
-				event.setCancelled(true);
+					event.setCancelled(true);
 
-				new BukkitRunnable() {
-					@Override
-					public void run() {
+					new BukkitRunnable() {
+						@Override
+						public void run() {
 
-						String date = plugin.getBasicPluginManager().getDateTodayFromCal();
+							FileConfiguration rewards = plugin.getFileManager().getRewardsConfig();
 
-						executeCustomItemClick(player, display, item, GUIType.JOBS);
+							executeCustomItemClick(player, display, item, GUIType.REWARDS);
 
-						if (plugin.getJobAPI().getLoadedJobsArray() != null) {
+							if (rewards.getString("SortModes.RANDOM.Icon") != null
+									&& rewards.getString("SortModes.NORMAL.Icon") != null) {
+								String c1 = rewards.getString("SortModes.RANDOM.Icon");
+								String c2 = rewards.getString("SortModes.NORMAL.Icon");
 
-							plugin.getJobAPI().getLoadedJobsHash().forEach((id, job) -> {
+								Material i1 = plugin.getItemManager()
+										.createOrGetItem("CatItemRewardsRandom", c1, player.getName(), 0).getType();
+								Material i2 = plugin.getItemManager()
+										.createOrGetItem("CatItemRewardsNormal", c2, player.getName(), 0).getType();
 
-								ItemStack item2 = job.getIcon();
+								List<String> modes = rewards.getStringList("SortModes.List");
+								;
 
-								String display2 = job.getDisplay(player);
+								if (item.getType().equals(i1) || item.getType().equals(i2)) {
 
-								if (item2.getType().equals(item.getType()) && display.equalsIgnoreCase(display2)) {
+									plugin.getBasicPluginManager().playSound(player, "REWARDS_CHANGE_SORTING");
 
-									if (jb.getCurrentJobs().contains(job.getID())) {
-										// lore.add("In");
+									List<String> used = null;
 
-										if (plugin.getFileManager().getConfigConfig().getBoolean("JobInfoGUI")) {
-											Bukkit.getScheduler().runTaskLater(plugin, () -> {
-												plugin.getJobsGUIManager().openOptionsMenu(player, job.getID(), false);
-											}, 2);
-										} else {
+									List<String> test = modes;
 
-											if (mg.hasMessage("job_already_joined")) {
-												player.sendMessage(mg.getMessage(player, "job_already_joined")
-														.replaceAll("<job>", job.getDisplay(player)));
-											}
-										}
-
-										return;
-									} else if (jb.getOwnedJobs().contains(job.getID())) {
-
-										if (jb.getCurrentJobs().size() >= jb.getMaxJobs() + 1) {
-											if (mg.hasMessage("too_many_jobs")) {
-												player.sendMessage(mg.getMessage(player, "too_many_jobs")
-														.replaceAll("<job>", job.getDisplay(player)));
-											}
-											return;
-										} else {
-											jb.addCurrentJob(job.getID(), date);
-
-											if (mg.hasMessage("job_join_message")) {
-												player.sendMessage(mg.getMessage(player, "job_join_message")
-														.replaceAll("<job>", job.getDisplay(player)));
-											}
-
-											plugin.getBasicPluginManager().playSound(player, "PLAYER_JOINED_JOB");
-
-											if (plugin.getFileManager().getConfigConfig()
-													.getBoolean("ReOpenForUpdate")) {
-												plugin.getJobsGUIManager().updateJobMenu(player);
-											} else {
-												Bukkit.getScheduler().runTask(plugin, () -> {
-													player.closeInventory();
-												});
-											}
-										}
-
-										return;
+									String current = null;
+									if (plugin.getBasicGUIManager().getCurrentCate().containsKey(jb.getUUID())) {
+										current = plugin.getBasicGUIManager().getCurrentCate().get(jb.getUUID());
 									} else {
+										current = plugin.getFileManager().getRewardsConfig().getString("DefaultSorting")
+												.toUpperCase();
+									}
 
-										if (job.getPrice() <= 0) {
+									test.remove(current);
 
-											jb.addOwnedJob(job.getID());
+									used = test;
 
-											if (mg.hasMessage("job_is_free_message")) {
-												player.sendMessage(mg.getMessage(player, "job_is_free_message")
-														.replaceAll("<job>", job.getDisplay(player)));
+									String player_name = player.getName() + "_" + job.getID();
+
+									int page = 1;
+
+									if (RewardsSub.getPages().containsKey(player_name)) {
+										page = RewardsSub.getPages().get(player_name);
+									}
+
+									if (RewardsSub.getPages().containsKey(player_name)) {
+										page = RewardsSub.getPages().get(player_name);
+									}
+
+									if (used.size() != 0) {
+										String next = used.get(0).toUpperCase();
+
+										plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), page, next);
+
+									} else {
+										String def = rewards.getString("DefaultSorting").toUpperCase();
+
+										plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), page, def);
+
+									}
+
+								} else if (rewards.getBoolean("BackToFirstPage.Enabled")) {
+
+									ItemStack item_got = plugin.getItemManager().createOrGetItem(
+											"Rewards.Back.To.First.Page", rewards.getString("BackToFirstPage.Icon"),
+											player.getName(), rewards.getInt("BackToFirstPage.CustomModelData"));
+
+									String got = plugin.getBasicPluginManager()
+											.replaceAll(rewards.getString("BackToFirstPage.Display"), player, job);
+
+									if (display.equalsIgnoreCase(got) && item.getType().equals(item_got.getType())) {
+
+										String current = plugin.getBasicGUIManager().getCurrentCate().get(jb.getUUID());
+
+										plugin.getJobsGUIManager().updateBlockRewardsGUI(player, job.getID(), 1, current);
+
+										plugin.getBasicPluginManager().playSound(player, "REWARDS_CHANGE_PAGE");
+									}
+
+								}
+							}
+
+						}
+					}.runTaskAsynchronously(plugin);
+
+				} else if (m.isJobsMenu(player, title)) {
+					event.setCancelled(true);
+
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+
+							String date = plugin.getBasicPluginManager().getDateTodayFromCal();
+
+							executeCustomItemClick(player, display, item, GUIType.JOBS);
+
+							if (plugin.getJobAPI().getLoadedJobsArray() != null) {
+
+								plugin.getJobAPI().getLoadedJobsHash().forEach((id, job) -> {
+
+									ItemStack item2 = job.getIcon();
+
+									String display2 = job.getDisplay(player);
+
+									if (item2.getType().equals(item.getType()) && display.equalsIgnoreCase(display2)) {
+
+										if (jb.getCurrentJobs().contains(job.getID())) {
+											// lore.add("In");
+
+											if (jobs_settings.getBoolean("JobInfoGUI")) {
+												Bukkit.getScheduler().runTaskLater(plugin, () -> {
+													plugin.getJobsGUIManager().openOptionsMenu(player, job.getID(), false);
+												}, 2);
+											} else {
+
+												if (mg.hasMessage("job_already_joined")) {
+													player.sendMessage(mg.getMessage(player, "job_already_joined")
+															.replaceAll("<job>", job.getDisplay(player)));
+												}
 											}
 
-											plugin.getBasicPluginManager().playSound(player, "PLAYER_BOUGHT_JOB");
+											return;
+										} else if (jb.getOwnedJobs().contains(job.getID())) {
 
-											if (plugin.getFileManager().getConfigConfig()
-													.getBoolean("ReOpenForUpdate")) {
-
-												plugin.getJobsGUIManager().updateJobMenu(player);
+											if (jb.getCurrentJobs().size() >= jb.getMaxJobs() + 1) {
+												if (mg.hasMessage("too_many_jobs")) {
+													player.sendMessage(mg.getMessage(player, "too_many_jobs")
+															.replaceAll("<job>", job.getDisplay(player)));
+												}
+												return;
 											} else {
-												Bukkit.getScheduler().runTask(plugin, () -> {
-													player.closeInventory();
-												});
+												jb.addCurrentJob(job.getID(), date);
+
+												if (mg.hasMessage("job_join_message")) {
+													player.sendMessage(mg.getMessage(player, "job_join_message")
+															.replaceAll("<job>", job.getDisplay(player)));
+												}
+
+												plugin.getBasicPluginManager().playSound(player, "PLAYER_JOINED_JOB");
+
+												if (gui_settings.getBoolean("ReOpenForUpdate")) {
+													plugin.getJobsGUIManager().updateJobMenu(player);
+												} else {
+													Bukkit.getScheduler().runTask(plugin, () -> {
+														player.closeInventory();
+													});
+												}
 											}
 
 											return;
 										} else {
 
-											if (plugin.getEco().getBalance(player) >= job.getPrice()
-													|| plugin.getEco().getBalance(player) == job.getPrice()) {
+											if (job.getPrice() <= 0) {
 
-												if (plugin.getFileManager().getConfigConfig()
-														.getBoolean("NeedToConfirmWhileBuying")) {
+												jb.addOwnedJob(job.getID());
 
-													Bukkit.getScheduler().runTaskLater(plugin, () -> {
-														plugin.getJobsGUIManager().openConfPurchaseMenu(player,
-																job.getID(), false);
-													}, 1);
-
-												} else {
-
-													plugin.getEco().withdrawPlayer(player, job.getPrice());
-
-													jb.addOwnedJob(job.getID());
-
-													plugin.getBasicPluginManager().playSound(player,
-															"PLAYER_BOUGHT_JOB");
-
-													player.sendMessage(mg.getMessage(player, "job_buy_message")
-															.replaceAll("<price>", job.getPriceToDisplay())
+												if (mg.hasMessage("job_is_free_message")) {
+													player.sendMessage(mg.getMessage(player, "job_is_free_message")
 															.replaceAll("<job>", job.getDisplay(player)));
+												}
 
-													if (plugin.getFileManager().getConfigConfig()
-															.getBoolean("ReOpenForUpdate")) {
-														plugin.getJobsGUIManager().updateJobMenu(player);
-													} else {
-														Bukkit.getScheduler().runTask(plugin, () -> {
-															player.closeInventory();
-														});
-													}
+												plugin.getBasicPluginManager().playSound(player, "PLAYER_BOUGHT_JOB");
 
+												if (gui_settings.getBoolean("ReOpenForUpdate")) {
+
+													plugin.getJobsGUIManager().updateJobMenu(player);
+												} else {
+													Bukkit.getScheduler().runTask(plugin, () -> {
+														player.closeInventory();
+													});
 												}
 
 												return;
 											} else {
-												if (mg.hasMessage("job_not_enough_money")) {
-													player.sendMessage(mg.getMessage(player, "job_not_enough_money")
-															.replaceAll("<job>", job.getDisplay(player)));
+
+												if (plugin.getEco().getBalance(player) >= job.getPrice()
+														|| plugin.getEco().getBalance(player) == job.getPrice()) {
+
+													if (jobs_settings.getBoolean("NeedToConfirmWhileBuying")) {
+
+														Bukkit.getScheduler().runTaskLater(plugin, () -> {
+															plugin.getJobsGUIManager().openConfPurchaseMenu(player,
+																	job.getID(), false);
+														}, 1);
+
+													} else {
+
+														plugin.getEco().withdrawPlayer(player, job.getPrice());
+
+														jb.addOwnedJob(job.getID());
+
+														plugin.getBasicPluginManager().playSound(player,
+																"PLAYER_BOUGHT_JOB");
+
+														player.sendMessage(mg.getMessage(player, "job_buy_message")
+																.replaceAll("<price>", job.getPriceToDisplay())
+																.replaceAll("<job>", job.getDisplay(player)));
+
+														if (gui_settings.getBoolean("ReOpenForUpdate")) {
+															plugin.getJobsGUIManager().updateJobMenu(player);
+														} else {
+															Bukkit.getScheduler().runTask(plugin, () -> {
+																player.closeInventory();
+															});
+														}
+
+													}
+
+													return;
+												} else {
+													if (mg.hasMessage("job_not_enough_money")) {
+														player.sendMessage(mg.getMessage(player, "job_not_enough_money")
+																.replaceAll("<job>", job.getDisplay(player)));
+													}
 												}
+												return;
 											}
-											return;
+
 										}
 
 									}
 
-								}
-
-							});
-						}
-
-					}
-				}.runTaskAsynchronously(plugin);
-
-			} else if (m.isConfirmBuyMenu(player, job, title)) {
-				event.setCancelled(true);
-
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-
-						executeCustomItemClick(player, display, item, GUIType.BUY_CONFIRM);
-
-						FileConfiguration c = plugin.getFileManager().getConfirmConfig();
-
-						if (c.getBoolean("GUI_Buttons.Confirm.Enable")) {
-
-							String displayc = c.getString("GUI_Buttons.Confirm.Display");
-
-							String trans = plugin.getBasicPluginManager().toHex(player, displayc);
-
-							final double money = plugin.getEco().getBalance(player);
-
-							if (display.equalsIgnoreCase(trans)) {
-								if (money >= job.getPrice() || money == job.getPrice()) {
-								 
-									plugin.getBasicPluginManager().playSound(player, "PLAYER_BOUGHT_JOB");
-
-									player.sendMessage(mg.getMessage(player, "job_buy_message")
-											.replaceAll("<price>", job.getPriceToDisplay())
-											.replaceAll("<job>", job.getDisplay(player)));
-
-									if (plugin.getFileManager().getConfigConfig().getBoolean("ReOpenForUpdate")) {
-
-										Bukkit.getScheduler().runTaskLater(plugin, () -> {
-											plugin.getJobsGUIManager().openJobsMenu(player, true);
-										}, 0);
-
-									} else {
-										Bukkit.getScheduler().runTask(plugin, () -> {
-											player.closeInventory();
-										});
-									}
-
-									jb.addOwnedJob(job.getID());
-									plugin.getEco().withdrawPlayer(player, job.getPrice());
-
-									return;
-								} else {
-									if (mg.hasMessage("job_not_enough_money")) {
-										player.sendMessage(mg.getMessage(player, "job_not_enough_money")
-												.replaceAll("<job>", job.getDisplay(player)));
-									}
-								}
-								return;
-							}
-
-						}
-						if (c.getBoolean("GUI_Buttons.Cancel.Enable")) {
-
-							String displayc = c.getString("GUI_Buttons.Cancel.Display");
-
-							String trans = plugin.getBasicPluginManager().toHex(player, displayc);
-
-							if (display.equalsIgnoreCase(trans)) {
-								Bukkit.getScheduler().runTask(plugin, () -> {
-									plugin.getJobsGUIManager().openJobsMenu(player, true);
 								});
+							}
+
+						}
+					}.runTaskAsynchronously(plugin);
+
+				} else if (m.isConfirmBuyMenu(player, job, title)) {
+					event.setCancelled(true);
+
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+
+							executeCustomItemClick(player, display, item, GUIType.BUY_CONFIRM);
+
+							FileConfiguration c = plugin.getFileManager().getConfirmConfig();
+
+							if (c.getBoolean("GUI_Buttons.Confirm.Enable")) {
+
+								String displayc = c.getString("GUI_Buttons.Confirm.Display");
+
+								String trans = plugin.getBasicPluginManager().toHex(player, displayc);
+
+								final double money = plugin.getEco().getBalance(player);
+
+								if (display.equalsIgnoreCase(trans)) {
+									if (money >= job.getPrice() || money == job.getPrice()) {
+									 
+										plugin.getBasicPluginManager().playSound(player, "PLAYER_BOUGHT_JOB");
+
+										player.sendMessage(mg.getMessage(player, "job_buy_message")
+												.replaceAll("<price>", job.getPriceToDisplay())
+												.replaceAll("<job>", job.getDisplay(player)));
+
+										if (gui_settings.getBoolean("ReOpenForUpdate")) {
+
+											Bukkit.getScheduler().runTaskLater(plugin, () -> {
+												plugin.getJobsGUIManager().openJobsMenu(player, true);
+											}, 0);
+
+										} else {
+											Bukkit.getScheduler().runTask(plugin, () -> {
+												player.closeInventory();
+											});
+										}
+
+										jb.addOwnedJob(job.getID());
+										plugin.getEco().withdrawPlayer(player, job.getPrice());
+
+										return;
+									} else {
+										if (mg.hasMessage("job_not_enough_money")) {
+											player.sendMessage(mg.getMessage(player, "job_not_enough_money")
+													.replaceAll("<job>", job.getDisplay(player)));
+										}
+									}
+									return;
+								}
 
 							}
+							if (c.getBoolean("GUI_Buttons.Cancel.Enable")) {
+
+								String displayc = c.getString("GUI_Buttons.Cancel.Display");
+
+								String trans = plugin.getBasicPluginManager().toHex(player, displayc);
+
+								if (display.equalsIgnoreCase(trans)) {
+									Bukkit.getScheduler().runTask(plugin, () -> {
+										plugin.getJobsGUIManager().openJobsMenu(player, true);
+									});
+
+								}
+							}
 						}
-					}
-				}.runTaskAsynchronously(plugin);
+					}.runTaskAsynchronously(plugin);
 
-			} else if (m.isOptionsMenu(player, title, job)) {
-				event.setCancelled(true);
+				} else if (m.isOptionsMenu(player, title, job)) {
+					event.setCancelled(true);
 
-				new BukkitRunnable() {
-					@Override
-					public void run() {
+					new BukkitRunnable() {
+						@Override
+						public void run() {
 
-						executeCustomItemClick(player, display, item, GUIType.OPTIONS);
+							executeCustomItemClick(player, display, item, GUIType.OPTIONS);
 
-					}
-				}.runTaskAsynchronously(plugin);
+						}
+					}.runTaskAsynchronously(plugin);
+				}
 			}
 
-		}
+	 
 
 	}
 
@@ -444,7 +445,11 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 		JobsGUIManager m2 = plugin.getJobsGUIManager();
 		BasicPluginManager d = plugin.getBasicPluginManager();
 		MessageManager mg = plugin.getMessageManager();
-
+		
+		FileConfiguration jobs_settings = plugin.getFileManager().getJobsSettings();
+		FileConfiguration levels_settings = plugin.getFileManager().getLevelsSettings();
+		FileConfiguration gui_settings = plugin.getFileManager().getGuiSettings();
+		 
 		JobsPlayer jb = plugin.getPlayerDataManager().getJobsPlayer(player.getName(), player.getUniqueId());
 
 		UUID ID = player.getUniqueId();
@@ -499,7 +504,7 @@ public class PlayerASyncInventoryClickEvent implements Listener {
 							plugin.getBasicPluginManager().playSound(player, "PLAYER_LEAVE_ALL_JOBS");
 
 							if (type.equals(GUIType.JOBS)) {
-								if (plugin.getFileManager().getConfigConfig().getBoolean("ReOpenForUpdate")) {
+								if (gui_settings.getBoolean("ReOpenForUpdate")) {
 									plugin.getJobsGUIManager().updateJobMenu(player);
 								} else {
 									Bukkit.getScheduler().runTask(plugin, () -> {

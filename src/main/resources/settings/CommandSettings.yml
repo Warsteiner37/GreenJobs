@@ -1,0 +1,51 @@
+#   _____                                          _        _____      _   _   _                 
+#  / ____|                                        | |      / ____|    | | | | (_)                
+# | |     ___  _ __ ___  _ __ ___   __ _ _ __   __| |_____| (___   ___| |_| |_ _ _ __   __ _ ___ 
+# | |    / _ \| '_ ` _ \| '_ ` _ \ / _` | '_ \ / _` |______\___ \ / _ \ __| __| | '_ \ / _` / __|
+# | |___| (_) | | | | | | | | | | | (_| | | | | (_| |      ____) |  __/ |_| |_| | | | | (_| \__ \
+#  \_____\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|\__,_|     |_____/ \___|\__|\__|_|_| |_|\__, |___/
+#                                                                                       __/ |    
+#                                                                                      |___/     
+#
+
+CommandConfig:
+
+  GeneralUnknown: "<prefix> &7Unknown Command use &6/Jobs help"
+
+  Levels:
+  
+    Enabled: true
+    
+    NoJobs: "<prefix> &cYou are not in any Job. Use /Jobs levels <job>!"
+    
+    UnknownJob: "<prefix> &cCannot find this Job!"
+    
+    Usage: " &7Use &a/Jobs levels <job>"
+    
+    Use: "levels"
+
+  Rewards:
+  
+    Enabled: true
+    
+    NoJobs: "<prefix> &cYou are not in any Job. Use /Jobs rewards <job>!"
+    
+    UnknownJob: "<prefix> &cCannot find this Job!"
+    
+    Usage: " &7Use &a/Jobs rewards <job>"
+    
+    Use: "rewards"
+  
+  Help:
+  
+    Enabled: true
+    
+    Use: "help"
+ 
+    Usage: " &7Use &a/Jobs help"
+ 
+    Message:
+      - "&8-> &aGreenjobs &8- &cHelp Page"
+      - "&8| &b/Jobs &8- &7Open the Jobs GUI"        
+      - "&8| &b/Jobs rewards <job> &8- &7Open the Rewards GUI"
+      - "&8| &b/Jobs levels <job> &8- &7Open the Levels GUI"            

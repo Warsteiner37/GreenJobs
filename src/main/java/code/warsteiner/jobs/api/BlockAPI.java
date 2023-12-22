@@ -14,8 +14,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import code.warsteiner.jobs.GreenJobs;
+import code.warsteiner.jobs.utils.files.FileTemplate;
 import code.warsteiner.jobs.utils.templates.BlockData;
-import code.warsteiner.jobs.utils.templates.FileTemplate;
 
 public class BlockAPI {
 

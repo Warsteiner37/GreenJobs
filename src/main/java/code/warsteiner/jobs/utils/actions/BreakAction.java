@@ -44,7 +44,7 @@ public class BreakAction extends JobAction implements Listener {
 		String BlockID = block.getType().toString();
 		Location loc = block.getLocation();
 
-		if (!plugin.getFileManager().getConfigConfig().getBoolean("GiveMoneyWhenPlacedByPlayer")) {
+		if (!plugin.getFileManager().getJobsSettings().getBoolean("GiveMoneyWhenPlacedByPlayer")) {
 			if (bapi.isPlacedByPlayer(loc, BlockID)) {
 				return;
 			}

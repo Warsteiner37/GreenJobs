@@ -24,7 +24,7 @@ public class HelpSub extends PlayerSubCommand {
 
 	@Override
 	public String getName() {
-		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
+		FileConfiguration f = plugin.getFileManager().getCommandSettings();
 		
 		return f.getString("CommandConfig.Help.Use").toLowerCase();
 	}
@@ -36,7 +36,7 @@ public class HelpSub extends PlayerSubCommand {
  
 		MessageManager m = plugin.getMessageManager();
 		
-		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
+		FileConfiguration f = plugin.getFileManager().getCommandSettings();
 		BasicPluginManager v = plugin.getBasicPluginManager();
 		
 		String name = player.getName();
@@ -80,7 +80,7 @@ public class HelpSub extends PlayerSubCommand {
  
 	@Override
 	public String getUsage(CommandSender sender) {
-		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
+		FileConfiguration f = plugin.getFileManager().getCommandSettings();
 		
 		return plugin.getBasicPluginManager().toHex(sender, f.getString("CommandConfig.Help.Usage"));
 	}
@@ -88,7 +88,7 @@ public class HelpSub extends PlayerSubCommand {
 	@Override
 	public String getArgsLayout() { 
 		
-		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
+		FileConfiguration f = plugin.getFileManager().getCommandSettings();
 		
 		String use = f.getString("CommandConfig.Help.Use");
 		

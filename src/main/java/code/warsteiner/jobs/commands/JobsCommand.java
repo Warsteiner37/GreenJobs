@@ -25,7 +25,7 @@ public class JobsCommand implements CommandExecutor {
 
 		int length = args.length;
  
-		FileConfiguration f = plugin.getFileManager().getCommandsConfig();
+		FileConfiguration f = plugin.getFileManager().getCommandSettings();
 		MessageManager m = plugin.getMessageManager();
 
 		if (sender instanceof Player) {

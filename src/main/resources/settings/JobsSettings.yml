@@ -1,0 +1,31 @@
+#       _       _                _____      _   _   _                 
+#      | |     | |              / ____|    | | | | (_)                
+#      | | ___ | |__  ___ _____| (___   ___| |_| |_ _ _ __   __ _ ___ 
+#  _   | |/ _ \| '_ \/ __|______\___ \ / _ \ __| __| | '_ \ / _` / __|
+# | |__| | (_) | |_) \__ \      ____) |  __/ |_| |_| | | | | (_| \__ \
+#  \____/ \___/|_.__/|___/     |_____/ \___|\__|\__|_|_| |_|\__, |___/
+#                                                            __/ |    
+#                                                           |___/                      
+#
+                                                               
+MaxDefaultJobs: 1
+
+GiveMoneyWhenPlacedByPlayer: false
+
+EnabledDefaultJobs: false
+AutoJoinDefaultJobs: false
+
+DefaultJobs:
+  - "MINER"
+
+AutoAddFreeJobsToOwn: false
+
+JobInfoGUI: true
+NeedToConfirmWhileBuying: true
+
+#amount of time in ticks. 20 ticks = 1 second
+BossBarShowTime: 30
+
+GlobalJobWorlds:
+  - "world1"
+  - "world2"

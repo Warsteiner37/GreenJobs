@@ -1,5 +1,5 @@
 main: code.warsteiner.jobs.GreenJobs
-version: 1.2.4
+version: 1.2.6
 name: GreenJobs
 author: Warsteiner37
 api-version: 1.16

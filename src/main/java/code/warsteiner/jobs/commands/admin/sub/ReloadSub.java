@@ -57,7 +57,13 @@ public class ReloadSub extends AdminSubCommand {
 
 			sender.sendMessage(m.getPrefix(sender) + " §a§lReloaded all Jobs!");
 			
-		} else {
+		} else if (args.length == 2 && args[1].toLowerCase().equalsIgnoreCase("configs")) {
+
+			plugin.getFileManager().setFiles();
+
+			sender.sendMessage(m.getPrefix(sender) + " §a§lReloaded all Configs!");
+			
+		}  else {
 			sender.sendMessage(m.getPrefix(sender) + " §7Usage§8: §6" + getUsage());
 
 		}
@@ -66,7 +72,7 @@ public class ReloadSub extends AdminSubCommand {
   
 	@Override
 	public String getUsage() {
-		return "§7/Jobsadmin §areload §7<jobs>";
+		return "§7/Jobsadmin §areload §7<jobs,configs>";
 	}
 
 	@Override
@@ -81,7 +87,7 @@ public class ReloadSub extends AdminSubCommand {
 
 	@Override
 	public String getArgsLayout() {
-		return "reload <jobs>";
+		return "reload <jobs,configs>";
 	}
 
 	@Override

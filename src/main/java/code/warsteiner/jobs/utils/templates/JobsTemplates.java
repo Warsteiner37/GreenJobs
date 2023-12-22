@@ -1122,7 +1122,7 @@ public class JobsTemplates {
 
 	public void setMilkmanTemplate() {
 
-		File file = new File("plugins/GreenJobs/jobs/", "milkman.yml");
+		File file = new File("plugins/GreenJobs/jobs/", "Milkman.yml");
 
 		if (!file.exists()) {
 			try {
@@ -1511,7 +1511,7 @@ public class JobsTemplates {
 
 	public void setShearTemplate() {
 
-		File file = new File("plugins/GreenJobs/jobs/", "shepherd.yml");
+		File file = new File("plugins/GreenJobs/jobs/", "Shepherd.yml");
 
 		if (!file.exists()) {
 			try {
@@ -1884,7 +1884,7 @@ public class JobsTemplates {
 
 	public void setKillMobTemplate() {
 
-		File file = new File("plugins/GreenJobs/jobs/", "guard.yml");
+		File file = new File("plugins/GreenJobs/jobs/", "Guard.yml");
 
 		if (!file.exists()) {
 			try {
@@ -2011,7 +2011,7 @@ public class JobsTemplates {
 
 	public void setBuilderTemplate() {
 
-		File file = new File("plugins/GreenJobs/jobs/", "BUILDER.yml");
+		File file = new File("plugins/GreenJobs/jobs/", "Builder.yml");
 
 		if (!file.exists()) {
 			try {
@@ -2135,7 +2135,7 @@ public class JobsTemplates {
 
 	public void setLumberjackTemplate() {
 
-		File file = new File("plugins/GreenJobs/jobs/", "LUMBERJACK.yml");
+		File file = new File("plugins/GreenJobs/jobs/", "Lumberjack.yml");
 
 		if (!file.exists()) {
 			try {
@@ -2271,7 +2271,7 @@ public class JobsTemplates {
 
 	public void setMinerTemplate() {
 
-		File file = new File("plugins/GreenJobs/jobs/", "MINER.yml");
+		File file = new File("plugins/GreenJobs/jobs/", "Miner.yml");
 
 		if (!file.exists()) {
 			try {

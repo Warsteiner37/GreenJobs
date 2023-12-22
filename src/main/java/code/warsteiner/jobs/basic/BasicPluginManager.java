@@ -128,7 +128,7 @@ public class BasicPluginManager {
 	public void playSound(Player player, String type) {
 		Bukkit.getScheduler().runTask(plugin, () -> {
 
-			FileConfiguration file = plugin.getFileManager().getSoundsConfig();
+			FileConfiguration file = plugin.getFileManager().getSoundsSettings();
 
 			if (file.contains("Sounds." + type + ".Type")) {
 
@@ -169,14 +169,14 @@ public class BasicPluginManager {
 	}
 
 	public String getDateTodayFromCal() {
-		DateFormat format = new SimpleDateFormat(plugin.getFileManager().getConfigConfig().getString("Date"));
+		DateFormat format = new SimpleDateFormat(plugin.getFileManager().getUtilSettings().getString("Date"));
 		Date data = new Date();
 		return format.format(data);
 	}
 
 	public String Format(double i) {
 
-		DecimalFormat t = new DecimalFormat(plugin.getFileManager().getConfigConfig().getString("Format"));
+		DecimalFormat t = new DecimalFormat(plugin.getFileManager().getUtilSettings().getString("Format"));
 		String b = t.format(i).replaceAll(",", ".");
 		return b;
 	}

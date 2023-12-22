@@ -21,9 +21,9 @@ public class PlayerASyncJoinEvent implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent event) {
-
-
-		FileConfiguration cfg = plugin.getFileManager().getConfigConfig(); 
+ 
+		FileConfiguration jobs_settings = plugin.getFileManager().getJobsSettings();
+		 
 		PlayerDataManager data = plugin.getPlayerDataManager(); 
 		JobAPI api = plugin.getJobAPI();
 
@@ -42,7 +42,7 @@ public class PlayerASyncJoinEvent implements Listener {
 				JobsPlayer jb = data.getJobsPlayer(name, id);
 				
 				api.getLoadedJobsHash().forEach((id, job) -> {
-					if (cfg.getBoolean("AutoAddFreeJobsToOwn")) { 
+					if (jobs_settings.getBoolean("AutoAddFreeJobsToOwn")) { 
 						if (job != null) {
 							if (job.getPrice() == 0) { 
 								jb.addOwnedJob(job.getID()); 

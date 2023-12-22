@@ -1,0 +1,101 @@
+#   _____                       _            _____      _   _   _                 
+#  / ____|                     | |          / ____|    | | | | (_)                
+# | (___   ___  _   _ _ __   __| |___ _____| (___   ___| |_| |_ _ _ __   __ _ ___ 
+#  \___ \ / _ \| | | | '_ \ / _` / __|______\___ \ / _ \ __| __| | '_ \ / _` / __|
+#  ____) | (_) | |_| | | | | (_| \__ \      ____) |  __/ |_| |_| | | | | (_| \__ \
+# |_____/ \___/ \__,_|_| |_|\__,_|___/     |_____/ \___|\__|\__|_|_| |_|\__, |___/
+#                                                                        __/ |    
+#                                                                       |___/     
+#
+
+Sounds:
+
+  PLAYER_ALREADY_LEFT_ALL_JOBS:
+    Type: "ENTITY_VILLAGER_NO"
+    Vol: 1
+    Pitch: 2
+
+  LIVEGUI_PROGRESS_CANCELED:
+    Type: "ENTITY_VILLAGER_NO"
+    Vol: 1
+    Pitch: 2
+ 
+  RE_OPEN_MAIN_GUI:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+ 
+  OPEN_JOBS_GUI:
+    Type: "BLOCK_CHEST_OPEN"
+    Vol: 1
+    Pitch: 4
+
+  OPEN_OPTIONS_GUI:
+    Type: "BLOCK_CHEST_OPEN"
+    Vol: 1
+    Pitch: 4
+
+  OPEN_CONFIRM_GUI:
+    Type: "BLOCK_CHEST_OPEN"
+    Vol: 1
+    Pitch: 4
+
+  OPEN_LEVELS_GUI:
+    Type: "BLOCK_CHEST_OPEN"
+    Vol: 1
+    Pitch: 4
+
+  OPEN_REWARDS_GUI:
+    Type: "BLOCK_CHEST_OPEN"
+    Vol: 1
+    Pitch: 4
+
+  LEVELS_CHANGE_PAGE:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+
+  REWARDS_CHANGE_PAGE:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+
+  PLAYER_LEAVE_ALL_JOBS:
+    Type: "ENTITY_PLAYER_LEVELUP"
+    Vol: 1
+    Pitch: 2
+
+  PLAYER_LEAVE_A_JOB:
+    Type: "ENTITY_PLAYER_LEVELUP"
+    Vol: 1
+    Pitch: 2
+
+  PLAYER_CLOSE_BUTTON_ACTION:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+
+  PLAYER_BOUGHT_JOB:
+    Type: "ENTITY_PLAYER_LEVELUP"
+    Vol: 1
+    Pitch: 2
+
+  PLAYER_JOINED_JOB:
+    Type: "ENTITY_PLAYER_LEVELUP"
+    Vol: 1
+    Pitch: 2
+
+  REWARDS_CHANGE_SORTING:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+
+  PLAYER_FINISH_WORK:
+    Type: "BLOCK_NOTE_BLOCK_BASS"
+    Vol: 1
+    Pitch: 3
+    
+  PLAYER_LEVEL_UP:
+    Type: "ENTITY_LIGHTNING_BOLT_THUNDER"
+    Vol: 1
+    Pitch: 1 

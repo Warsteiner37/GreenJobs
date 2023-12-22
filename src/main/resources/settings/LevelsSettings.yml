@@ -1,0 +1,38 @@
+#  _                    _            _____      _   _   _                 
+# | |                  | |          / ____|    | | | | (_)                
+# | |     _____   _____| |___ _____| (___   ___| |_| |_ _ _ __   __ _ ___ 
+# | |    / _ \ \ / / _ \ / __|______\___ \ / _ \ __| __| | '_ \ / _` / __|
+# | |___|  __/\ V /  __/ \__ \      ____) |  __/ |_| |_| | | | | (_| \__ \
+# |______\___| \_/ \___|_|___/     |_____/ \___|\__|\__|_|_| |_|\__, |___/
+#                                                                __/ |    
+#                                                               |___/     
+#
+
+UseLevels: true
+
+Exp:
+
+  Display_Layout: "&7<exp>&8/&c<need_amount> &a<percent_amount>%"
+  
+  Display_Max: "&cMax Level &8- &c<percent_amount>%"
+  
+LevelUp:
+
+  Broadcast:
+  
+    Enabled: false
+    
+    Message: "<prefix> &b<name> &7just reached Level <level> &7in the Job <job>&7!"
+
+  Titles:
+  
+    Enabled: true
+    
+    T1: "&8| &6&lLevel Up &8|"
+    T2: "&7#&a<level> &7| <job>"
+  
+  Message:
+  
+    Enabled: true
+    
+    Message: "<prefix> &7You reached a new Level in the <job> &7Job!"
